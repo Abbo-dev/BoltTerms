@@ -25,3 +25,4 @@ dist-ssr
 #Firebase Config
 src/FirebaseConfig.js
 .env
+template.json
