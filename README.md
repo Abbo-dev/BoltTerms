@@ -1,32 +1,26 @@
-# React + Vite
+# 📝 Terms & Conditions Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, lightweight web app for quickly generating Terms & Conditions pages tailored to your product or website.
 
-Currently, two official plugins are available:
+Built with a clean React frontend and a fully serverless backend using Firebase, this tool makes legal content generation easy, fast, and secure.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React (Vite), Tailwind CSS  
+- **Backend**: Firebase Functions (Node.js)  
+- **Authentication**: Firebase Auth  
+- **Payments**: Stripe Checkout  
+- **Database**: Firestore  
+- **Hosting**: Firebase Hosting  
 
-## background color insided card : #1F2937
+---
 
-## lower font color : #828a96
+## ✨ Features
 
-## button color : #2962ea
-
-## card color : #374151
-
-## main text color : #e4e6e8
-
-## background color :#181e2b
-
-## input color : #4c5562
-
-## nav color : #232b38
-
-## color outside card : #242d39
-
-## copy button color : #4c5562
+- 🔐 User authentication via Firebase  
+- ⚡ Dynamic and customizable T&C content  
+- 💳 Stripe integration for payments  
+- ☁️ Serverless architecture for scalability  
+- 🎨 Modern, responsive UI with Tailwind CSS  
