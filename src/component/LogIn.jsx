@@ -1,0 +1,214 @@
+import { useState } from "react";
+import { Input, Button, Card } from "@heroui/react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import BackHome from "./BackHome.jsx";
+import { auth, db } from "../FirebaseConfig.js";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { updateProfile } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+
+export default function AuthPage() {
+  const [tab, setTab] = useState("login");
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+
+  const isLogin = tab === "login";
+  let navigate = useNavigate();
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        username,
+        email,
+        isPaidUser: false,
+        aiQueriesToday: 0,
+        createdAt: new Date(),
+      }).catch((error) => {
+        console.error("Error creating user document:", error);
+      });
+      await updateProfile(user, { displayName: username });
+
+      console.log("User registered:", user);
+      navigate("/");
+    } catch (error) {
+      switch (error.code) {
+        case "auth/invalid-credential":
+          // Handle generic error when Email Enumeration Protection is enabled
+          setError(
+            "Invalid credentials. Please check your email and password."
+          );
+          break;
+        case "auth/user-disabled":
+          setError("This user account has been disabled.");
+          break;
+        case "auth/user-not-found":
+          setError("No user found with this email.");
+          break;
+        case "auth/wrong-password":
+          setError("Incorrect password.");
+          break;
+        case "auth/too-many-requests":
+          setError("Too many attempts. Please try again later.");
+          break;
+        default:
+          setError("An error occurred. Please try again.");
+      }
+      console.error("Error creating user:", error);
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      console.log("User logged in sucessfully:", auth.currentUser);
+      navigate("/");
+    } catch (error) {
+      switch (error.code) {
+        case "auth/invalid-credential":
+          // Handle generic error when Email Enumeration Protection is enabled
+          setError(
+            "Invalid credentials. Please check your email and password."
+          );
+          break;
+        case "auth/user-disabled":
+          setError("This user account has been disabled.");
+          break;
+        case "auth/user-not-found":
+          setError("No user found with this email.");
+          break;
+        case "auth/wrong-password":
+          setError("Incorrect password.");
+          break;
+        case "auth/too-many-requests":
+          setError("Too many attempts. Please try again later.");
+          break;
+        default:
+          setError("An error occurred. Please try again.");
+      }
+
+      console.error("Error logging in:", error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#181e2b] flex items-center justify-center p-4">
+      <Card className="bg-[#242d39] p-8 rounded-2xl shadow-xl max-w-md w-full space-y-6">
+        {/* Tabs */}
+        <div className="flex justify-center mb-4">
+          {["login", "register"].map((type) => (
+            <button
+              key={type}
+              onClick={() => {
+                setTab(type);
+                setError("");
+              }}
+              className={`px-4 py-2 text-sm font-medium rounded-full mx-1 transition-all ${
+                tab === type
+                  ? "bg-[#2962ea] text-white shadow-md"
+                  : "text-[#828a96] hover:bg-[#1F2937]"
+              }`}
+            >
+              {type === "login" ? "Log In" : "Register"}
+            </button>
+          ))}
+        </div>
+
+        {/* Heading */}
+        <h2 className="text-2xl font-bold text-[#e4e6e8] text-center">
+          {isLogin ? "Welcome Back" : "Create an Account"}
+        </h2>
+
+        {/* Form */}
+        <motion.form
+          onSubmit={isLogin ? handleLogin : handleRegister}
+          key={tab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="space-y-5"
+        >
+          {!isLogin && (
+            <Input
+              label="Username"
+              type="text"
+              name="username"
+              placeholder="Your username"
+              isRequired
+              className=" text-[#e4e6e8]"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          )}
+
+          <Input
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            isRequired
+            className=" text-[#e4e6e8]"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          {/* Password with toggle */}
+          <div className="relative">
+            <Input
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="••••••••"
+              isRequired
+              className="text-[#e4e6e8]"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div
+              onClick={() => setShowPassword((show) => !show)}
+              className="absolute top-1/2 right-3 -translate-y-1/2 text-[#828a96] cursor-pointer z-10"
+            >
+              {showPassword ? (
+                <EyeSlashIcon className="h-5 w-5" />
+              ) : (
+                <EyeIcon className="h-5 w-5" />
+              )}
+            </div>
+          </div>
+          {error && <p className="text-red-500 text-xs text-center">{error}</p>}
+          <Button
+            type="submit"
+            className="w-full bg-[#2962ea] text-white py-3 rounded-md font-medium hover:opacity-90 transition"
+          >
+            {isLogin ? "Log In" : "Register"}
+          </Button>
+        </motion.form>
+
+        <p className="text-center text-sm text-[#828a96] mt-4">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+          <button
+            onClick={() => setTab(isLogin ? "register" : "login")}
+            className="text-[#2962ea] hover:underline"
+          >
+            {isLogin ? "Register" : "Log In"}
+          </button>
+        </p>
+      </Card>
+      <BackHome />
+    </div>
+  );
+}

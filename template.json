@@ -1,0 +1,454 @@
+{
+  "templates": [
+    {
+      "templateName": "Ecommerce T&C Template 1",
+      "clauses": [
+        {
+          "title": "Introduction",
+          "text": "{{businessName}} ('we', 'us') operates {{websiteUrl}}. By accessing this site, you agree to these legally binding Terms."
+        },
+        {
+          "title": "Account Security",
+          "text": "You’re responsible for all activities under your account. Notify {{businessName}} immediately of unauthorized use."
+        },
+        {
+          "title": "Pricing & Taxes",
+          "text": "All prices on {{websiteUrl}} are in USD/GBP. Sales tax/VAT will be calculated at checkout based on your location."
+        },
+        {
+          "title": "Order Cancellation",
+          "text": "{{businessName}} reserves the right to cancel orders suspected of fraud, pricing errors, or inventory issues."
+        },
+        {
+          "title": "Shipping (UK)",
+          "text": "UK orders ship within 3 days via Royal Mail. {{businessName}} isn’t liable for customs delays or fees."
+        },
+        {
+          "title": "Shipping (US)",
+          "text": "US orders ship via USPS/FedEx. Express shipping costs are non-refundable if you initiate a return."
+        },
+        {
+          "title": "Returns (UK)",
+          "text": "Under UK law, you may return goods within 14 days for a full refund. Contact {{businessName}} at [email] for authorization."
+        },
+        {
+          "title": "Returns (US)",
+          "text": "US returns require a pre-approved RMA from {{businessName}}. Refunds exclude original shipping costs."
+        },
+        {
+          "title": "Intellectual Property",
+          "text": "All {{websiteUrl}} content, including product photos, is owned by {{businessName}}. Scraping = lawsuit."
+        },
+        {
+          "title": "Governing Law",
+          "text": "Disputes with {{businessName}} will be resolved in [UK/US] courts based on your shipping address."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 2",
+      "clauses": [
+        {
+          "title": "Introduction",
+          "text": "Welcome to {{websiteUrl}}! These terms govern your use of our website and services. By using this site, you accept these terms."
+        },
+        {
+          "title": "Account Creation",
+          "text": "By creating an account, you agree to provide accurate and up-to-date information. You are responsible for maintaining the confidentiality of your login credentials."
+        },
+        {
+          "title": "Payment",
+          "text": "All transactions are processed in USD/GBP. Payment is due at the time of order and must be made via authorized payment methods."
+        },
+        {
+          "title": "Shipping & Delivery",
+          "text": "Shipping timeframes may vary depending on location. You agree to provide accurate shipping information to avoid delays."
+        },
+        {
+          "title": "Return & Refund Policy",
+          "text": "Returns are accepted within 30 days of purchase, provided the product is unused and in its original packaging."
+        },
+        {
+          "title": "Taxes & Duties",
+          "text": "All applicable sales tax/VAT will be added at checkout. Customers are responsible for customs duties or other taxes imposed by their country."
+        },
+        {
+          "title": "Privacy & Security",
+          "text": "Your privacy is important to us. We utilize encryption technology to protect your payment and personal information during transactions."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We are not liable for any damages, losses, or injuries resulting from the use of our products or services."
+        },
+        {
+          "title": "Intellectual Property",
+          "text": "All content on this website, including text, images, and logos, is the property of {{businessName}} and protected by copyright laws."
+        },
+        {
+          "title": "Governing Law",
+          "text": "These terms will be governed by the laws of the United States or United Kingdom, depending on your location."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 3",
+      "clauses": [
+        {
+          "title": "Acceptance of Terms",
+          "text": "By using {{websiteUrl}}, you agree to comply with these Terms and Conditions, including any future changes or updates."
+        },
+        {
+          "title": "Account Responsibility",
+          "text": "You are responsible for maintaining the confidentiality of your account information and all activities under your account."
+        },
+        {
+          "title": "Order Processing & Cancellation",
+          "text": "Orders will be processed upon receipt of payment. {{businessName}} reserves the right to cancel any order for fraud prevention or inventory issues."
+        },
+        {
+          "title": "Shipping & Delivery",
+          "text": "We ship worldwide. Delivery times vary by destination, and shipping fees are calculated at checkout."
+        },
+        {
+          "title": "Returns & Exchanges",
+          "text": "We accept returns within 14 days for products that are defective or damaged. To request a return, contact us at [email]."
+        },
+        {
+          "title": "Taxes & Charges",
+          "text": "All prices listed are exclusive of taxes. You are responsible for paying any sales tax or other taxes that apply to your location."
+        },
+        {
+          "title": "Prohibited Activities",
+          "text": "You agree not to use our website for any illegal or unauthorized activities, including fraud, spamming, and harassment."
+        },
+        {
+          "title": "Privacy Policy",
+          "text": "We value your privacy. All personal information provided to us will be handled in accordance with our Privacy Policy."
+        },
+        {
+          "title": "Intellectual Property",
+          "text": "All content on {{websiteUrl}}, including images, graphics, and trademarks, is the property of {{businessName}}."
+        },
+        {
+          "title": "Dispute Resolution",
+          "text": "Any disputes will be resolved through arbitration, and jurisdiction will be limited to [UK/US]."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 4",
+      "clauses": [
+        {
+          "title": "General Terms",
+          "text": "By accessing {{websiteUrl}}, you agree to these Terms and Conditions, which may be updated from time to time."
+        },
+        {
+          "title": "Account Management",
+          "text": "You must keep your account information accurate. Notify us immediately of any unauthorized access or use of your account."
+        },
+        {
+          "title": "Payment Terms",
+          "text": "We accept payments through Visa, Mastercard, and PayPal. All payments are processed in USD/GBP."
+        },
+        {
+          "title": "Shipping Policy",
+          "text": "Shipping charges will be calculated at checkout. All orders will be processed within 2-3 business days."
+        },
+        {
+          "title": "Returns & Refunds",
+          "text": "Returns are accepted within 14 days of purchase for a full refund. Items must be unused and in their original condition."
+        },
+        {
+          "title": "Taxes",
+          "text": "Applicable taxes, including sales tax or VAT, will be added to the final order total based on your location."
+        },
+        {
+          "title": "Use of Content",
+          "text": "All content on {{websiteUrl}}, including product images and descriptions, is owned by {{businessName}} and protected by copyright laws."
+        },
+        {
+          "title": "Privacy & Security",
+          "text": "We protect your personal and payment information using encryption and secure transaction methods."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We are not liable for any indirect, incidental, or consequential damages arising from the use of our website or products."
+        },
+        {
+          "title": "Dispute Resolution",
+          "text": "Any disputes will be resolved through binding arbitration, governed by the laws of [US/UK]."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 5",
+      "clauses": [
+        {
+          "title": "Overview",
+          "text": "These terms govern your use of {{websiteUrl}}. By accessing this site, you accept these terms in full."
+        },
+        {
+          "title": "Account Responsibilities",
+          "text": "You are responsible for maintaining your account’s confidentiality and security. Notify us if you suspect unauthorized access."
+        },
+        {
+          "title": "Payment Methods",
+          "text": "We accept payments through Visa, Mastercard, PayPal, and other secure payment methods."
+        },
+        {
+          "title": "Shipping Information",
+          "text": "Shipping is available to most locations worldwide. Shipping costs and delivery timeframes will vary based on location."
+        },
+        {
+          "title": "Returns & Refunds Policy",
+          "text": "Returns are accepted within 14 days of purchase for an exchange or refund. Items must be unused and in original condition."
+        },
+        {
+          "title": "Taxes & Fees",
+          "text": "Sales tax or VAT will be added at checkout based on your location. You are responsible for any customs duties or fees."
+        },
+        {
+          "title": "Privacy & Data Protection",
+          "text": "We respect your privacy and take necessary steps to protect your personal information in accordance with our Privacy Policy."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We are not responsible for any indirect, incidental, or consequential damages resulting from the use of our website."
+        },
+        {
+          "title": "Intellectual Property Rights",
+          "text": "All content on this site, including logos, images, and product descriptions, is owned by {{businessName}} and is protected by copyright laws."
+        },
+        {
+          "title": "Governing Law & Jurisdiction",
+          "text": "These terms are governed by the laws of [US/UK]. Any disputes will be resolved in the courts of [US/UK]."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 6",
+      "clauses": [
+        {
+          "title": "Acceptance of Terms",
+          "text": "By using {{websiteUrl}}, you agree to be bound by these terms and conditions. Please read them carefully."
+        },
+        {
+          "title": "Account Registration",
+          "text": "You must provide accurate and complete information during registration. You are responsible for maintaining the security of your account."
+        },
+        {
+          "title": "Product Information",
+          "text": "We make every effort to accurately display product details. However, we do not guarantee that product descriptions are 100% accurate."
+        },
+        {
+          "title": "Payment & Billing",
+          "text": "All transactions are processed securely. You are responsible for providing accurate billing information and ensuring payment is made in full."
+        },
+        {
+          "title": "Shipping Policy",
+          "text": "We offer a range of shipping options. Delivery time depends on your location and the shipping method chosen at checkout."
+        },
+        {
+          "title": "Return & Refund Policy",
+          "text": "You may return products within 30 days of receiving your order. Refunds will be processed once the return is received and inspected."
+        },
+        {
+          "title": "Taxes & Duties",
+          "text": "Sales tax and other applicable duties will be added to your order at checkout based on your shipping address."
+        },
+        {
+          "title": "Privacy & Data Protection",
+          "text": "Your privacy is important to us. We use your personal information in accordance with our Privacy Policy to process orders and improve your experience."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We are not liable for any indirect, incidental, or consequential damages arising from your use of the site or the products."
+        },
+        {
+          "title": "Governing Law & Disputes",
+          "text": "These terms are governed by the laws of [Jurisdiction]. Any disputes will be handled in the appropriate courts."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 7",
+      "clauses": [
+        {
+          "title": "Introduction",
+          "text": "By using {{websiteUrl}}, you agree to our Terms and Conditions. Please review them carefully before making a purchase."
+        },
+        {
+          "title": "Account Security",
+          "text": "You are responsible for all activities under your account. Notify us immediately of any unauthorized use of your account."
+        },
+        {
+          "title": "Pricing & Payments",
+          "text": "All prices listed on {{websiteUrl}} are in USD/GBP. Payment must be made at the time of purchase through an approved payment gateway."
+        },
+        {
+          "title": "Shipping & Delivery",
+          "text": "We ship to most countries worldwide. Delivery times and shipping fees are calculated based on your location at checkout."
+        },
+        {
+          "title": "Returns & Exchanges",
+          "text": "You may return items within 14 days of purchase for a full refund. All returned items must be in original condition."
+        },
+        {
+          "title": "Customer Privacy",
+          "text": "We value your privacy. Personal data collected will be used solely for the purpose of processing your orders and enhancing your experience."
+        },
+        {
+          "title": "Taxes & Fees",
+          "text": "Applicable sales tax/VAT will be calculated and added during checkout based on your location. Any import duties are the responsibility of the buyer."
+        },
+        {
+          "title": "Prohibited Uses",
+          "text": "You agree not to use the website for any illegal activities, including fraud, phishing, or spamming."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We are not liable for any damages or loss caused by using our site or services, whether direct or indirect."
+        },
+        {
+          "title": "Governing Law",
+          "text": "These Terms and Conditions will be governed by the laws of the jurisdiction of [Location], without regard to its conflict of law principles."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 8",
+      "clauses": [
+        {
+          "title": "Acceptance of Terms",
+          "text": "By accessing and using {{websiteUrl}}, you agree to comply with the terms outlined in this agreement."
+        },
+        {
+          "title": "Account Management",
+          "text": "You are responsible for maintaining the confidentiality of your login credentials and all activities under your account."
+        },
+        {
+          "title": "Product Information & Availability",
+          "text": "We strive to keep product information up to date. However, we cannot guarantee that all information on our website is accurate or complete."
+        },
+        {
+          "title": "Order Process & Confirmation",
+          "text": "Once an order is placed, you will receive a confirmation email. We reserve the right to refuse any order at our discretion."
+        },
+        {
+          "title": "Shipping Policy",
+          "text": "We offer free standard shipping for all orders over a certain amount. Expedited shipping is also available at checkout."
+        },
+        {
+          "title": "Returns & Refunds",
+          "text": "Returns are accepted within 14 days of delivery. To initiate a return, please contact our customer support team for instructions."
+        },
+        {
+          "title": "Payment Terms",
+          "text": "Payments are processed through secure third-party gateways. We accept major credit cards and PayPal."
+        },
+        {
+          "title": "Intellectual Property",
+          "text": "All content on {{websiteUrl}}, including text, images, and logos, is protected by copyright and belongs to {{businessName}}."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We will not be held liable for any damages that arise from the use or inability to use our products, website, or services."
+        },
+        {
+          "title": "Dispute Resolution",
+          "text": "Any disputes will be resolved through binding arbitration in the jurisdiction of [Location]."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 9",
+      "clauses": [
+        {
+          "title": "Introduction",
+          "text": "By accessing {{websiteUrl}}, you agree to abide by these Terms and Conditions. These terms govern your use of our site."
+        },
+        {
+          "title": "Account Creation & Responsibility",
+          "text": "You must create an account to make a purchase. You agree to keep your account information confidential and notify us of any suspicious activity."
+        },
+        {
+          "title": "Product Pricing & Payments",
+          "text": "Prices for products on {{websiteUrl}} are listed in USD/GBP. Payment is due at the time of order and can be made through our approved payment methods."
+        },
+        {
+          "title": "Shipping & Handling",
+          "text": "Shipping charges are calculated at checkout based on your location. We offer several shipping options to meet your needs."
+        },
+        {
+          "title": "Returns Policy",
+          "text": "If you are not satisfied with your purchase, you may return it within 30 days for a refund. Returned items must be in original condition."
+        },
+        {
+          "title": "Taxes & Duties",
+          "text": "All applicable taxes and duties will be added at checkout. You are responsible for any customs fees or import taxes that may be incurred."
+        },
+        {
+          "title": "Privacy & Data Protection",
+          "text": "We respect your privacy. All personal information provided is handled in accordance with our Privacy Policy."
+        },
+        {
+          "title": "Prohibited Conduct",
+          "text": "You agree not to use our website for illegal activities, including fraud, hacking, or misrepresentation of information."
+        },
+        {
+          "title": "Intellectual Property Rights",
+          "text": "All content on {{websiteUrl}} is owned by {{businessName}} and is protected by intellectual property laws."
+        },
+        {
+          "title": "Governing Law & Jurisdiction",
+          "text": "These Terms and Conditions are governed by the laws of [Location]. Disputes will be resolved in the courts of [Location]."
+        }
+      ]
+    },
+    {
+      "templateName": "Ecommerce T&C Template 10",
+      "clauses": [
+        {
+          "title": "Agreement to Terms",
+          "text": "By accessing {{websiteUrl}}, you agree to comply with these Terms and Conditions. Please review them carefully before using the site."
+        },
+        {
+          "title": "Account Responsibilities",
+          "text": "You are responsible for all activities under your account. Ensure that your account details are kept secure and notify us of any unauthorized use."
+        },
+        {
+          "title": "Pricing & Payment Methods",
+          "text": "Prices for products are listed in USD/GBP. Payments are processed securely via credit card or PayPal."
+        },
+        {
+          "title": "Order Processing & Delivery",
+          "text": "Orders are processed within 1-3 business days. Delivery time will depend on your shipping method and location."
+        },
+        {
+          "title": "Returns & Exchanges",
+          "text": "We offer a 14-day return policy for unused products. Returns are subject to inspection before processing a refund."
+        },
+        {
+          "title": "Taxes & Duties",
+          "text": "Sales tax will be calculated based on your shipping address. Any import duties or taxes are the responsibility of the customer."
+        },
+        {
+          "title": "Privacy Policy",
+          "text": "Your privacy is important to us. We collect personal information for the sole purpose of processing your orders."
+        },
+        {
+          "title": "Limitation of Liability",
+          "text": "We are not liable for any damages, including indirect or consequential, arising from the use of this site or the products sold."
+        },
+        {
+          "title": "Intellectual Property",
+          "text": "All content on {{websiteUrl}}, including trademarks, logos, and product descriptions, is owned by {{businessName}}."
+        },
+        {
+          "title": "Governing Law",
+          "text": "These Terms and Conditions are governed by the laws of [Location]. Any legal actions will be subject to the jurisdiction of [Location]."
+        }
+      ]
+    }
+  ]
+}
