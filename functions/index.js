@@ -34,12 +34,7 @@ exports.createCheckoutSession = onCall(
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-    if (!data.stripePriceId) {
-      throw new HttpsError(
-        "invalid-argument",
-        "The function must be called with a valid stripePriceId."
-      );
-    }
+   
     try {
       const session = await stripe.checkout.sessions.create({
         line_items: [

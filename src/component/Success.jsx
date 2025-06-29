@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "@heroui/react";
 export default function SuccessPage() {
   const navigate = useNavigate();
 
@@ -19,18 +19,15 @@ export default function SuccessPage() {
             email with the details.
           </p>
           <div className="space-y-4">
-            <button
+            <Button
               onClick={() => navigate("/profile")}
               className="w-full bg-[#2962ea] hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200"
             >
               Go to Dashboard
-            </button>
-            <button
-              onClick={() => navigate("/orders")}
-              className="w-full bg-[#4c5562] hover:bg-[#5a6474] text-white font-medium py-3 px-4 rounded-lg transition duration-200"
-            >
+            </Button>
+            <Button className="w-full bg-[#4c5562] hover:bg-[#5a6474] text-white font-medium py-3 px-4 rounded-lg transition duration-200">
               View Order Details
-            </button>
+            </Button>
           </div>
         </div>
         <div className="bg-[#1F2937] px-8 py-4 text-center">
