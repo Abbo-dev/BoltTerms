@@ -20,7 +20,7 @@ export default function SuccessPage() {
           </p>
           <div className="space-y-4">
             <Button
-              onClick={() => navigate("/profile")}
+              onPress={() => navigate("/profile")}
               className="w-full bg-[#2962ea] hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200"
             >
               Go to Dashboard

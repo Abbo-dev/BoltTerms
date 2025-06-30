@@ -3,18 +3,44 @@ import FooterPart from "./FooterPart";
 import { Button } from "@heroui/react";
 import { Accordion, AccordionItem } from "@heroui/react";
 import { stripePromise } from "../stripe";
+import { getApp } from "firebase/app";
+import { getFunctions, httpsCallable } from "firebase/functions";
 export default function PricingPage() {
-  const handlePayment = async (plan) => {
+  const handlePayment = async (stripePriceId) => {
+    console.log("Initiating payment for:", stripePriceId);
     const stripe = await stripePromise;
-    const response = await fetch("/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ plan }),
+    if (!stripe) {
+      console.error("Stripe.js not loaded");
+      return;
+    }
+    const app = getApp();
+    const functions = getFunctions(app, {
+      region: "us-central1", // Adjust the region as needed
     });
-    const session = await response.json();
-    await stripe.redirectToCheckout({ sessionId: session.id });
+    const createCheckoutSession = httpsCallable(
+      functions,
+      "createCheckoutSession"
+    );
+    try {
+      const result = await createCheckoutSession({
+        stripePriceId,
+      });
+      console.log("Checkout session result:", result);
+      if (!result.data || !result.data.sessionId) {
+        throw new Error("No session ID returned from server");
+      }
+      const sessionId = result.data.sessionId;
+      if (!sessionId) {
+        throw new Error("No session ID returned from server");
+      }
+      await stripe.redirectToCheckout({
+        sessionId,
+      });
+      console.log("Checkout session created:", result);
+    } catch (error) {
+      alert("Error creating checkout session. Please try again later.");
+      console.error("Error creating checkout session:", error);
+    }
   };
 
   const plans = [
@@ -188,7 +214,7 @@ export default function PricingPage() {
                   }`}
                   style={{ color: "white" }}
                   disabled={!plan.popular}
-                  onPress={() => handlePayment(plan.name)}
+                  onPress={() => handlePayment(plan.stripePriceId)}
                 >
                   {plan.cta}
                 </Button>
