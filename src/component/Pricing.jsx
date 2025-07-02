@@ -3,43 +3,50 @@ import FooterPart from "./FooterPart";
 import { Button } from "@heroui/react";
 import { Accordion, AccordionItem } from "@heroui/react";
 import { stripePromise } from "../stripe";
-import { getApp } from "firebase/app";
-import { getFunctions, httpsCallable } from "firebase/functions";
+
+import { getAuth } from "firebase/auth";
 export default function PricingPage() {
+  const user = getAuth().currentUser;
+  console.log("Current user:", user); // Debug log
+
   const handlePayment = async (stripePriceId) => {
-    console.log("Initiating payment for:", stripePriceId);
-    const stripe = await stripePromise;
-    if (!stripe) {
-      console.error("Stripe.js not loaded");
-      return;
-    }
-    const app = getApp();
-    const functions = getFunctions(app, {
-      region: "us-central1", // Adjust the region as needed
-    });
-    const createCheckoutSession = httpsCallable(
-      functions,
-      "createCheckoutSession"
-    );
     try {
-      const result = await createCheckoutSession({
-        stripePriceId,
-      });
-      console.log("Checkout session result:", result);
-      if (!result.data || !result.data.sessionId) {
-        throw new Error("No session ID returned from server");
+      if (!user) {
+        throw new Error("User not authenticated. Please log in.");
       }
-      const sessionId = result.data.sessionId;
+      const idToken = await user.getIdToken();
+      const response = await fetch(
+        "https://us-central1-tc-generator-5bdea.cloudfunctions.net/createCheckoutSession",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`,
+          },
+          body: JSON.stringify({ stripePriceId }),
+        }
+      );
+
+      const result = await response.json();
+      console.log("Function response:", result); // Debug log
+
+      // FIXED: Remove .data - onRequest doesn't wrap in data
+      const sessionId = result.sessionId;
+
       if (!sessionId) {
-        throw new Error("No session ID returned from server");
+        throw new Error("No sessionId returned from function.");
       }
-      await stripe.redirectToCheckout({
-        sessionId,
-      });
-      console.log("Checkout session created:", result);
+
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+
+      if (error) {
+        console.error("Stripe redirect error:", error.message);
+        alert("Error redirecting to Stripe: " + error.message);
+      }
     } catch (error) {
-      alert("Error creating checkout session. Please try again later.");
-      console.error("Error creating checkout session:", error);
+      console.error("Error during handlePayment:", error.message, error.stack);
+      alert("Payment failed: " + error.message);
     }
   };
 
@@ -56,7 +63,7 @@ export default function PricingPage() {
         "Email support (48h response)",
       ],
       cta: "Buy Once, Use Forever",
-      stripePriceId: "prod_SZ19VhUa0vwh0L",
+      stripePriceId: "price_1Rdt73COmRZKMVKqPPM96VIo",
       popular: true,
     },
     {

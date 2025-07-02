@@ -5,10 +5,7 @@
  */
 "use strict";
 const { setGlobalOptions } = require("firebase-functions");
-const { onCall } = require("firebase-functions/v2/https");
-const { onRequest } = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
-const functions = require("firebase-functions");
+const { onRequest, onCall } = require("firebase-functions/v2/https");
 const Stripe = require("stripe");
 const admin = require("firebase-admin");
 const { HttpsError } = require("firebase-functions/v2/https");
@@ -16,74 +13,121 @@ const { HttpsError } = require("firebase-functions/v2/https");
 const bodyParser = require("body-parser");
 const express = require("express");
 
-// Initialize Stripe with proper key sourcing
-
 admin.initializeApp();
 
-setGlobalOptions({ maxInstances: 10 });
-exports.health = onRequest((req, res) => res.send("OK"));
+setGlobalOptions({
+  maxInstances: 10,
+});
 
-exports.createCheckoutSession = onCall(
+// Convert to onRequest to properly handle CORS
+const checkoutApp = express();
+checkoutApp.use(bodyParser.json());
+
+checkoutApp.post("/", async (req, res) => {
+  try {
+    console.log("=== CHECKOUT SESSION REQUEST ===");
+    console.log("Headers:", req.headers);
+    console.log("Body:", req.body);
+
+    // Get the auth token from header
+    const authToken = req.headers.authorization?.split("Bearer ")[1];
+    if (!authToken) {
+      console.log("No authorization token provided");
+      return res.status(401).json({ error: "No authorization token provided" });
+    }
+
+    // Verify the token
+    let decodedToken;
+    try {
+      decodedToken = await admin.auth().verifyIdToken(authToken);
+    } catch (authError) {
+      console.error("Token verification failed:", authError);
+      return res.status(401).json({ error: "Invalid authorization token" });
+    }
+
+    const userId = decodedToken.uid;
+    console.log("Authenticated user:", userId);
+
+    const { stripePriceId } = req.body;
+
+    if (!stripePriceId) {
+      console.log("No stripePriceId provided");
+      return res.status(400).json({ error: "stripePriceId is required" });
+    }
+
+    console.log("=== STRIPE INITIALIZATION ===");
+    console.log("STRIPE_SECRET_KEY exists:", !!process.env.STRIPE_SECRET_KEY);
+    console.log(
+      "STRIPE_SECRET_KEY starts with sk_:",
+      process.env.STRIPE_SECRET_KEY?.startsWith("sk_")
+    );
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2022-11-15",
+    });
+
+    console.log("Creating Stripe checkout session...");
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          price: stripePriceId,
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url:
+        "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "http://localhost:5173/cancel",
+      metadata: {
+        userId: userId,
+      },
+    });
+
+    console.log("Checkout session created:", session.id);
+    res.json({ sessionId: session.id });
+  } catch (error) {
+    console.error("=== CHECKOUT SESSION ERROR ===");
+    console.error("Error type:", error.constructor.name);
+    console.error("Error message:", error.message);
+    console.error("Error code:", error.code);
+    console.error("Full error:", error);
+    console.error("Stack trace:", error.stack);
+
+    res.status(500).json({
+      error: "Error creating checkout session: " + error.message,
+    });
+  }
+});
+
+
+
+
+
+exports.createCheckoutSession = onRequest(
   {
     secrets: ["STRIPE_SECRET_KEY"],
-    region: "us-central1", // Adjust the region as needed
+    region: "us-central1",
+    cors: {
+      origin: ["http://localhost:5173"], // Your frontend origin
+      methods: ["POST", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+    },
   },
-  async (data, context) => {
-    // Check if the user is authenticated
-    if (!context || !context.auth) {
-      logger.error("Unauthenticated request");
-      throw new HttpsError(
-        "unauthenticated",
-        "You must be signed in to create a checkout session."
-      );
-    }
-    if (!context.auth) {
-      throw new HttpsError(
-        "unauthenticated",
-        "You must be signed in to create a checkout session."
-      );
-    }
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-    if (!data.stripePriceId) {
-      throw new HttpsError(
-        "invalid-argument",
-        "The function must be called with a valid stripePriceId."
-      );
-    }
-    try {
-      const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price: data.stripePriceId,
-            quantity: 1,
-          },
-        ],
-        mode: "payment",
-        success_url:
-          "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url: "http://localhost:5173/cancel",
-        metadata: {
-          userId: context.auth.uid,
-        },
-      });
-      return { sessionId: session.id };
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-      throw new HttpsError("internal", "Error creating checkout session.");
-    }
-  }
+  checkoutApp
 );
-
-const app = express();
+//Webhook handler for Stripe events
+// This will handle the checkout.session.completed event to update user status in Firestore
+const webhookApp = express();
 
 // Middleware to parse raw body for Stripe webhook
-app.use(bodyParser.raw({ type: "application/json" }));
+webhookApp.use(express.raw({ type: "application/json" }));
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-app.post("/stripeWebhook", async (req, res) => {
+webhookApp.post("/", async (req, res) => {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
   let event;
+
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
@@ -91,7 +135,7 @@ app.post("/stripeWebhook", async (req, res) => {
       endpointSecret
     );
   } catch (error) {
-    console.error("Error verifying webhook:", error);
+    console.error("Error verifying webhook:", error.message, error.stack);
     return res.status(400).send(`Webhook Error: ${error.message}`);
   }
 
@@ -107,9 +151,8 @@ app.post("/stripeWebhook", async (req, res) => {
         console.error("No user ID found in session metadata.");
         return res.status(400).send("No user ID found in session metadata.");
       }
+      // Update the user document in Firestore
       await admin.firestore().collection("users").doc(userId).update({
-        lastPaymentSessionId: sessionId,
-        lastPaymentDate: admin.firestore.FieldValue.serverTimestamp(),
         isPaidUser: true,
       });
       console.log("User document updated successfully.");
@@ -118,6 +161,33 @@ app.post("/stripeWebhook", async (req, res) => {
       return res.status(500).send("Error updating user document.");
     }
   }
+
+  res.status(200).send("Webhook received");
 });
 
-exports.stripeWebhook = functions.onRequest(app);
+exports.stripeWebhook = onRequest(
+  {
+    secrets: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"],
+    region: "us-central1",
+    cors: {
+      origin: true, // Allow all origins for webhook (Stripe needs this)
+      methods: ["POST"],
+      allowedHeaders: ["Content-Type", "stripe-signature"],
+    },
+  },
+  webhookApp
+);
+exports.health = onCall(
+  {
+    region: "us-central1",
+  },
+  async (request) => {
+    try {
+      console.log("Health check request received");
+      return { status: "ok" };
+    } catch (error) {
+      console.error("Health check error:", error);
+      throw new HttpsError("internal", "Health check failed");
+    }
+  }
+);
