@@ -99,10 +99,6 @@ checkoutApp.post("/", async (req, res) => {
   }
 });
 
-
-
-
-
 exports.createCheckoutSession = onRequest(
   {
     secrets: ["STRIPE_SECRET_KEY"],
@@ -147,14 +143,20 @@ webhookApp.post("/", async (req, res) => {
     console.log("User ID:", userId);
 
     try {
-      if (!userId) {
-        console.error("No user ID found in session metadata.");
+      const docRef = admin.firestore().collection("users").doc(userId);
+      const docSnapshot = await docRef.get();
+
+      if (!docSnapshot.exists) {
+        console.error("No user ID found " + userId);
         return res.status(400).send("No user ID found in session metadata.");
+      } else {
+        // Update the user document in Firestore
+        await docRef.update({
+          isPaidUser: true,
+        });
+        console.log("User document updated successfully for user:", userId);
       }
-      // Update the user document in Firestore
-      await admin.firestore().collection("users").doc(userId).update({
-        isPaidUser: true,
-      });
+
       console.log("User document updated successfully.");
     } catch (error) {
       console.error("Error updating user document:", error);
