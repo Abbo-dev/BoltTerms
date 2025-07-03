@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
-import { auth, db } from "../FirebaseConfig.js";
+import { db } from "../FirebaseConfig.js";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../AuthContext.jsx";
 
-const UserStatuts = () => {
-  const [UserStatuts, setUserStatuts] = useState({ isPaidUser: false });
+const UserStatus = () => {
+  const [UserStatus, setUserStatus] = useState({ isPaidUser: false });
 
   const { user } = useAuth();
 
   useEffect(() => {
-    const fetchUserStatuts = async () => {
+    const fetchUserStatus = async () => {
       if (user) {
         const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          setUserStatuts(userData);
+          setUserStatus(userData);
         }
       }
     };
 
-    fetchUserStatuts();
+    fetchUserStatus();
   }, [user]);
 
-  return { UserStatuts };
+  return { UserStatus };
 };
 
-export default UserStatuts;
+export default UserStatus;

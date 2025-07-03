@@ -10,7 +10,6 @@ const Stripe = require("stripe");
 const admin = require("firebase-admin");
 const { HttpsError } = require("firebase-functions/v2/https");
 
-const bodyParser = require("body-parser");
 const express = require("express");
 
 admin.initializeApp();
@@ -21,7 +20,7 @@ setGlobalOptions({
 
 // Convert to onRequest to properly handle CORS
 const checkoutApp = express();
-checkoutApp.use(bodyParser.json());
+checkoutApp.use(express.json());
 
 checkoutApp.post("/", async (req, res) => {
   try {
@@ -114,71 +113,95 @@ exports.createCheckoutSession = onRequest(
 );
 //Webhook handler for Stripe events
 // This will handle the checkout.session.completed event to update user status in Firestore
-const webhookApp = express();
 
-// Middleware to parse raw body for Stripe webhook
-webhookApp.use(express.raw({ type: "application/json" }));
-
-webhookApp.post("/", async (req, res) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  let event;
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      req.headers["stripe-signature"],
-      endpointSecret
-    );
-  } catch (error) {
-    console.error("Error verifying webhook:", error.message, error.stack);
-    return res.status(400).send(`Webhook Error: ${error.message}`);
-  }
-
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    const userId = session.metadata.userId;
-    const sessionId = session.id;
-    console.log("Checkout session completed:", sessionId);
-    console.log("User ID:", userId);
-
-    try {
-      const docRef = admin.firestore().collection("users").doc(userId);
-      const docSnapshot = await docRef.get();
-
-      if (!docSnapshot.exists) {
-        console.error("No user ID found " + userId);
-        return res.status(400).send("No user ID found in session metadata.");
-      } else {
-        // Update the user document in Firestore
-        await docRef.update({
-          isPaidUser: true,
-        });
-        console.log("User document updated successfully for user:", userId);
-      }
-
-      console.log("User document updated successfully.");
-    } catch (error) {
-      console.error("Error updating user document:", error);
-      return res.status(500).send("Error updating user document.");
-    }
-  }
-
-  res.status(200).send("Webhook received");
-});
+// Handle the Stripe webhook
+// This endpoint will be called by Stripe when an event occurs
 
 exports.stripeWebhook = onRequest(
   {
     secrets: ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"],
     region: "us-central1",
-    cors: {
-      origin: true, // Allow all origins for webhook (Stripe needs this)
-      methods: ["POST"],
-      allowedHeaders: ["Content-Type", "stripe-signature"],
-    },
   },
-  webhookApp
+  async (req, res) => {
+    console.log("=== WEBHOOK REQUEST DEBUG ===");
+    console.log("Method:", req.method);
+    console.log("Headers:", Object.keys(req.headers));
+    console.log("Content-Type:", req.headers["content-type"]);
+    console.log("Body type:", typeof req.body);
+    console.log("Body is Buffer:", Buffer.isBuffer(req.body));
+    console.log("Raw body type:", typeof req.rawBody);
+    console.log("Raw body is Buffer:", Buffer.isBuffer(req.rawBody));
+
+    // Check if the request method is POST
+    // Stripe webhooks should only be POST requests
+    if (req.method !== "POST") {
+      return res.status(405).send("Method Not Allowed");
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    let event;
+    try {
+      const rawBody = req.rawBody || req.body;
+      if (!rawBody) {
+        console.error("No raw body found in request");
+        return res.status(400).send("No raw body found in request.");
+      }
+      if (!endpointSecret) {
+        console.error("STRIPE_WEBHOOK_SECRET is not set");
+        return res.status(500).send("Webhook secret not configured.");
+      }
+
+      const signature = req.headers["stripe-signature"];
+
+      if (!signature) {
+        console.error("No Stripe signature header found");
+        return res.status(400).send("No Stripe signature header found.");
+      }
+
+      event = stripe.webhooks.constructEvent(
+        rawBody,
+        signature,
+        endpointSecret
+      );
+    } catch (error) {
+      console.error("Error verifying webhook:", error.message, error.stack);
+      return res.status(400).send(`Webhook Error: ${error.message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      const userId = session.metadata.userId;
+      const sessionId = session.id;
+      console.log("Checkout session completed:", sessionId);
+      console.log("User ID:", userId);
+
+      try {
+        const docRef = admin.firestore().collection("users").doc(userId);
+        const docSnapshot = await docRef.get();
+
+        if (!docSnapshot.exists) {
+          console.error("No user ID found " + userId);
+          return res.status(400).send("No user ID found in session metadata.");
+        }
+        console.log("User document found:", docSnapshot.id);
+        // Update the user document to set isPaidUser to true
+        await docRef.update({
+          isPaidUser: true,
+        });
+
+        console.log("User document updated successfully." + userId);
+      } catch (error) {
+        console.error("Error updating user document:", error);
+        return res.status(500).send("Error updating user document.");
+      }
+    }
+
+    res.status(200).send("Webhook received");
+  }
 );
+
+// Health check function to ensure the service is running
 exports.health = onCall(
   {
     region: "us-central1",
