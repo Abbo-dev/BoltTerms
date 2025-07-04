@@ -4,7 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../AuthContext.jsx";
 
 const UserStatus = () => {
-  const [UserStatus, setUserStatus] = useState({ isPaidUser: false });
+  const [userStatus, setUserStatus] = useState({ isPaidUser: false });
 
   const { user } = useAuth();
 
@@ -23,7 +23,7 @@ const UserStatus = () => {
     fetchUserStatus();
   }, [user]);
 
-  return { UserStatus };
+  return { userStatus };
 };
 
 export default UserStatus;

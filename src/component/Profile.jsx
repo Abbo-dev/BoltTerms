@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "./../AuthContext.jsx";
 import { signOut } from "firebase/auth";
-import { auth, db } from "./../FirebaseConfig.js";
+import { auth } from "./../FirebaseConfig.js";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@heroui/react";
 import { Avatar, AvatarIcon } from "@heroui/react";
@@ -14,7 +14,7 @@ function Profile() {
   const dateOnly = creationTime.split(" ").slice(1, 4).join(" ");
   const navigate = useNavigate();
 
-  const { UserStatus } = useStatus();
+  const { userStatus } = useStatus();
   const handleSignout = async () => {
     try {
       await signOut(auth);
@@ -51,10 +51,7 @@ function Profile() {
           <div className="space-y-4">
             <div className="bg-[#1F2937] rounded-lg p-4">
               <p className="text-sm text-[#828a96]">Subscription Plan</p>
-              <p>{UserStatus?.isPaidUser ?
-                "Paid User" :
-                "Free User"
-              }</p>
+              <p>{userStatus?.isPaidUser ? "Paid User" : "Free User"}</p>
             </div>
             <div className="bg-[#1F2937] rounded-lg p-4">
               <p className="text-sm text-[#828a96]">Email</p>

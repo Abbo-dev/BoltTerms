@@ -6,6 +6,7 @@ import { Button } from "@heroui/react";
 import TemplatePreviewModal from "./TemplatePreview";
 import { useState } from "react";
 import Templates from "./../../template.json";
+import useStatus from "./userStatus";
 // ...same imports
 export default function TCTemplatePage() {
   const [previewTemplate, setPreviewTemplate] = useState(null);
@@ -15,6 +16,8 @@ export default function TCTemplatePage() {
   const handlePreview = (template) => {
     setPreviewTemplate(template);
   };
+
+  const { userStatus } = useStatus();
 
   return (
     <>
@@ -65,7 +68,7 @@ export default function TCTemplatePage() {
                       </span>
                     </li>
                   ))}
-                  {template.clauses.length > 3 && (
+                  {template.clauses.length >= 3 && (
                     <li className="text-sm text-[#828a96]">
                       + {template.clauses.length - 3} more clauses
                     </li>
@@ -81,10 +84,12 @@ export default function TCTemplatePage() {
                   Preview
                 </Button>
                 <Button
-                  disabled
+                  disabled={!userStatus?.isPaidUser}
                   className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Upgrade to Download
+                  {userStatus?.isPaidUser
+                    ? "Download anytime"
+                    : "Upgrade to Download"}
                 </Button>
               </div>
             </div>
