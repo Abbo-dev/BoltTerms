@@ -2,16 +2,19 @@ import { CheckIcon, DocumentTextIcon } from "./Icons";
 import Navbar from "./Navbar";
 import FooterPart from "./FooterPart";
 import { Link } from "react-router-dom";
-import { Button } from "@heroui/react";
+import { Button, form } from "@heroui/react";
 import TemplatePreviewModal from "./TemplatePreview";
+import { downloadTemplatePdf } from "../utils/dowloadTemplatePdf";
 import { useState } from "react";
 import Templates from "./../../template.json";
 import useStatus from "./userStatus";
+import { useForm } from "../FormDataContext.jsx";
 // ...same imports
 export default function TCTemplatePage() {
   const [previewTemplate, setPreviewTemplate] = useState(null);
 
   const templates = Templates.templates;
+  const { formData } = useForm();
 
   const handlePreview = (template) => {
     setPreviewTemplate(template);
@@ -85,6 +88,7 @@ export default function TCTemplatePage() {
                 </Button>
                 <Button
                   disabled={!userStatus?.isPaidUser}
+                  onPress={() => downloadTemplatePdf(template, formData)}
                   className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {userStatus?.isPaidUser

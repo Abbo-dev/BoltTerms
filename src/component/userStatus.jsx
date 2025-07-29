@@ -1,29 +1,19 @@
 import { useEffect, useState } from "react";
-import { db } from "../FirebaseConfig.js";
-import { doc, getDoc } from "firebase/firestore";
-import { useAuth } from "../AuthContext.jsx";
+import { getAuth } from "firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../FirebaseConfig"; // adjust path as needed
 
-const UserStatus = () => {
-  const [userStatus, setUserStatus] = useState({ isPaidUser: false });
-
-  const { user } = useAuth();
+export default function useStatus() {
+  const [userStatus, setUserStatus] = useState(null);
 
   useEffect(() => {
-    const fetchUserStatus = async () => {
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        const userDoc = await getDoc(userRef);
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          setUserStatus(userData);
-        }
-      }
-    };
-
-    fetchUserStatus();
-  }, [user]);
+    const user = getAuth().currentUser;
+    if (!user) return;
+    const unsub = onSnapshot(doc(db, "users", user.uid), (docSnap) => {
+      setUserStatus(docSnap.data());
+    });
+    return () => unsub();
+  }, []);
 
   return { userStatus };
-};
-
-export default UserStatus;
+}
