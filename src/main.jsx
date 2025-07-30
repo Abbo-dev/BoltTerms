@@ -7,6 +7,7 @@ import { ToastProvider } from "@heroui/react";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./AuthContext.jsx";
 import { FormProvider } from "./FormDataContext.jsx";
+import { GeneratedTemplatesProvider } from "./component/GeneratedTemplatesContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +16,9 @@ createRoot(document.getElementById("root")).render(
         <ToastProvider />
         <AuthProvider>
           <FormProvider>
-            <App />
+            <GeneratedTemplatesProvider>
+              <App />
+            </GeneratedTemplatesProvider>
           </FormProvider>
         </AuthProvider>
       </HeroUIProvider>

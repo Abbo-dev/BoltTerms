@@ -5,16 +5,20 @@ import { Link } from "react-router-dom";
 import { Button, form } from "@heroui/react";
 import TemplatePreviewModal from "./TemplatePreview";
 import { downloadTemplatePdf } from "../utils/dowloadTemplatePdf";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Templates from "./../../template.json";
 import useStatus from "./userStatus";
 import { useForm } from "../FormDataContext.jsx";
+import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 // ...same imports
 export default function TCTemplatePage() {
   const [previewTemplate, setPreviewTemplate] = useState(null);
-
-  const templates = Templates.templates;
+  const { generatedTemplates, clearGeneratedTemplates } = useContext(GeneratedTemplatesContext);
   const { formData } = useForm();
+  
+  // If there are no generated templates, show default templates
+  const templates = generatedTemplates.length > 0 ? generatedTemplates : Templates.templates;
+  const showDefaultTemplates = generatedTemplates.length === 0;
 
   const handlePreview = (template) => {
     setPreviewTemplate(template);
@@ -32,16 +36,43 @@ export default function TCTemplatePage() {
         {/* Header */}
         <header className="bg-[#232b38] rounded-lg p-6 mb-10 max-w-7xl mx-auto">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#e4e6e8]">
-            Ecommerce TC Generator
+            Terms & Conditions Templates
           </h1>
-          <p className="text-sm text-[#828a96] mt-1">
-            Select a template to get started
-          </p>
+          {generatedTemplates.length > 0 ? (
+            <>
+              <p className="text-sm text-[#828a96] mt-1">
+                Your generated templates
+              </p>
+              <Button
+                onPress={clearGeneratedTemplates}
+                className="mt-4 bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90"
+              >
+                Clear Generated Templates
+              </Button>
+            </>
+          ) : (
+            <p className="text-sm text-[#828a96] mt-1">
+              Create your first template by using the generator
+            </p>
+          )}
         </header>
 
         {/* Templates Grid */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {templates.slice(0, 1).map((template, index) => (
+        {showDefaultTemplates ? (
+          <div className="text-center py-12">
+            <h2 className="text-xl text-[#e4e6e8] mb-4">No Generated Templates Yet</h2>
+            <p className="text-[#828a96] mb-8">
+              Head over to the generator to create your first template!
+            </p>
+            <Link to="/">
+              <Button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm hover:opacity-90">
+                Create Your First Template
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {templates.map((template, index) => (
             <div
               key={index}
               className="bg-[#374151] border border-[#4c5562] rounded-lg p-6 hover:shadow-lg transition-all"
@@ -52,8 +83,18 @@ export default function TCTemplatePage() {
                   <h3 className="text-lg font-semibold text-[#e4e6e8]">
                     {template.templateName}
                   </h3>
+                  {template.businessName && (
+                    <p className="text-sm text-[#828a96] mt-1">
+                      Generated for: {template.businessName}
+                    </p>
+                  )}
+                  {template.dateGenerated && (
+                    <p className="text-sm text-[#828a96] mt-1">
+                      Generated on: {new Date(template.dateGenerated).toLocaleDateString()}
+                    </p>
+                  )}
                   <p className="text-sm text-[#828a96] mt-1">
-                    {template.clauses.length - 9}. Free pre-built clauses
+                    {template.clauses.length} clauses included
                   </p>
                 </div>
               </div>
@@ -98,7 +139,8 @@ export default function TCTemplatePage() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
 
         {/* --- New Section: Benefits CTA --- */}
         <div className="bg-[#232b38] rounded-lg p-8 mt-16 max-w-7xl mx-auto text-center">

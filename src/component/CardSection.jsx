@@ -8,9 +8,10 @@ import {
   addToast,
 } from "@heroui/react";
 import Copy from "./../assets/copy.svg";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Templates from "./../../template.json";
 import { useForm } from "../FormDataContext.jsx";
+import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 
 function CardSection() {
   const options = [{ value: "E-commerce", label: "E-commerce" }];
@@ -18,6 +19,7 @@ function CardSection() {
   const [websiteURL, setWebsiteURL] = useState("");
   const [businessType, setBusinessType] = useState("E-commerce");
   const [generatedContent, setGeneratedContent] = useState("");
+  const { addGeneratedTemplate } = useContext(GeneratedTemplatesContext);
 
   const replacePlaceholders = (text) => {
     return text
@@ -27,6 +29,13 @@ function CardSection() {
 
   const { formData, setFormData } = useForm();
 
+  const [selectedTemplate, setSelectedTemplate] = useState(Templates.templates[0]);
+
+  const handleTemplateSelect = (templateIndex) => {
+    const template = Templates.templates[templateIndex] || Templates.templates[0];
+    setSelectedTemplate(template);
+  };
+
   const handleGenerate = () => {
     const newFormData = {
       ...formData,
@@ -35,10 +44,8 @@ function CardSection() {
       businessType,
     };
     setFormData(newFormData);
-    console.log("Generated content:", formData);
 
-    const firstTemplate = Templates.templates[0];
-    const content = firstTemplate.clauses
+    const content = selectedTemplate.clauses
       .map((clause, idx) => {
         const replacedText = replacePlaceholders(clause.text || "");
         return `${idx + 1}. ${clause.title || "Untitled"}\n${replacedText}`;
@@ -46,6 +53,17 @@ function CardSection() {
       .join("\n\n");
 
     setGeneratedContent(content);
+    
+    // Add the generated template to context
+    const generatedTemplate = {
+      ...selectedTemplate,
+      generatedContent: content,
+      businessName,
+      websiteURL,
+      businessType,
+      dateGenerated: new Date().toISOString()
+    };
+    addGeneratedTemplate(generatedTemplate);
   };
 
   const handleCopy = () => {
@@ -92,6 +110,21 @@ function CardSection() {
                   {options.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+
+                <Select
+                  label="Select Template Type"
+                  className="pt-2"
+                  labelPlacement="inside"
+                  size="sm"
+                  onChange={(e) => handleTemplateSelect(Number(e.target.value))}
+                  isRequired
+                >
+                  {Templates.templates.map((template, index) => (
+                    <SelectItem key={index} value={index}>
+                      {template.templateName}
                     </SelectItem>
                   ))}
                 </Select>

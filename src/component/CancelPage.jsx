@@ -20,10 +20,10 @@ export default function CancelPage() {
           </p>
           <div className="space-y-4">
             <Button
-              onPress={() => navigate("/checkout")}
+              onPress={() => navigate("/pricing")}
               className="w-full bg-[#2962ea] hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200"
             >
-              Try Again
+              Back to Pricing
             </Button>
             <Button
               onPress={() => navigate("/")}

@@ -44,16 +44,22 @@ export default function TemplatePreviewModal({ template, onClose }) {
             {template.templateName}
           </h2>
           <div className="space-y-5">
-            {cleanedClauses.map((clause, i) => (
-              <div key={i}>
-                <h3 className="text-[#e4e6e8] font-semibold mb-1 text-base">
-                  {clause.title || `Clause ${i++}`}
-                </h3>
-                <p className="text-sm text-[#cbd5e1] whitespace-pre-line">
-                  {replacePlaceholders(clause.text)}
-                </p>
+            {template.generatedContent ? (
+              <div className="text-sm text-[#cbd5e1] whitespace-pre-line">
+                {template.generatedContent}
               </div>
-            ))}
+            ) : (
+              cleanedClauses.map((clause, i) => (
+                <div key={i}>
+                  <h3 className="text-[#e4e6e8] font-semibold mb-1 text-base">
+                    {clause.title || `Clause ${i++}`}
+                  </h3>
+                  <p className="text-sm text-[#cbd5e1] whitespace-pre-line">
+                    {replacePlaceholders(clause.text)}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
         </CardBody>
       </Card>

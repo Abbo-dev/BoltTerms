@@ -3,11 +3,12 @@ import FooterPart from "./FooterPart";
 import { Button } from "@heroui/react";
 import { Accordion, AccordionItem } from "@heroui/react";
 import { stripePromise } from "../stripe";
-
 import { getAuth } from "firebase/auth";
+import { useContext } from "react";
+import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 export default function PricingPage() {
   const user = getAuth().currentUser;
-  console.log("Current user:", user); // Debug log
+  const { userPlan, setUserPlanAfterPurchase } = useContext(GeneratedTemplatesContext);
 
   const handlePayment = async (stripePriceId) => {
     try {
@@ -28,17 +29,23 @@ export default function PricingPage() {
       );
 
       const result = await response.json();
-      console.log("Function response:", result); // Debug log
-
-      // FIXED: Remove .data - onRequest doesn't wrap in data
       const sessionId = result.sessionId;
 
       if (!sessionId) {
         throw new Error("No sessionId returned from function.");
       }
 
+      // Add success_url and cancel_url to the session creation
+      if (!result.success_url || !result.cancel_url) {
+        console.log("Payment session URLs:", result);
+      }
+
       const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({ sessionId });
+      const { error } = await stripe.redirectToCheckout({ 
+        sessionId,
+        successUrl: window.location.origin + '/success',
+        cancelUrl: window.location.origin + '/cancel'
+      });
 
       if (error) {
         console.error("Stripe redirect error:", error.message);
@@ -220,10 +227,10 @@ export default function PricingPage() {
                       : "bg-gray-700 cursor-not-allowed opacity-60"
                   }`}
                   style={{ color: "white" }}
-                  disabled={!plan.popular}
+                  disabled={!plan.popular || userPlan === 'LIFETIME'}
                   onPress={() => handlePayment(plan.stripePriceId)}
                 >
-                  {plan.cta}
+                  {userPlan === 'LIFETIME' ? 'Already Purchased' : plan.cta}
                 </Button>
               </div>
             </div>
