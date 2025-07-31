@@ -8,7 +8,9 @@ import { useContext } from "react";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 export default function PricingPage() {
   const user = getAuth().currentUser;
-  const { userPlan, setUserPlanAfterPurchase } = useContext(GeneratedTemplatesContext);
+  const { userPlan, setUserPlanAfterPurchase } = useContext(
+    GeneratedTemplatesContext
+  );
 
   const handlePayment = async (stripePriceId) => {
     try {
@@ -41,10 +43,10 @@ export default function PricingPage() {
       }
 
       const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({ 
+      const { error } = await stripe.redirectToCheckout({
         sessionId,
-        successUrl: window.location.origin + '/success',
-        cancelUrl: window.location.origin + '/cancel'
+        successUrl: window.location.origin + "/success",
+        cancelUrl: window.location.origin + "/cancel",
       });
 
       if (error) {
@@ -227,10 +229,10 @@ export default function PricingPage() {
                       : "bg-gray-700 cursor-not-allowed opacity-60"
                   }`}
                   style={{ color: "white" }}
-                  disabled={!plan.popular || userPlan === 'LIFETIME'}
+                  disabled={!plan.popular || userPlan === "LIFETIME"}
                   onPress={() => handlePayment(plan.stripePriceId)}
                 >
-                  {userPlan === 'LIFETIME' ? 'Already Purchased' : plan.cta}
+                  {userPlan === "LIFETIME" ? "Already Purchased" : plan.cta}
                 </Button>
               </div>
             </div>

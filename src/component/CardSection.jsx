@@ -8,10 +8,13 @@ import {
   addToast,
 } from "@heroui/react";
 import Copy from "./../assets/copy.svg";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Templates from "./../../template.json";
 import { useForm } from "../FormDataContext.jsx";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
+import { useAuth } from "../AuthContext.jsx";
+import useStatus from "./userStatus.jsx";
+import { Link } from "react-router-dom";
 
 function CardSection() {
   const options = [{ value: "E-commerce", label: "E-commerce" }];
@@ -19,6 +22,8 @@ function CardSection() {
   const [websiteURL, setWebsiteURL] = useState("");
   const [businessType, setBusinessType] = useState("E-commerce");
   const [generatedContent, setGeneratedContent] = useState("");
+  const [count, setCount] = useState(0);
+  const { user } = useAuth();
   const { addGeneratedTemplate } = useContext(GeneratedTemplatesContext);
 
   const replacePlaceholders = (text) => {
@@ -29,14 +34,49 @@ function CardSection() {
 
   const { formData, setFormData } = useForm();
 
-  const [selectedTemplate, setSelectedTemplate] = useState(Templates.templates[0]);
+  const [selectedTemplate, setSelectedTemplate] = useState(
+    Templates.templates[0]
+  );
 
   const handleTemplateSelect = (templateIndex) => {
-    const template = Templates.templates[templateIndex] || Templates.templates[0];
+    const template =
+      Templates.templates[templateIndex] || Templates.templates[0];
     setSelectedTemplate(template);
   };
-
+  const { userStatus } = useStatus();
   const handleGenerate = () => {
+    if (count >= 2) {
+      setGeneratedContent("You need to be a paid user to generate more T&Cs.");
+      addToast({
+        description: "You need to be a paid user to generate more T&Cs.",
+        duration: 500,
+        color: "danger",
+        position: "top-right",
+        classNames: {
+          description: "text-red-500",
+          closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 ",
+        },
+        closeIcon: (
+          <svg
+            fill="none"
+            height="32"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width="32"
+          >
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        ),
+      });
+      return;
+    }
+
+    // increment count by 1
+    setCount((prev) => prev + 1);
     const newFormData = {
       ...formData,
       businessName,
@@ -53,7 +93,7 @@ function CardSection() {
       .join("\n\n");
 
     setGeneratedContent(content);
-    
+
     // Add the generated template to context
     const generatedTemplate = {
       ...selectedTemplate,
@@ -61,7 +101,7 @@ function CardSection() {
       businessName,
       websiteURL,
       businessType,
-      dateGenerated: new Date().toISOString()
+      dateGenerated: new Date().toISOString(),
     };
     addGeneratedTemplate(generatedTemplate);
   };
@@ -145,7 +185,7 @@ function CardSection() {
           </Card>
 
           {/* Right Side - Preview */}
-          <Card className="w-full max-w-lg mx-auto rounded-xl bg-[#394251] border-none shadow-none  h-[450px] ">
+          <Card className="w-full max-w-lg mx-auto rounded-xl bg-[#394251] border-none shadow-none  h-[600px] ">
             <CardBody className="p-0 overflow-hidden w-full">
               <div className="flex flex-col h-full px-6 pt-6">
                 <div className="flex items-center justify-between ">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from '@heroui/react';
+import React from "react";
+import { Button } from "@heroui/react";
 
 export default function UpgradePrompt({ onUpgrade }) {
   return (
@@ -8,7 +8,8 @@ export default function UpgradePrompt({ onUpgrade }) {
         Reach the template limit?
       </h3>
       <p className="text-[#828a96] text-sm mb-4">
-        Upgrade to Pro for unlimited templates, custom branding, and more features!
+        Upgrade to Pro for unlimited templates, custom branding, and more
+        features!
       </p>
       <Button
         className="w-full bg-[#2962ea] text-[#e4e6e8] py-2 rounded-md hover:bg-[#2454c9]"
