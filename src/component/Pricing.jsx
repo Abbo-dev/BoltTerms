@@ -4,19 +4,24 @@ import { Button } from "@heroui/react";
 import { Accordion, AccordionItem } from "@heroui/react";
 import { stripePromise } from "../stripe";
 import { getAuth } from "firebase/auth";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
+import AlertSignIn from "./AlertSignIn.jsx";
+import { a } from "framer-motion/client";
 export default function PricingPage() {
+  const [alertForPlan, setAlertForPlan] = useState(false);
   const user = getAuth().currentUser;
-  const { userPlan, setUserPlanAfterPurchase } = useContext(
-    GeneratedTemplatesContext
-  );
+  const { userPlan } = useContext(GeneratedTemplatesContext);
 
   const handlePayment = async (stripePriceId) => {
     try {
       if (!user) {
-        throw new Error("User not authenticated. Please log in.");
+        setAlertForPlan(stripePriceId);
+        return;
       }
+
+      setAlertForPlan(null);
+
       const idToken = await user.getIdToken();
       const response = await fetch(
         "https://us-central1-tc-generator-5bdea.cloudfunctions.net/createCheckoutSession",
@@ -234,6 +239,7 @@ export default function PricingPage() {
                 >
                   {userPlan === "LIFETIME" ? "Already Purchased" : plan.cta}
                 </Button>
+                {alertForPlan === plan.stripePriceId && <AlertSignIn />}
               </div>
             </div>
           ))}
