@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { auth } from "./../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
+import SupaDemoEmbed from "./SupaDemoEmbed.jsx";
 const Home = () => {
   const [user, setUser] = useState(null);
 
@@ -81,6 +82,7 @@ const Home = () => {
         </div>
 
         <Card />
+
         <Why />
         <FooterPart />
       </div>
