@@ -4,6 +4,7 @@ import React from "react";
 import { Button, Card, CardBody } from "@heroui/react";
 import { useForm } from "../FormDataContext.jsx";
 import { title } from "framer-motion/client";
+import { useState } from "react";
 
 export default function TemplatePreviewModal({ template, onClose }) {
   if (!template) return null;

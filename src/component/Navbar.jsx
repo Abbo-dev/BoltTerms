@@ -43,16 +43,24 @@ const Navbar = () => {
     }
   }, [open]);
 
+  const handleClick = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <div className="w-full h-15 bg-[#232b38] flex flex-wrap justify-between items-center px-4 py-3 md:px-8 transition-all">
         {/* Logo Section */}
-        <Link to="/">
-          <div className="flex items-center">
-            <Image src={Shield} width={25} height={25} />
-            <p className="text-white text-lg pl-1.5 font-bold">T&C Generator</p>
-          </div>
-        </Link>
+        <div onClick={() => handleClick()}>
+          <Link to="/" className="flex items-center">
+            <div className="flex items-center">
+              <Image src={Shield} width={25} height={25} />
+              <p className="text-white text-lg pl-1.5 font-bold">
+                T&C Generator
+              </p>
+            </div>
+          </Link>
+        </div>
 
         {/* Navigation Links - Hidden on mobile */}
         <div className="hidden md:flex items-center mx-2">

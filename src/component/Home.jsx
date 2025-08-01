@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Navbar from "./Navbar.jsx";
 import { Button, Image } from "@heroui/react";
 import Arrow from "./../assets/arrow.png";

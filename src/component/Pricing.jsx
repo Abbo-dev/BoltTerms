@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Navbar from "./Navbar";
 import FooterPart from "./FooterPart";
 import { Button } from "@heroui/react";

@@ -8,12 +8,12 @@ import {
   addToast,
 } from "@heroui/react";
 import Copy from "./../assets/copy.svg";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Templates from "./../../template.json";
 import { useForm } from "../FormDataContext.jsx";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
-import { useAuth } from "../AuthContext.jsx";
-import useStatus from "./userStatus.jsx";
+//import { useAuth } from "../AuthContext.jsx";
+//import useStatus from "./userStatus.jsx";
 import { Link } from "react-router-dom";
 
 function CardSection() {
@@ -23,8 +23,9 @@ function CardSection() {
   const [businessType, setBusinessType] = useState("E-commerce");
   const [generatedContent, setGeneratedContent] = useState("");
   const [count, setCount] = useState(0);
-  const { user } = useAuth();
+  //const { user } = useAuth();
   const { addGeneratedTemplate } = useContext(GeneratedTemplatesContext);
+  const [loading, setLoading] = useState(false);
 
   const replacePlaceholders = (text) => {
     return text
@@ -43,67 +44,78 @@ function CardSection() {
       Templates.templates[templateIndex] || Templates.templates[0];
     setSelectedTemplate(template);
   };
-  const { userStatus } = useStatus();
-  const handleGenerate = () => {
-    if (count >= 2) {
-      setGeneratedContent("You need to be a paid user to generate more T&Cs.");
-      addToast({
-        description: "You need to be a paid user to generate more T&Cs.",
-        duration: 500,
-        color: "danger",
-        position: "top-right",
-        classNames: {
-          description: "text-red-500",
-          closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 ",
-        },
-        closeIcon: (
-          <svg
-            fill="none"
-            height="32"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            width="32"
-          >
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        ),
-      });
-      return;
+  //const { userStatus } = useStatus();
+  const handleGenerate = async () => {
+    setLoading(true);
+    try {
+      if (count >= 2) {
+        setGeneratedContent(
+          "You need to be a paid user to generate more T&Cs."
+        );
+        addToast({
+          description: "You need to be a paid user to generate more T&Cs.",
+          duration: 500,
+          color: "danger",
+          position: "top-right",
+          classNames: {
+            description: "text-red-500",
+            closeButton:
+              "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 ",
+          },
+          closeIcon: (
+            <svg
+              fill="none"
+              height="32"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="32"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          ),
+        });
+        return;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
+
+      // increment count by 1
+      setCount((prev) => prev + 1);
+      const newFormData = {
+        ...formData,
+        businessName,
+        websiteURL,
+        businessType,
+      };
+      setFormData(newFormData);
+
+      const content = selectedTemplate.clauses
+        .map((clause, idx) => {
+          const replacedText = replacePlaceholders(clause.text || "");
+          return `${idx + 1}. ${clause.title || "Untitled"}\n${replacedText}`;
+        })
+        .join("\n\n");
+
+      setGeneratedContent(content);
+
+      // Add the generated template to context
+      const generatedTemplate = {
+        ...selectedTemplate,
+        generatedContent: content,
+        businessName,
+        websiteURL,
+        businessType,
+        dateGenerated: new Date().toISOString(),
+      };
+      addGeneratedTemplate(generatedTemplate);
+    } catch (error) {
+      console.error("Error generating content:", error);
+    } finally {
+      setLoading(false);
     }
-
-    // increment count by 1
-    setCount((prev) => prev + 1);
-    const newFormData = {
-      ...formData,
-      businessName,
-      websiteURL,
-      businessType,
-    };
-    setFormData(newFormData);
-
-    const content = selectedTemplate.clauses
-      .map((clause, idx) => {
-        const replacedText = replacePlaceholders(clause.text || "");
-        return `${idx + 1}. ${clause.title || "Untitled"}\n${replacedText}`;
-      })
-      .join("\n\n");
-
-    setGeneratedContent(content);
-
-    // Add the generated template to context
-    const generatedTemplate = {
-      ...selectedTemplate,
-      generatedContent: content,
-      businessName,
-      websiteURL,
-      businessType,
-      dateGenerated: new Date().toISOString(),
-    };
-    addGeneratedTemplate(generatedTemplate);
   };
 
   const handleCopy = () => {
@@ -170,13 +182,14 @@ function CardSection() {
                 </Select>
 
                 <Button
-                  disabled={!businessName || !websiteURL}
+                  isLoading={loading}
+                  disabled={!businessName || !websiteURL || loading}
                   onPress={handleGenerate}
                   className="w-full bg-[#2962ea] text-[#e4e6e8] font-semibold rounded-md  disabled:opacity-50  disabled:cursor-not-allowed"
                 >
-                  Generate T&C
+                  {loading ? "Generating..." : "Generate T&C"}
                 </Button>
-                <small className="text-[#9CA3AF] text-[7px] font-extralight -mt-7 p">
+                <small className="text-[#9CA3AF] text-[9px] font-extralight -mt-7 p">
                   By generating T&Cs, you acknowledge this is AI-assisted and
                   not a substitute for legal counsel.
                 </small>
@@ -234,8 +247,10 @@ function CardSection() {
                         Terms & Conditions
                       </h2>
                       <pre className="text-gray-400 text-sm whitespace-pre-wrap">
-                        {generatedContent ||
-                          "Fill out the form to generate your T&C."}
+                        {loading
+                          ? "Generating..."
+                          : generatedContent ||
+                            "Fill out the form to generate your T&C."}
                       </pre>
                     </div>
                   </CardBody>

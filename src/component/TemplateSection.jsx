@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { CheckIcon, DocumentTextIcon } from "./Icons";
 import Navbar from "./Navbar";
 import FooterPart from "./FooterPart";

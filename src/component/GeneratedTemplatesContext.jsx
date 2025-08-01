@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useContext } from "react";
 import { db } from "../FirebaseConfig"; // make sure Firestore is initialized here
 import {
@@ -11,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { useAuth } from "../AuthContext";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const GeneratedTemplatesContext = createContext();
 
 export function GeneratedTemplatesProvider({ children }) {
@@ -71,7 +73,7 @@ export function GeneratedTemplatesProvider({ children }) {
   };
 
   const clearGeneratedTemplates = () => {
-    setGeneratedTemplates([]);
+    //setGeneratedTemplates([]);
     // Optionally delete from Firestore if needed
 
     if (user) {
