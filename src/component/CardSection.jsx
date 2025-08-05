@@ -12,7 +12,7 @@ import { useState, useContext } from "react";
 import Templates from "./../../template.json";
 import { useForm } from "../FormDataContext.jsx";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
-//import { useAuth } from "../AuthContext.jsx";
+import { useAuth } from "../AuthContext.jsx";
 //import useStatus from "./userStatus.jsx";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,7 @@ function CardSection() {
   const [businessType, setBusinessType] = useState("E-commerce");
   const [generatedContent, setGeneratedContent] = useState("");
   const [count, setCount] = useState(0);
-  //const { user } = useAuth();
+  const { user } = useAuth();
   const { addGeneratedTemplate } = useContext(GeneratedTemplatesContext);
   const [loading, setLoading] = useState(false);
 
@@ -44,11 +44,11 @@ function CardSection() {
       Templates.templates[templateIndex] || Templates.templates[0];
     setSelectedTemplate(template);
   };
-  //const { userStatus } = useStatus();
+
   const handleGenerate = async () => {
     setLoading(true);
     try {
-      if (count >= 2) {
+      if (!user && count >= 2) {
         setGeneratedContent(
           "You need to be a paid user to generate more T&Cs."
         );
@@ -126,7 +126,7 @@ function CardSection() {
 
   return (
     <div className="w-full flex justify-center px-4 mt-10 transition-all">
-      <Card className="w-full max-w-[1400px] bg-[#242d39] rounded-2xl p-10 shadow-lg transition-all ">
+      <Card className="w-full max-w-[1300px] bg-[#242d39] rounded-2xl p-10 shadow-lg transition-all ">
         <CardBody className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Side - Form */}
           <Card className="w-full max-w-lg mx-auto rounded-xl shadow pb-10 bg-[#394251]  overflow-hidden">

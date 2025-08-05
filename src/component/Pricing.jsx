@@ -158,8 +158,9 @@ export default function PricingPage() {
             className="text-4xl font-bold text-center text-[#e4e6e8] pb-4 "
             style={{ color: "#e4e6e8" }}
           >
-            Simple, transparent pricings
+            Simple, transparent pricing
           </h1>
+
           <p
             className="text-center text-[#9CA3AF] text-md"
             style={{ color: "#828a96" }}
@@ -167,6 +168,12 @@ export default function PricingPage() {
             One-time lifetime access — with optional subscriptions coming soon.
           </p>
         </div>
+      </div>
+      {/* Separator SVG */}
+      <div className="relative z-10">
+        <svg viewBox="0 0 1440 100" className="text-[#232b38] fill-current">
+          <path d="M0,0 C480,100 960,0 1440,100 L1440,00 L0,0 Z"></path>
+        </svg>
       </div>
 
       {/* Pricing Tiers */}
@@ -245,6 +252,12 @@ export default function PricingPage() {
             </div>
           ))}
         </div>
+      </div>
+      {/* Separator SVG */}
+      <div className="relative z-10">
+        <svg viewBox="0 0 1440 100" className="text-[#232b38] fill-current">
+          <path d="M0,0 C480,100 960,0 1440,100 L1440,00 L0,0 Z"></path>
+        </svg>
       </div>
 
       {/* Feature Comparison */}
