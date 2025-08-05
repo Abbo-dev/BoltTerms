@@ -11,7 +11,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useAuth } from "../AuthContext";
-
+import { useStatus } from "./userStatus.jsx"; // Assuming you have a userStatus hook to get user status
 // eslint-disable-next-line react-refresh/only-export-components
 export const GeneratedTemplatesContext = createContext();
 
