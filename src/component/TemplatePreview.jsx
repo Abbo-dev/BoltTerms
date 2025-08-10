@@ -33,7 +33,7 @@ export default function TemplatePreviewModal({ template, onClose }) {
 
   return (
     <div id="preview-modal">
-      <Card className="fixed inset-0 z-100 bg-black bg-opacity-60 flex justify-center items-center ">
+      <Card className="fixed inset-0 z-100 bg-black bg-opacity-60 flex justify-center items-center px-4 ">
         <CardBody className="bg-[#1f2937] rounded-l-xl rounded-r-xl p-6 max-w-2xl w-full shadow-xl relative overflow-y-auto max-h-[90vh] m-4 ">
           <Button
             onPress={onClose}

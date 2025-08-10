@@ -124,106 +124,113 @@ export default function TCTemplatePage() {
         ) : (
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {templates.map((template, index) => (
-              <div
-                key={index}
-                className="bg-[#374151] border border-[#4c5562] rounded-lg p-6 hover:shadow-lg transition-all"
-              >
-                <div className="flex items-start mb-4">
-                  <DocumentTextIcon className="h-6 w-6 text-[#2962ea] mr-3 mt-1" />
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#e4e6e8]">
-                      {template.templateName}
-                    </h3>
-                    {template.businessName && (
+              <>
+                <div
+                  key={index}
+                  className="bg-[#374151] border border-[#4c5562] rounded-lg p-6 hover:shadow-lg transition-all"
+                >
+                  <div className="flex items-start mb-4 relative">
+                    <DocumentTextIcon className="h-6 w-6 text-[#2962ea] mr-3 mt-1" />
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#e4e6e8]">
+                        {template.templateName}
+                      </h3>
+
+                      {template.businessName && (
+                        <p className="text-sm text-[#828a96] mt-1">
+                          Generated for: {template.businessName}
+                        </p>
+                      )}
+                      {template.dateGenerated && (
+                        <p className="text-sm text-[#828a96] mt-1">
+                          Generated on:{" "}
+                          {new Date(
+                            template.dateGenerated
+                          ).toLocaleDateString()}
+                        </p>
+                      )}
                       <p className="text-sm text-[#828a96] mt-1">
-                        Generated for: {template.businessName}
+                        {template.clauses?.length ?? 0} clauses included
                       </p>
-                    )}
-                    {template.dateGenerated && (
-                      <p className="text-sm text-[#828a96] mt-1">
-                        Generated on:{" "}
-                        {new Date(template.dateGenerated).toLocaleDateString()}
-                      </p>
-                    )}
-                    <p className="text-sm text-[#828a96] mt-1">
-                      {template.clauses?.length ?? 0} clauses included
-                    </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#1F2937] rounded p-4 mb-4">
+                    <h4 className="text-sm font-medium text-[#e4e6e8] mb-2">
+                      Includes:
+                    </h4>
+                    <ul className="space-y-2">
+                      {template.clauses?.slice(0, 3).map((clause, i) => (
+                        <li key={i} className="flex items-start">
+                          <CheckIcon className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                          <span className="text-sm text-[#e4e6e8]">
+                            {clause.title.length > 0
+                              ? clause.title
+                              : "Untitled"}
+                          </span>
+                        </li>
+                      ))}
+                      {template.clauses?.length >= 3 && (
+                        <li className="text-sm text-[#828a96]">
+                          + {template.clauses.length - 3} more clauses
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex flex-col md:flex-row gap-2">
+                      <Button
+                        onPress={() => handlePreview(template)}
+                        className="bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
+                      >
+                        Preview
+                      </Button>
+                      {userStatus?.isPaidUser ? (
+                        <div className="flex flex-col md:flex-row gap-2 flex-[2]">
+                          <Button
+                            onPress={() =>
+                              downloadTemplatePdf(template, formData)
+                            }
+                            className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
+                          >
+                            <span>Download PDF</span>
+                          </Button>
+                          <Button
+                            onPress={() =>
+                              downloadTemplateDocx(template, formData)
+                            }
+                            className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
+                          >
+                            <span>Download DOCX</span>
+                          </Button>
+                        </div>
+                      ) : !usedFreeDownload ? (
+                        <div className="flex flex-col md:flex-row gap-2 flex-[2]">
+                          <Button
+                            onPress={() => handleDownload(template, "pdf")}
+                            className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
+                          >
+                            <span>Try PDF (Free)</span>
+                          </Button>
+                          <Button
+                            onPress={() => handleDownload(template, "docx")}
+                            className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
+                          >
+                            <span>Try DOCX (Free)</span>
+                          </Button>
+                        </div>
+                      ) : (
+                        <Link to="/pricing">
+                          <Button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 w-full flex items-center justify-center">
+                            Upgrade for Unlimited Downloads
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-
-                <div className="bg-[#1F2937] rounded p-4 mb-4">
-                  <h4 className="text-sm font-medium text-[#e4e6e8] mb-2">
-                    Includes:
-                  </h4>
-                  <ul className="space-y-2">
-                    {template.clauses?.slice(0, 3).map((clause, i) => (
-                      <li key={i} className="flex items-start">
-                        <CheckIcon className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                        <span className="text-sm text-[#e4e6e8]">
-                          {clause.title.length > 0 ? clause.title : "Untitled"}
-                        </span>
-                      </li>
-                    ))}
-                    {template.clauses?.length >= 3 && (
-                      <li className="text-sm text-[#828a96]">
-                        + {template.clauses.length - 3} more clauses
-                      </li>
-                    )}
-                  </ul>
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex flex-col md:flex-row gap-2">
-                    <Button
-                      onPress={() => handlePreview(template)}
-                      className="bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                    >
-                      Preview
-                    </Button>
-                    {userStatus?.isPaidUser ? (
-                      <div className="flex flex-col md:flex-row gap-2 flex-[2]">
-                        <Button
-                          onPress={() =>
-                            downloadTemplatePdf(template, formData)
-                          }
-                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                        >
-                          <span>Download PDF</span>
-                        </Button>
-                        <Button
-                          onPress={() =>
-                            downloadTemplateDocx(template, formData)
-                          }
-                          className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                        >
-                          <span>Download DOCX</span>
-                        </Button>
-                      </div>
-                    ) : !usedFreeDownload ? (
-                      <div className="flex flex-col md:flex-row gap-2 flex-[2]">
-                        <Button
-                          onPress={() => handleDownload(template, "pdf")}
-                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                        >
-                          <span>Try PDF (Free)</span>
-                        </Button>
-                        <Button
-                          onPress={() => handleDownload(template, "docx")}
-                          className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                        >
-                          <span>Try DOCX (Free)</span>
-                        </Button>
-                      </div>
-                    ) : (
-                      <Link to="/pricing">
-                        <Button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 w-full flex items-center justify-center">
-                          Upgrade for Unlimited Downloads
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
+              </>
             ))}
           </div>
         )}

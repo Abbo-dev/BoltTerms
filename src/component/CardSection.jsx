@@ -189,7 +189,7 @@ function CardSection() {
                 >
                   {loading ? "Generating..." : "Generate T&C"}
                 </Button>
-                <small className="text-[#9CA3AF] text-[9px] font-extralight -mt-7 p">
+                <small className="text-[#9CA3AF] text-[8px] -mt-7 font-semibold">
                   By generating T&Cs, you acknowledge this is AI-assisted and
                   not a substitute for legal counsel.
                 </small>
