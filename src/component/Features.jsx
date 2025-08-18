@@ -66,7 +66,7 @@ export default function FeaturesPage() {
             <div className="inline-flex items-center bg-[#2962ea]/10 text-[#2962ea] px-4 py-2 rounded-full mb-4 text-sm font-medium">
               ⚡ The fastest way to generate legal docs
             </div>
-            <h1 className="text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl font-extrabold mb-6 leading-tight">
               Generate <span className="text-[#2962ea]">T&C</span> in{" "}
               <span className="relative inline-block">
                 60 Seconds

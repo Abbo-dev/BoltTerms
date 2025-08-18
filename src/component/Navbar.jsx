@@ -21,6 +21,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { auth } from "./../FirebaseConfig.js";
 import { signOut } from "firebase/auth";
+
 const Navbar = () => {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
@@ -54,10 +55,10 @@ const Navbar = () => {
         <div onClick={() => handleClick()}>
           <Link to="/" className="flex items-center">
             <div className="flex items-center">
-              <Image src={Shield} width={25} height={25} />
-              <p className="text-white text-lg pl-1.5 font-bold">
-                T&C Generator
-              </p>
+              <div className="w-10 h-10 bg-[#2962ea] rounded-lg flex items-center justify-center mr-2">
+                <DocumentTextIcon className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-white text-lg font-bold">T&C Generator</p>
             </div>
           </Link>
         </div>
@@ -66,18 +67,24 @@ const Navbar = () => {
         <div className="hidden md:flex items-center mx-2">
           <ul className="flex gap-6 lg:gap-8 xl:gap-12">
             <Link to="/features">
-              <li className=" hover:text-blue-300 cursor-pointer">Features</li>
+              <li className="text-[#9CA3AF] hover:text-blue-300 cursor-pointer">
+                Features
+              </li>
             </Link>
             <Link to="/templates">
-              <li className=" hover:text-blue-300 cursor-pointer">Templates</li>
+              <li className="text-[#9CA3AF] hover:text-blue-300 cursor-pointer">
+                Templates
+              </li>
             </Link>
             <Link to="/pricing">
-              {" "}
-              <li className=" hover:text-blue-300 cursor-pointer">Pricing</li>
+              <li className="text-[#9CA3AF] hover:text-blue-300 cursor-pointer">
+                Pricing
+              </li>
             </Link>
             <Link to="/support">
-              {" "}
-              <li className=" hover:text-blue-300 cursor-pointer">Support</li>
+              <li className="text-[#9CA3AF] hover:text-blue-300 cursor-pointer">
+                Support
+              </li>
             </Link>
           </ul>
         </div>
@@ -133,14 +140,14 @@ const Navbar = () => {
                 </Dropdown>
               </div>
             ) : (
-              <Link to="/login" className="hover:text-blue-300">
+              <Link to="/login" className="text-[#9CA3AF] hover:text-blue-300">
                 Log In
               </Link>
             )}
 
             <Button
               className="flex items-center justify-center gap-2 bg-[#2962ea] w-50 h-10 rounded-md 
-                text-[#e4e6e8] font-semibold"
+                text-[#e4e6e8] font-semibold hover:bg-[#2962ea]/80 transition-colors"
             >
               Get Started
             </Button>
@@ -190,12 +197,9 @@ const Navbar = () => {
             {/* Menu Header */}
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-2">
-                <Image
-                  src={Shield}
-                  width={24}
-                  height={24}
-                  className="text-[#2962ea]"
-                />
+                <div className="w-8 h-8 bg-[#2962ea] rounded-lg flex items-center justify-center">
+                  <DocumentTextIcon className="w-5 h-5 text-white" />
+                </div>
                 <span className="text-[#e4e6e8] font-semibold text-xl">
                   T&C Generator
                 </span>
@@ -259,8 +263,8 @@ const Navbar = () => {
                 </div>
                 <Link to="/profile">
                   <p className="text-[#e4e6e8] font-medium hover:underline">
-                    {user.displayName.charAt(0).toUpperCase() +
-                      user.displayName.slice(1) || "User"}
+                    {user.displayName?.charAt(0).toUpperCase() +
+                      user.displayName?.slice(1) || "User"}
                   </p>
                 </Link>
                 <p className="text-sm text-[#9CA3AF]">{user.email}</p>
@@ -286,7 +290,6 @@ const Navbar = () => {
               className="w-full bg-[#2962ea] hover:bg-[#1e4bac] text-white font-semibold py-3 rounded-md transition-colors"
               onPress={() => {
                 setOpen(false);
-                navigate("/generate");
               }}
             >
               Start Generating

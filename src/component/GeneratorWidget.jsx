@@ -1,66 +1,66 @@
-// GeneratorWidget.jsx
-
 import { Button } from "@heroui/react";
-import React from "react";
-
-// An SVG component for the refresh icon.
-const RefreshIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6" // Tailwind classes for size
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2.5}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M3 12a9 9 0 0 1 9-9c2.39 0 4.68.94 6.34 2.61M21 3v6h-6m0 0a9 9 0 0 1-9 9c-2.39 0-4.68-.94-6.34-2.61M3 21v-6h6"
-    />
-  </svg>
-);
+import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GeneratorWidget = () => {
+  const navigate = useNavigate();
+  const [businessName, setBusinessName] = useState("");
+
+  const handleGenerate = (e) => {
+    e.preventDefault();
+    if (!businessName.trim()) return;
+    navigate(`/generate?business=${encodeURIComponent(businessName)}`);
+  };
+
   return (
-    // Main container using your dark palette
-    <div className="bg-[#242d39] p-6 sm:p-8 border border-slate-700 rounded-xl shadow-lg max-w-2xl mx-auto">
-      <div className="flex flex-col md:flex-row items-center gap-8 md:gap-6">
-        {/* Left Side: Document Preview */}
-        <div className="relative w-full max-w-[220px] shrink-0">
-          {/* Background card with a light border for contrast */}
-          <div className="absolute -top-1.5 -left-1.5 w-full h-full border-2 border-slate-600 rounded-lg -z-0"></div>
-
-          {/* Foreground card using the dark background */}
-          <div className="relative bg-[#1f2937] w-full h-full p-4 border-2 border-slate-600 rounded-lg space-y-3">
-            <h4 className="font-semibold text-[#e4e6e8]">Terms & Conditions</h4>
-            <div className="space-y-2">
-              {/* Lines are now a darker grey to be subtle on the dark background */}
-              <div className="h-0.5 w-3/4 bg-slate-600"></div>
-              <div className="h-0.5 w-11/12 bg-slate-600"></div>
-              <div className="h-0.5 w-full bg-slate-600"></div>
-            </div>
-            <p className="font-semibold text-[#cbd5e1] pt-2">Business Name</p>
-          </div>
-        </div>
-
-        {/* Right Side: Action Panel */}
-        <div className="flex flex-col items-center md:items-start gap-4 w-full">
-          <div className="flex items-center gap-2 text-[#e4e6e8]">
-            <RefreshIcon />
-            <h3 className="text-2xl font-bold">Generate Yours</h3>
-          </div>
-
-          {/* Button styled for a dark theme with a hover inversion effect */}
-          <Button className="w-full md:w-auto px-6 py-3 font-semibold text-[#e4e6e8] bg-transparent border-2 border-slate-500 rounded-lg transition-colors hover:bg-[#2962ea] hover:text-[#fffff] focus:ring-slate-400">
-            Generate Yours Free
-          </Button>
-
-          <p className="text-xs text-[#cbd5e1]">
-            No credit card required. Cancel anytime
+    <div className="flex items-center justify-center px-4 mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-3xl p-6 sm:p-8 border border-[#2962ea]/20 rounded-xl"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="flex flex-col items-center gap-4 w-full"
+        >
+          <h3 className="text-2xl md:text-3xl font-bold text-[#e4e6e8] text-center">
+            Generate Your Business Terms
+          </h3>
+          <p className="text-sm md:text-base text-[#9CA3AF] text-center">
+            Enter your business name below to generate a ready-to-use Terms &
+            Conditions document.
           </p>
-        </div>
-      </div>
+          <form
+            onSubmit={handleGenerate}
+            className="w-full flex flex-col md:flex-row items-center gap-3 mt-4"
+          >
+            <input
+              type="text"
+              placeholder="Business Name"
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              className="flex-1 px-4 py-3 rounded-lg border border-[#2962ea]/30 bg-transparent text-[#e4e6e8] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#2962ea] transition-all"
+            />
+            <Button
+              type="submit"
+              disabled={!businessName.trim()}
+              className={`px-6 py-3 font-semibold rounded-lg transition-all duration-300 ${
+                businessName.trim()
+                  ? "bg-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/90"
+                  : "bg-[#394251] text-[#9CA3AF] cursor-not-allowed"
+              }`}
+            >
+              Generate
+            </Button>
+          </form>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

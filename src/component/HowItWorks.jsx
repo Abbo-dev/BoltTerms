@@ -1,63 +1,128 @@
 import { Link } from "react-router-dom";
-import { FaUserAlt, FaFileAlt, FaClock } from "react-icons/fa";
-import { Button, Card } from "@heroui/react";
+import {
+  FaUserAlt,
+  FaFileAlt,
+  FaClock,
+  FaShieldAlt,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { Button } from "@heroui/react";
+import { motion } from "framer-motion";
+import GeneratorWidget from "./GeneratorWidget";
+
 function HowItWorks() {
+  const steps = [
+    {
+      icon: <FaUserAlt />,
+      title: "Enter Business Info",
+      desc: "Quickly fill in your company details so we can customize your document.",
+    },
+    {
+      icon: <FaFileAlt />,
+      title: "Choose a Template",
+      desc: "Pick from lawyer-approved templates designed for different industries.",
+    },
+    {
+      icon: <FaClock />,
+      title: "Get Your T&Cs in Minutes",
+      desc: "Instantly download a ready-to-use document you can add to your website.",
+    },
+    {
+      icon: <FaShieldAlt />,
+      title: "Stay Protected",
+      desc: "Your terms are clear, professional, and built to safeguard your business.",
+    },
+  ];
+
   return (
     <>
-      <section className="w-full flex flex-col items-center justify-center py-20 px-4 mt-16">
-        <div className="flex items-center justify-between w-full max-w-4xl mb-8 ">
-          <h2 className="text-2xl font-bold text-[#e4e6e8] flex items-center gap-2 mx-auto ">
+      <section className="w-full flex flex-col items-center justify-center py-20 px-6 mt-16 relative">
+        <div className="flex flex-col items-center justify-center text-center mb-12 max-w-2xl relative z-10">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl font-bold text-[#e4e6e8] mb-3"
+          >
             How It Works
-          </h2>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-[#9CA3AF] text-sm md:text-base"
+          >
+            In just a few simple steps, you'll have legally sound Terms &
+            Conditions tailored for your business — no lawyers, no hassle.
+          </motion.p>
         </div>
 
         {/* Steps */}
-        <section className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-5   bg-transparent  p-11 hover:border-[#2962ea]/50  relative ">
-          <p className="text-xs text-[#9CA3AF] absolute top-[189px] right-[60px]  ">
-            ✔ No credit card required
+        <motion.section
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 gap-y-12 md:gap-8 p-6 md:p-11 relative z-10 max-w-6xl"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          {steps.map((step, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15, duration: 0.6 }}
+              className="flex flex-col items-center text-center relative group hover:-translate-y-2 transition-transform duration-300"
+            >
+              <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#2962ea]/10 text-[#2962ea] text-2xl mb-4 border border-[#2962ea]/20 group-hover:bg-[#2962ea]/15 group-hover:border-[#2962ea]/30 transition-all duration-300">
+                <div className="group-hover:scale-110 transition-transform duration-200">
+                  {step.icon}
+                </div>
+              </div>
+
+              <p className="text-[#e4e6e8] font-semibold mb-2 group-hover:text-[#2962ea] transition-colors duration-200">
+                {step.title}
+              </p>
+
+              <p className="text-[#9CA3AF] text-sm leading-relaxed">
+                {step.desc}
+              </p>
+
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 + 0.5, duration: 0.3 }}
+              >
+                <FaCheckCircle className="text-[#2962ea] mt-3" />
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.section>
+
+        <GeneratorWidget className="m-12" />
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="mt-10 flex flex-col items-center text-center z-10"
+        >
+          <p className="text-[#9CA3AF] mb-4 text-sm md:text-base">
+            Start protecting your business today — it only takes 3 minutes.
           </p>
-
-          {/* Step 1 */}
-          <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#2962ea]/10 text-[#2962ea] text-2xl mb-3">
-              <FaUserAlt />
-            </div>
-            <p className="text-[#e4e6e8] font-medium">Enter Business Info</p>
-          </div>
-
-          <div className="block md:hidden w-[2px] h-[50px] bg-gradient-to-b from-[#394251] to-[#6b7280] rounded-lg mb-2"></div>
-          <div className="hidden md:block w-[120px] h-[2px] bg-gradient-to-b from-[#394251] to-[#6b7280] rounded-lg"></div>
-
-          {/* Step 2 */}
-          <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#2962ea]/10 text-[#2962ea] text-2xl mb-3">
-              <FaFileAlt />
-            </div>
-            <p className="text-[#e4e6e8] font-medium">Choose a Template</p>
-          </div>
-
-          <div className="block md:hidden w-[2px] h-[50px] bg-gradient-to-b from-[#394251] to-[#6b7280] rounded-lg"></div>
-          <div className="hidden md:block w-[120px] h-[2px] bg-gradient-to-b from-[#394251] to-[#6b7280] rounded-lg"></div>
-
-          {/* Step 3 */}
-          <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#2962ea]/10 text-[#2962ea] text-2xl mb-3">
-              <FaClock />
-            </div>
-            <p className="text-[#e4e6e8] font-medium">
-              Get Your T&Cs in Minutes
-            </p>
-          </div>
-        </section>
-        <div className="mt-8">
           <Link to="/generate">
-            <Button className="bg-transparent border border-[#2962ea] px-8 h-12 rounded-md text-[#2962ea] font-semibold hover:bg-[#2962ea] hover:text-white transition">
-              Try It Now
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button className="bg-[#2962ea] px-10 h-12 rounded-lg text-[#e4e6e8] font-semibold text-lg hover:bg-[#2962ea]/90 transition-all duration-300 flex items-center gap-2">
+                <FaShieldAlt /> Try It Now
+              </Button>
+            </motion.div>
           </Link>
-        </div>
-
-        {/* CTA button under the card */}
+        </motion.div>
       </section>
     </>
   );
