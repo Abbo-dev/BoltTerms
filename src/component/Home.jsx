@@ -10,6 +10,8 @@ import { useState, useEffect } from "react";
 import { auth } from "./../FirebaseConfig.js";
 import { onAuthStateChanged } from "firebase/auth";
 import SupaDemoEmbed from "./SupaDemoEmbed.jsx";
+import HowItWorks from "./HowItWorks.jsx";
+import GeneratorWidget from "./GeneratorWidget.jsx";
 const Home = () => {
   const [user, setUser] = useState(null);
 
@@ -82,9 +84,13 @@ const Home = () => {
           </div>
         </div>
 
-        <Card />
+        {/* <Card /> */}
+        <HowItWorks />
 
+        <GeneratorWidget />
         <Why />
+        {/* <Features /> */}
+        {/* <FooterPart /> */}
         <FooterPart />
       </div>
     </>

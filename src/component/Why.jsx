@@ -50,7 +50,7 @@ function Why() {
               <h1 className="text-[#e4e6e8] text-lg font-bold mb-2">
                 {feature.title}
               </h1>
-              <p className="text-[#9CA3AF] text-sm md:text-base">
+              <p className="text-[#9CA3AF] sm:text-sm ">
                 {feature.description}
               </p>
             </CardBody>
