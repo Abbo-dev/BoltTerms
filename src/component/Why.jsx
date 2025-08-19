@@ -30,7 +30,7 @@ function Why() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 mt-20 pt-5 w-full h-full">
+    <div className="flex flex-col items-center justify-center gap-8  pt-5 w-full h-full">
       <motion.h2
         className="font-bold text-2xl text-[#e4e6e8] text-center"
         initial={{ opacity: 0, y: 20 }}

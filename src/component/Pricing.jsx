@@ -8,7 +8,7 @@ import { getAuth } from "firebase/auth";
 import { useContext, useState } from "react";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 import AlertSignIn from "./AlertSignIn.jsx";
-import { a } from "framer-motion/client";
+import PricingTable from "./PricingTable.jsx";
 export default function PricingPage() {
   const [alertForPlan, setAlertForPlan] = useState(false);
   const user = getAuth().currentUser;
@@ -121,21 +121,23 @@ export default function PricingPage() {
   const faqs = [
     {
       question: "Is this really a one-time payment?",
-      answer: "Yes! Pay once, use forever. No subscriptions or hidden charges.",
+      answer:
+        "Yes, it is. We offer a lifetime license that you acquire with a single payment. This means you pay once and have access to all the features included in your plan forever, without any recurring subscriptions or hidden fees.",
     },
     {
       question: "Can I upgrade to future subscriptions later?",
       answer:
-        "Absolutely. You'll get an upgrade discount when subscriptions launch.",
+        "Absolutely. We value our early supporters. When we introduce new subscription models in the future, all lifetime license holders will be offered a substantial discount to upgrade, should they choose to do so.",
     },
     {
       question: "Do you offer refunds?",
       answer:
-        "We offer a 7-day refund window if you're not satisfied. No questions asked.",
+        "We offer a 7-day, no-questions-asked refund policy. If you find that our service doesn't meet your needs within the first week of your purchase, you are entitled to a full refund.",
     },
     {
       question: "Will my access change when subscriptions launch?",
-      answer: "Nope. Lifetime users keep all their benefits permanently.",
+      answer:
+        "Your lifetime access will not be affected at all. As a lifetime user, you will permanently retain all the features and benefits that were available at the time of your purchase, regardless of any future changes to our pricing or subscription models.",
     },
   ];
 
@@ -260,47 +262,7 @@ export default function PricingPage() {
         </svg>
       </div>
 
-      {/* Feature Comparison */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2
-          className="text-2xl font-bold mb-8 text-center"
-          style={{ color: "#e4e6e8" }}
-        >
-          What's included
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ color: "#e4e6e8" }}>
-            <thead>
-              <tr style={{ borderBottomColor: "#4c5562" }}>
-                <th className="pb-4 px-4 text-left">Features</th>
-                <th className="pb-4 px-4 text-center">Lifetime</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={{ borderBottomColor: "#4c5562" }}>
-                <td className="py-4 px-4">TC generations</td>
-                <td className="py-4 px-4 text-center">Unlimited</td>
-              </tr>
-              <tr style={{ borderBottomColor: "#4c5562" }}>
-                <td className="py-4 px-4">Export formats</td>
-                <td className="py-4 px-4 text-center">PDF + DOCX</td>
-              </tr>
-              <tr style={{ borderBottomColor: "#4c5562" }}>
-                <td className="py-4 px-4">Templates & branding</td>
-                <td className="py-4 px-4 text-center">Included</td>
-              </tr>
-              <tr style={{ borderBottomColor: "#4c5562" }}>
-                <td className="py-4 px-4">Custom fields</td>
-                <td className="py-4 px-4 text-center">✅</td>
-              </tr>
-              <tr>
-                <td className="py-4 px-4">Support</td>
-                <td className="py-4 px-4 text-center">Email (48h)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <PricingTable />
 
       {/* FAQs */}
       <div className="space-y-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
