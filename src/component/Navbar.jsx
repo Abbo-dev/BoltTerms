@@ -57,7 +57,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center">
             <div className="flex items-center">
               <div className="w-10 h-10 bg-[#2962ea] rounded-lg flex items-center justify-center mr-2">
-                <Image src={Bolt} alt="Shield Icon" className="w-6 h-6" />
+                <Image src={Bolt} alt="Bolt Icon" className="w-6 h-6" />
               </div>
               <p className="text-white text-lg font-bold">Bolt Terms</p>
             </div>

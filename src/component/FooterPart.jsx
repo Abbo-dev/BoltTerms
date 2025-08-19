@@ -2,16 +2,20 @@ import Shield from "./../assets/shield.svg";
 import { Image } from "@heroui/react";
 import { Link } from "react-router-dom";
 import { Divider } from "@heroui/divider";
-
+import Bolt from "./../assets/bolt.png";
 function FooterPart() {
   return (
     <>
       <div className="flex flex-col md:flex-row items-start justify-center w-full bg-[#242d39] gap-y-10 md:gap-y-0 gap-x-10 md:gap-x-20 lg:gap-x-32 py-10 px-6  mx-auto mt-10 ">
         <div className="flex flex-col md:flex-row items-start justify-center gap-y-10 md:gap-y-0 gap-x-10 md:gap-x-20 lg:gap-x-32 mx-auto">
           <div className=" mx-auto  max-w-m ">
-            <div className="flex items-center mx-auto gap-1 pb-3 ">
-              <Image src={Shield} width={25} height={25} />
-              <p className="text-white text-lg  font-bold">T&C Generator</p>
+            <div className="flex items-center mx-auto gap-1 pb-3  ">
+              <Link to="/" className="flex items-center">
+                <div className="w-10 h-10 bg-[#2962ea] rounded-lg flex items-center justify-center mr-2">
+                  <Image src={Bolt} alt="Bolt Icon" className="w-6 h-6" />
+                </div>
+                <p className="text-white text-lg font-bold">Bolt Terms</p>
+              </Link>
             </div>
             <p className=" text-[#9CA3AF] text-sm max-w-[300px] md:max-w-[240px]">
               Generate professional terms and condition for your business
