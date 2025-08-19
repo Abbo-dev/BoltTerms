@@ -8,13 +8,20 @@ import {
   addToast,
 } from "@heroui/react";
 import Copy from "./../assets/copy.svg";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Templates from "./../../template.json";
 import { useForm } from "../FormDataContext.jsx";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 import { useAuth } from "../AuthContext.jsx";
-//import useStatus from "./userStatus.jsx";
 import { Link } from "react-router-dom";
+// Added framer-motion and heroicons for enhanced styling and animations
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  BuildingOffice2Icon,
+  GlobeAltIcon,
+  XMarkIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 
 function CardSection() {
   const options = [{ value: "E-commerce", label: "E-commerce" }];
@@ -26,6 +33,8 @@ function CardSection() {
   const { user } = useAuth();
   const { addGeneratedTemplate } = useContext(GeneratedTemplatesContext);
   const [loading, setLoading] = useState(false);
+  // State to control the visibility of the post-generation toast
+  const [showTemplateToast, setShowTemplateToast] = useState(false);
 
   const replacePlaceholders = (text) => {
     return text
@@ -54,7 +63,7 @@ function CardSection() {
         );
         addToast({
           description: "You need to be a paid user to generate more T&Cs.",
-          duration: 500,
+          duration: 5000,
           color: "danger",
           position: "top-right",
           classNames: {
@@ -80,9 +89,8 @@ function CardSection() {
         });
         return;
       }
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
 
-      // increment count by 1
       setCount((prev) => prev + 1);
       const newFormData = {
         ...formData,
@@ -101,7 +109,6 @@ function CardSection() {
 
       setGeneratedContent(content);
 
-      // Add the generated template to context
       const generatedTemplate = {
         ...selectedTemplate,
         generatedContent: content,
@@ -111,6 +118,9 @@ function CardSection() {
         dateGenerated: new Date().toISOString(),
       };
       addGeneratedTemplate(generatedTemplate);
+
+      // Show the custom toast on successful generation
+      setShowTemplateToast(true);
     } catch (error) {
       console.error("Error generating content:", error);
     } finally {
@@ -118,149 +128,225 @@ function CardSection() {
     }
   };
 
+  // Automatically hide the toast after a delay
+  useEffect(() => {
+    if (showTemplateToast) {
+      const timer = setTimeout(() => {
+        setShowTemplateToast(false);
+      }, 8000); // Stays for 8 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [showTemplateToast]);
+
   const handleCopy = () => {
-    if (generatedContent) {
+    if (generatedContent && !loading) {
       navigator.clipboard.writeText(generatedContent);
+      addToast({
+        description: "Text copied to clipboard",
+        duration: 3000,
+        position: "top-right",
+        classNames: {
+          description: "text-[#e4e6e8]",
+          base: "bg-[#242d39] border border-white/10 p-5",
+          closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 ",
+        },
+        closeIcon: (
+          <svg
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            width="24"
+          >
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        ),
+      });
     }
   };
 
+  // Animation variants for Framer Motion
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+  };
+
   return (
-    <div className="w-full flex justify-center px-4 mt-10 transition-all">
-      <Card className="w-full max-w-[1300px] bg-[#242d39] rounded-2xl p-10 shadow-lg transition-all ">
-        <CardBody className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Side - Form */}
-          <Card className="w-full max-w-lg mx-auto rounded-xl shadow pb-10 bg-[#394251]  overflow-hidden">
-            <CardBody className="p-8">
+    <>
+      <div className="w-full flex justify-center px-4 transition-all">
+        <Card className="w-full max-w-[1300px] bg-[#242d39]/60 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-10 shadow-2xl shadow-black/20 transition-all ">
+          <CardBody className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {/* Left Side - Form */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <h1 className="text-white text-2xl font-bold mb-6 text-left">
+                Document Details
+              </h1>
               <div className="flex flex-col gap-8">
-                <h1 className="text-white text-lg font-semibold text-left">
-                  Document Details
-                </h1>
-                <Input
-                  type="text"
-                  label="Business Name"
-                  labelPlacement="inside"
-                  size="sm"
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                />
-                <Input
-                  type="text"
-                  label="Website URL"
-                  labelPlacement="inside"
-                  size="sm"
-                  value={websiteURL}
-                  onChange={(e) => setWebsiteURL(e.target.value)}
-                />
-                <Select
-                  label="Select Business Type"
-                  className="pt-2"
-                  labelPlacement="inside"
-                  size="sm"
-                  onChange={(e) => setBusinessType(e.target.value)}
-                  isRequired
-                >
-                  {options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </Select>
-
-                <Select
-                  label="Select Template Type"
-                  className="pt-2"
-                  labelPlacement="inside"
-                  size="sm"
-                  onChange={(e) => handleTemplateSelect(Number(e.target.value))}
-                  isRequired
-                >
-                  {Templates.templates.map((template, index) => (
-                    <SelectItem key={index} value={index}>
-                      {template.templateName}
-                    </SelectItem>
-                  ))}
-                </Select>
-
-                <Button
-                  isLoading={loading}
-                  disabled={!businessName || !websiteURL || loading}
-                  onPress={handleGenerate}
-                  className="w-full bg-[#2962ea] text-[#e4e6e8] font-semibold rounded-md  disabled:opacity-50  disabled:cursor-not-allowed"
-                >
-                  {loading ? "Generating..." : "Generate T&C"}
-                </Button>
-                <small className="text-[#9CA3AF] text-[8px] -mt-7 font-semibold">
-                  By generating T&Cs, you acknowledge this is AI-assisted and
-                  not a substitute for legal counsel.
-                </small>
-              </div>
-            </CardBody>
-          </Card>
-
-          {/* Right Side - Preview */}
-          <Card className="w-full max-w-lg mx-auto rounded-xl bg-[#394251] border-none shadow-none  h-[600px] ">
-            <CardBody className="p-0 overflow-hidden w-full">
-              <div className="flex flex-col h-full px-6 pt-6">
-                <div className="flex items-center justify-between ">
-                  <h1 className="text-white text-lg font-semibold text-left">
-                    Document Preview
-                  </h1>
-                  <Button
-                    onPress={() => {
-                      handleCopy();
-                      addToast({
-                        description: "Text copied to clipboard",
-                        duration: 500,
-                        classNames: {
-                          description: "text-[#828a96]",
-                          base: "bg-[#242d39] border-none p-5",
-                          closeButton:
-                            "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 ",
-                        },
-                        closeIcon: (
-                          <svg
-                            fill="none"
-                            height="32"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            width="32"
-                          >
-                            <path d="M18 6 6 18" />
-                            <path d="m6 6 12 12" />
-                          </svg>
-                        ),
-                      });
-                    }}
-                    className="bg-[#4c5562] text-white font-semibold w-50 h-10 flex items-center justify-center gap-2 rounded-md"
+                <motion.div variants={itemVariants}>
+                  <Input
+                    type="text"
+                    label="Business Name"
+                    labelPlacement="inside"
+                    size="sm"
+                    value={businessName}
+                    onChange={(e) => setBusinessName(e.target.value)}
+                  />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <Input
+                    type="text"
+                    label="Website URL"
+                    labelPlacement="inside"
+                    size="sm"
+                    value={websiteURL}
+                    onChange={(e) => setWebsiteURL(e.target.value)}
+                  />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <Select
+                    label="Select Business Type"
+                    className="pt-2"
+                    labelPlacement="inside"
+                    size="sm"
+                    onChange={(e) => setBusinessType(e.target.value)}
+                    isRequired
                   >
-                    <Image src={Copy} className="w-6 h-6" />
-                    <h1 className="text-sm text-white">Copy</h1>
+                    {options.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <Select
+                    label="Select Template Type"
+                    className="pt-2"
+                    labelPlacement="inside"
+                    size="sm"
+                    onChange={(e) =>
+                      handleTemplateSelect(Number(e.target.value))
+                    }
+                    isRequired
+                  >
+                    {Templates.templates.map((template, index) => (
+                      <SelectItem key={index} value={index}>
+                        {template.templateName}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <Button
+                    isLoading={loading}
+                    disabled={!businessName || !websiteURL || loading}
+                    onPress={handleGenerate}
+                    className="w-full bg-[#2962ea] text-[#e4e6e8] font-semibold rounded-lg h-12 text-base disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-[#2962ea]/90 hover:shadow-lg hover:shadow-[#2962ea]/20"
+                  >
+                    {loading ? "Generating..." : "Generate T&C"}
                   </Button>
-                </div>
-                <Card className=" h-full my-3 bg-[#242d39] border-none shadow-none overflow-auto">
-                  <CardBody className="!p-0 !overflow-auto h-full">
-                    <div className="p-4 text-gray-300">
-                      <h2 className="text-xl font-bold mb-4">
-                        Terms & Conditions
-                      </h2>
-                      <pre className="text-gray-400 text-sm whitespace-pre-wrap">
-                        {loading
-                          ? "Generating..."
-                          : generatedContent ||
-                            "Fill out the form to generate your T&C."}
-                      </pre>
-                    </div>
-                  </CardBody>
-                </Card>
+                  <p className="text-[#9CA3AF] text-xs text-center mt-3">
+                    By generating, you acknowledge this is AI-assisted and not a
+                    substitute for legal counsel.
+                  </p>
+                </motion.div>
               </div>
-            </CardBody>
-          </Card>
-        </CardBody>
-      </Card>
-    </div>
+            </motion.div>
+
+            {/* Right Side - Preview */}
+            <motion.div
+              className="w-full rounded-xl bg-[#181e2b]/50 border border-white/10 h-[600px] flex flex-col"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <div className="flex items-center justify-between p-4 border-b border-white/10 shrink-0">
+                <h1 className="text-white text-lg font-semibold">
+                  Document Preview
+                </h1>
+                <Button
+                  onPress={handleCopy}
+                  className="bg-[#4c5562] text-white font-semibold h-10 flex items-center justify-center gap-2 rounded-md transition-all hover:bg-[#4c5562]/80"
+                >
+                  <Image src={Copy} className="w-5 h-5" />
+                  <span className="text-sm">Copy</span>
+                </Button>
+              </div>
+              <div className="p-4 overflow-auto h-full">
+                <h2 className="text-xl text-white font-bold mb-4">
+                  Terms & Conditions
+                </h2>
+                <pre className="text-gray-400 text-sm whitespace-pre-wrap font-sans">
+                  {loading ? (
+                    <div className="animate-pulse space-y-2">
+                      <div className="h-4 bg-gray-600 rounded w-3/4"></div>
+                      <div className="h-4 bg-gray-600 rounded w-full"></div>
+                      <div className="h-4 bg-gray-600 rounded w-5/6"></div>
+                    </div>
+                  ) : (
+                    generatedContent ||
+                    "Fill out the form to generate your T&C."
+                  )}
+                </pre>
+              </div>
+            </motion.div>
+          </CardBody>
+        </Card>
+      </div>
+
+      {/* Post-Generation Custom Toast */}
+      <AnimatePresence>
+        {showTemplateToast && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed bottom-5 left-1/2 -translate-x-1/2 w-full max-w-lg z-50"
+          >
+            <div className="bg-[#242d39] border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center justify-between gap-4">
+              <CheckCircleIcon className="w-6 h-6 text-green-400 shrink-0" />
+              <div className="flex-grow">
+                <p className="font-semibold text-white">Document Generated!</p>
+                <p className="text-sm text-gray-400">
+                  You can also browse our full template library.
+                </p>
+              </div>
+              <Link
+                to="/templates"
+                onClick={() => setShowTemplateToast(false)}
+                className="bg-[#2962ea] text-white px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap hover:bg-[#2962ea]/90"
+              >
+                Browse
+              </Link>
+              <Button
+                isIconOnly
+                className="bg-transparent hover:bg-white/10 shrink-0"
+                onPress={() => setShowTemplateToast(false)}
+              >
+                <XMarkIcon className="w-5 h-5 text-gray-400" />
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, Button, Card } from "@heroui/react";
+import { Input, Button, Card, Image } from "@heroui/react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
@@ -12,7 +12,8 @@ import {
 import { updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
-
+import Bolt from "../assets/bolt.png";
+import { Link } from "react-router-dom";
 export default function AuthPage() {
   const [tab, setTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
@@ -109,7 +110,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#181e2b] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#181e2b] flex items-center justify-center p-4 relative">
+      <div className="absolute top-[170px] ">
+        <Link className=" flex items-center ">
+          <div className="w-12 h-12 bg-[#2962ea] rounded-lg flex items-center justify-center  mr-2">
+            <Image src={Bolt} alt="Shield Icon" className="w-8 h-8 " />
+          </div>
+          <p className="text-white text-xl font-bold">Bolt Terms</p>
+        </Link>
+      </div>
       <Card className="bg-[#242d39] p-8 rounded-2xl shadow-xl max-w-md w-full space-y-6">
         {/* Tabs */}
         <div className="flex justify-center mb-4">

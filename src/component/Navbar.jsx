@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Closex from "./../assets/closex.svg";
 import { useAuth } from "./../AuthContext.jsx";
 import { Avatar, AvatarIcon } from "@heroui/react";
+import Bolt from "../assets/bolt.png";
 import {
   Dropdown,
   DropdownTrigger,
@@ -50,24 +51,24 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full h-15 bg-[#232b38] flex flex-wrap justify-between items-center px-4 py-3 md:px-8 transition-all">
+      <div className="w-full h-15 bg-[#232b38] flex flex-wrap justify-between items-center px-4 py-3 md:px-8 transition-allbackdrop-blur-md bg-slate-900/80 border-b border-blue-500/20 ">
         {/* Logo Section */}
         <div onClick={() => handleClick()}>
           <Link to="/" className="flex items-center">
             <div className="flex items-center">
               <div className="w-10 h-10 bg-[#2962ea] rounded-lg flex items-center justify-center mr-2">
-                <DocumentTextIcon className="w-6 h-6 text-white" />
+                <Image src={Bolt} alt="Shield Icon" className="w-6 h-6" />
               </div>
-              <p className="text-white text-lg font-bold">T&C Generator</p>
+              <p className="text-white text-lg font-bold">Bolt Terms</p>
             </div>
           </Link>
         </div>
 
         {/* Navigation Links - Hidden on mobile */}
-        <div className="hidden md:flex items-center mx-2">
-          <ul className="flex gap-6 lg:gap-8 xl:gap-12">
+        <div className="hidden md:flex items-center mx-2 ">
+          <ul className="flex gap-6 lg:gap-8 xl:gap-12 ">
             <Link to="/features">
-              <li className="text-[#9CA3AF] hover:text-blue-300 cursor-pointer">
+              <li className="text-[#9CA3AF] hover:text-blue-300 cursor-pointer ">
                 Features
               </li>
             </Link>
@@ -147,7 +148,7 @@ const Navbar = () => {
 
             <Button
               className="flex items-center justify-center gap-2 bg-[#2962ea] w-50 h-10 rounded-md 
-                text-[#e4e6e8] font-semibold hover:bg-[#2962ea]/80 transition-colors"
+                text-[#e4e6e8] font-semibold hover:bg-[#2962ea]/80 transition-colors duration-300"
             >
               Get Started
             </Button>
@@ -196,14 +197,14 @@ const Navbar = () => {
           <div className="p-6 pt-10">
             {/* Menu Header */}
             <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-[#2962ea] rounded-lg flex items-center justify-center">
-                  <DocumentTextIcon className="w-5 h-5 text-white" />
+              <Link to="/" className="flex items-center">
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-[#2962ea] rounded-lg flex items-center justify-center mr-2">
+                    <Image src={Bolt} alt="Shield Icon" className="w-6 h-6" />
+                  </div>
+                  <p className="text-white text-lg font-bold">Bolt Terms</p>
                 </div>
-                <span className="text-[#e4e6e8] font-semibold text-xl">
-                  T&C Generator
-                </span>
-              </div>
+              </Link>
             </div>
 
             {/* Menu Items */}

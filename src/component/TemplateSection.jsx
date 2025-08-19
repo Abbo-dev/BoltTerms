@@ -3,16 +3,16 @@ import { CheckIcon, DocumentTextIcon } from "./Icons";
 import Navbar from "./Navbar";
 import FooterPart from "./FooterPart";
 import { Link } from "react-router-dom";
-import { Button } from "@heroui/react";
 import TemplatePreviewModal from "./TemplatePreview";
 import { downloadTemplatePdf } from "../utils/dowloadTemplatePdf";
 import { downloadTemplateDocx } from "../utils/downloadTemplateDocx";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Templates from "./../../template.json";
 import useStatus from "./userStatus";
 import { useForm } from "../FormDataContext.jsx";
 import { useGeneratedTemplates } from "./GeneratedTemplatesContext.jsx";
 import { useAuth } from "../AuthContext.jsx";
+import { motion } from "framer-motion";
 
 export default function TCTemplatePage() {
   const [previewTemplate, setPreviewTemplate] = useState(null);
@@ -47,9 +47,6 @@ export default function TCTemplatePage() {
     }
   }, [user, clearGeneratedTemplates]);
 
-  // Show templates:
-  // If user logged in & has generated templates from Firebase, show those
-  // else fallback to default templates from local JSON (optional)
   const templates = user
     ? generatedTemplates.length > 0
       ? generatedTemplates
@@ -60,6 +57,11 @@ export default function TCTemplatePage() {
 
   const handlePreview = (template) => {
     setPreviewTemplate(template);
+  };
+
+  const buttonVariants = {
+    hover: { scale: 1.05, opacity: 0.9 },
+    tap: { scale: 0.95 },
   };
 
   return (
@@ -74,17 +76,21 @@ export default function TCTemplatePage() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#e4e6e8]">
             Terms & Conditions Templates
           </h1>
+
           {generatedTemplates.length > 0 ? (
             <>
               <p className="text-sm text-[#828a96] mt-1">
                 Your generated templates
               </p>
-              <Button
-                onPress={clearGeneratedTemplates}
-                className="mt-4 bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90"
+              <motion.button
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                onClick={clearGeneratedTemplates}
+                className="mt-4 bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm"
               >
                 Clear Generated Templates
-              </Button>
+              </motion.button>
             </>
           ) : (
             <p className="text-sm text-[#828a96] mt-1">
@@ -102,9 +108,14 @@ export default function TCTemplatePage() {
               Please sign in to view and generate templates
             </p>
             <Link to="/login">
-              <Button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm hover:opacity-90">
+              <motion.button
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm"
+              >
                 Sign In
-              </Button>
+              </motion.button>
             </Link>
           </div>
         ) : showDefaultTemplates ? (
@@ -116,121 +127,140 @@ export default function TCTemplatePage() {
               Head over to the generator to create your first template!
             </p>
             <Link to="/">
-              <Button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm hover:opacity-90">
+              <motion.button
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm"
+              >
                 Create Your First Template
-              </Button>
+              </motion.button>
             </Link>
           </div>
         ) : (
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {templates.map((template, index) => (
-              <>
-                <div
-                  key={index}
-                  className="bg-[#374151] border border-[#4c5562] rounded-lg p-6 hover:shadow-lg transition-all"
-                >
-                  <div className="flex items-start mb-4 relative">
-                    <DocumentTextIcon className="h-6 w-6 text-[#2962ea] mr-3 mt-1" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-[#e4e6e8]">
-                        {template.templateName}
-                      </h3>
+              <div
+                key={index}
+                className="bg-[#374151] border border-[#4c5562] rounded-lg p-6 hover:shadow-lg transition-all"
+              >
+                <div className="flex items-start mb-4 relative">
+                  <DocumentTextIcon className="h-6 w-6 text-[#2962ea] mr-3 mt-1" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#e4e6e8]">
+                      {template.templateName}
+                    </h3>
 
-                      {template.businessName && (
-                        <p className="text-sm text-[#828a96] mt-1">
-                          Generated for: {template.businessName}
-                        </p>
-                      )}
-                      {template.dateGenerated && (
-                        <p className="text-sm text-[#828a96] mt-1">
-                          Generated on:{" "}
-                          {new Date(
-                            template.dateGenerated
-                          ).toLocaleDateString()}
-                        </p>
-                      )}
+                    {template.businessName && (
                       <p className="text-sm text-[#828a96] mt-1">
-                        {template.clauses?.length ?? 0} clauses included
+                        Generated for: {template.businessName}
                       </p>
-                    </div>
-                  </div>
-
-                  <div className="bg-[#1F2937] rounded p-4 mb-4">
-                    <h4 className="text-sm font-medium text-[#e4e6e8] mb-2">
-                      Includes:
-                    </h4>
-                    <ul className="space-y-2">
-                      {template.clauses?.slice(0, 3).map((clause, i) => (
-                        <li key={i} className="flex items-start">
-                          <CheckIcon className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
-                          <span className="text-sm text-[#e4e6e8]">
-                            {clause.title.length > 0
-                              ? clause.title
-                              : "Untitled"}
-                          </span>
-                        </li>
-                      ))}
-                      {template.clauses?.length >= 3 && (
-                        <li className="text-sm text-[#828a96]">
-                          + {template.clauses.length - 3} more clauses
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex flex-col md:flex-row gap-2">
-                      <Button
-                        onPress={() => handlePreview(template)}
-                        className="bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                      >
-                        Preview
-                      </Button>
-                      {userStatus?.isPaidUser ? (
-                        <div className="flex flex-col md:flex-row gap-2 flex-[2]">
-                          <Button
-                            onPress={() =>
-                              downloadTemplatePdf(template, formData)
-                            }
-                            className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                          >
-                            <span>Download PDF</span>
-                          </Button>
-                          <Button
-                            onPress={() =>
-                              downloadTemplateDocx(template, formData)
-                            }
-                            className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                          >
-                            <span>Download DOCX</span>
-                          </Button>
-                        </div>
-                      ) : !usedFreeDownload ? (
-                        <div className="flex flex-col md:flex-row gap-2 flex-[2]">
-                          <Button
-                            onPress={() => handleDownload(template, "pdf")}
-                            className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                          >
-                            <span>Try PDF (Free)</span>
-                          </Button>
-                          <Button
-                            onPress={() => handleDownload(template, "docx")}
-                            className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 flex-1 flex items-center justify-center"
-                          >
-                            <span>Try DOCX (Free)</span>
-                          </Button>
-                        </div>
-                      ) : (
-                        <Link to="/pricing">
-                          <Button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm hover:opacity-90 w-full flex items-center justify-center">
-                            Upgrade for Unlimited Downloads
-                          </Button>
-                        </Link>
-                      )}
-                    </div>
+                    )}
+                    {template.dateGenerated && (
+                      <p className="text-sm text-[#828a96] mt-1">
+                        Generated on:{" "}
+                        {new Date(template.dateGenerated).toLocaleDateString()}
+                      </p>
+                    )}
+                    <p className="text-sm text-[#828a96] mt-1">
+                      {template.clauses?.length ?? 0} clauses included
+                    </p>
                   </div>
                 </div>
-              </>
+
+                <div className="bg-[#1F2937] rounded p-4 mb-4">
+                  <h4 className="text-sm font-medium text-[#e4e6e8] mb-2">
+                    Includes:
+                  </h4>
+                  <ul className="space-y-2">
+                    {template.clauses?.slice(0, 3).map((clause, i) => (
+                      <li key={i} className="flex items-start">
+                        <CheckIcon className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                        <span className="text-sm text-[#e4e6e8]">
+                          {clause.title.length > 0 ? clause.title : "Untitled"}
+                        </span>
+                      </li>
+                    ))}
+                    {template.clauses?.length >= 3 && (
+                      <li className="text-sm text-[#828a96]">
+                        + {template.clauses.length - 3} more clauses
+                      </li>
+                    )}
+                  </ul>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <motion.button
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      onClick={() => handlePreview(template)}
+                      className="bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                    >
+                      Preview
+                    </motion.button>
+                    {userStatus?.isPaidUser ? (
+                      <div className="flex flex-col md:flex-row gap-2 flex-[2]">
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          onClick={() =>
+                            downloadTemplatePdf(template, formData)
+                          }
+                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                        >
+                          Download PDF
+                        </motion.button>
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          onClick={() =>
+                            downloadTemplateDocx(template, formData)
+                          }
+                          className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                        >
+                          Download DOCX
+                        </motion.button>
+                      </div>
+                    ) : !usedFreeDownload ? (
+                      <div className="flex flex-col md:flex-row gap-2 flex-[2]">
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          onClick={() => handleDownload(template, "pdf")}
+                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                        >
+                          Try PDF (Free)
+                        </motion.button>
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          onClick={() => handleDownload(template, "docx")}
+                          className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                        >
+                          Try DOCX (Free)
+                        </motion.button>
+                      </div>
+                    ) : (
+                      <Link to="/pricing" className="flex-1">
+                        <motion.button
+                          variants={buttonVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm w-full"
+                        >
+                          Upgrade for Unlimited Downloads
+                        </motion.button>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}
@@ -246,27 +276,26 @@ export default function TCTemplatePage() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/features">
-              <button className="bg-[#2962ea] text-white px-6 py-3 rounded-md hover:opacity-90">
+              <motion.button
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="bg-[#2962ea] text-white px-6 py-3 rounded-md"
+              >
                 See Features
-              </button>
+              </motion.button>
             </Link>
             <Link to="/pricing">
-              <button className="border border-[#4c5562] text-[#e4e6e8] px-6 py-3 rounded-md hover:bg-[#2a3140]">
+              <motion.button
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="border border-[#4c5562] text-[#e4e6e8] px-6 py-3 rounded-md"
+              >
                 View Pricing
-              </button>
+              </motion.button>
             </Link>
           </div>
-        </div>
-
-        {/* Testimonial */}
-        <div className="bg-[#1F2937] rounded-lg p-8 mt-16 max-w-3xl mx-auto text-center">
-          <p className="text-[#e4e6e8] italic text-lg">
-            “I built compliant terms for my online store in under 2 minutes.
-            This tool is a game changer for startups.”
-          </p>
-          <p className="text-[#828a96] mt-4 text-sm">
-            — Alex R., Founder @ ShopHub
-          </p>
         </div>
 
         {/* Pro CTA */}
@@ -277,23 +306,32 @@ export default function TCTemplatePage() {
                 Need more power?
               </h3>
               <p className="text-sm text-[#828a96] mt-1">
-                Unlock bulk generation, custom branding, and priority support.
+                Upgrade to Pro for unlimited downloads, extra templates, and
+                more advanced features.
               </p>
             </div>
             <Link to="/pricing">
-              <button className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md font-medium hover:opacity-90">
+              <motion.button
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm"
+              >
                 Upgrade to Pro
-              </button>
+              </motion.button>
             </Link>
           </div>
         </div>
       </div>
 
-      <TemplatePreviewModal
-        template={previewTemplate}
-        onClose={() => setPreviewTemplate(null)}
-      />
       <FooterPart />
+
+      {previewTemplate && (
+        <TemplatePreviewModal
+          template={previewTemplate}
+          onClose={() => setPreviewTemplate(null)}
+        />
+      )}
     </>
   );
 }
