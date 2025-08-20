@@ -21,6 +21,7 @@ import {
   ClockIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
 
 export default function SupportPage() {
   const faqs = [
@@ -117,18 +118,18 @@ export default function SupportPage() {
 
       {/* Status Bar */}
       <div
-        className={`py-3 px-4 ${
-          systemStatus.operational ? "bg-green-900/50" : "bg-red-900/50"
+        className={`py-3 px-4 transition-colors duration-500 ${
+          systemStatus.operational ? "bg-green-900/40" : "bg-red-900/40"
         } border-y border-[#3a4556]`}
       >
-        <div className="max-w-7xl mx-auto flex items-center space-x-3">
+        <div className="max-w-7xl mx-auto flex items-center gap-3">
           {systemStatus.operational ? (
-            <CheckCircleIcon className="h-5 w-5 text-green-300" />
+            <CheckCircleIcon className="h-5 w-5 text-green-300 animate-pulse" />
           ) : (
-            <ExclamationTriangleIcon className="h-5 w-5 text-red-300" />
+            <ExclamationTriangleIcon className="h-5 w-5 text-red-300 animate-bounce" />
           )}
           <span
-            className={`text-sm font-medium ${
+            className={`text-sm font-medium transition-colors duration-500 ${
               systemStatus.operational ? "text-green-300" : "text-red-300"
             }`}
           >
