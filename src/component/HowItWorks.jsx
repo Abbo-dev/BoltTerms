@@ -43,7 +43,7 @@ function HowItWorks() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-3xl font-bold text-[#e4e6e8] mb-4 text-center"
+        className="text-2xl font-bold text-[#e4e6e8] mb-4 text-center"
       >
         How It Works
       </motion.h2>

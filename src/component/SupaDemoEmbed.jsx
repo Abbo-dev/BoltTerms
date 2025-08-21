@@ -3,7 +3,10 @@ import { FaPlay, FaRocket, FaClock, FaCheckCircle } from "react-icons/fa";
 
 function SupaDemoEmbed() {
   return (
-    <section className="w-full flex flex-col items-center justify-center px-6 relative py-16">
+    <section
+      id="supa-demo-embed"
+      className="w-full flex flex-col items-center justify-center px-6 relative py-16"
+    >
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -12,7 +15,7 @@ function SupaDemoEmbed() {
         transition={{ duration: 0.6 }}
         className="text-center mb-12 max-w-3xl"
       >
-        <h2 className="text-3xl font-bold text-[#e4e6e8] mb-4">
+        <h2 className="text-2xl font-bold text-[#e4e6e8] mb-4">
           See It In Action
         </h2>
         <div className="inline-flex items-center bg-[#2962ea]/10 border border-[#2962ea]/20 text-[#2962ea] px-4 py-2 rounded-full mb-6">

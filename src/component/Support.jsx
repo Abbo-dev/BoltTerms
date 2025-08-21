@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/20/solid";
 import FooterPart from "./FooterPart";
 import Navbar from "./Navbar";
@@ -57,7 +59,17 @@ export default function SupportPage() {
 
   const systemStatus = {
     operational: true,
-    message: "All systems operational",
+    message: `All systems operational - No issues reported as of
+     ${new Date()
+       .toLocaleString("en-GB", {
+         day: "2-digit",
+         month: "2-digit",
+         year: "numeric",
+         hour: "2-digit",
+         minute: "2-digit",
+         second: "2-digit",
+       })
+       .toLocaleUpperCase()}`,
   };
 
   const supportChannels = [
@@ -118,23 +130,40 @@ export default function SupportPage() {
 
       {/* Status Bar */}
       <div
-        className={`py-3 px-4 transition-colors duration-500 ${
+        className={`py-3 px-4 transition-colors duration-500 overflow-hidden ${
           systemStatus.operational ? "bg-green-900/40" : "bg-red-900/40"
         } border-y border-[#3a4556]`}
       >
         <div className="max-w-7xl mx-auto flex items-center gap-3">
-          {systemStatus.operational ? (
-            <CheckCircleIcon className="h-5 w-5 text-green-300 animate-pulse" />
-          ) : (
-            <ExclamationTriangleIcon className="h-5 w-5 text-red-300 animate-bounce" />
-          )}
-          <span
-            className={`text-sm font-medium transition-colors duration-500 ${
-              systemStatus.operational ? "text-green-300" : "text-red-300"
-            }`}
-          >
-            {systemStatus.message}
-          </span>
+          {/* Icon - fixed position */}
+          <div className="flex-shrink-0">
+            {systemStatus.operational ? (
+              <div className="h-5 w-5 text-green-300 animate-pulse">
+                <CheckCircleIcon className="w-5 h-5" />
+              </div>
+            ) : (
+              <div className="h-5 w-5 text-red-300 animate-bounce">
+                <XCircleIcon className="w-5 h-5" />
+              </div>
+            )}
+          </div>
+
+          {/* Scrolling text container */}
+          <div className="flex-1 overflow-hidden">
+            <div className="whitespace-nowrap">
+              <span
+                className={`inline-block animate-marquee text-sm font-bold transition-colors duration-500 ${
+                  systemStatus.operational ? "text-green-300" : "text-red-300"
+                }`}
+              >
+                {systemStatus.message}
+                <span className="mx-12">•</span>
+                {systemStatus.message}
+                <span className="mx-12">•</span>
+                {systemStatus.message}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -126,7 +126,7 @@ export default function TCTemplatePage() {
             <p className="text-[#828a96] mb-8">
               Head over to the generator to create your first template!
             </p>
-            <Link to="/">
+            <Link to="/generate">
               <motion.button
                 variants={buttonVariants}
                 whileHover="hover"

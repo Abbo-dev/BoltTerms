@@ -12,6 +12,7 @@ import FooterPart from "./FooterPart";
 import { ScaleIcon } from "@heroicons/react/20/solid";
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 export default function FeaturesPage() {
   const features = [
     {
@@ -85,7 +86,12 @@ export default function FeaturesPage() {
               >
                 Start Generating Free
               </Button>
-              <Button className="border border-[#2962ea] text-[#2962ea] hover:bg-[#2962ea]/10 px-6 py-3 rounded-md text-md">
+              <Button
+                as={HashLink}
+                smooth
+                to={"/#supa-demo-embed"}
+                className="border border-[#2962ea] text-[#2962ea] hover:bg-[#2962ea]/10 px-6 py-3 rounded-md text-md"
+              >
                 See Live Demo
               </Button>
             </div>
