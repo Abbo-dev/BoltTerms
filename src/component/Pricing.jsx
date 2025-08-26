@@ -22,19 +22,17 @@ export default function PricingPage() {
       }
 
       setAlertForPlan(null);
+      const functionsUrl = import.meta.env.VITE_FUNCTIONS_URL;
 
       const idToken = await user.getIdToken();
-      const response = await fetch(
-        "https://us-central1-tc-generator-5bdea.cloudfunctions.net/createCheckoutSession",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`,
-          },
-          body: JSON.stringify({ stripePriceId }),
-        }
-      );
+      const response = await fetch(functionsUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ stripePriceId }),
+      });
 
       const result = await response.json();
       const sessionId = result.sessionId;
@@ -51,8 +49,6 @@ export default function PricingPage() {
       const stripe = await stripePromise;
       const { error } = await stripe.redirectToCheckout({
         sessionId,
-        successUrl: window.location.origin + "/success",
-        cancelUrl: window.location.origin + "/cancel",
       });
 
       if (error) {

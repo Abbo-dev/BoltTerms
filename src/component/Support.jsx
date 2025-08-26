@@ -87,13 +87,6 @@ export default function SupportPage() {
       action: "tel:+11234567890",
       actionText: "+1 (123) 456-7890",
     },
-    {
-      title: "Live Chat",
-      description: "Available 24/7 for premium users",
-      icon: <ChatBubbleLeftRightIcon className="w-6 h-6 text-[#2962ea]" />,
-      action: "#",
-      actionText: "Start Chat",
-    },
   ];
 
   const itemClasses = {
@@ -231,7 +224,7 @@ export default function SupportPage() {
         </div>
 
         {/* Support Channels */}
-        <div className="grid gap-6 md:grid-cols-3  max-w-4xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-2  max-w-4xl mx-auto">
           {supportChannels.map((channel, index) => (
             <div
               key={index}

@@ -325,7 +325,7 @@ function CardSection() {
               <div className="flex-grow">
                 <p className="font-semibold text-white">Document Generated!</p>
                 <p className="text-sm text-gray-400">
-                  You can also browse our full template library.
+                  You can also browse your generated templates.
                 </p>
               </div>
               <Link
