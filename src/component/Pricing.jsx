@@ -23,7 +23,9 @@ export default function PricingPage() {
 
       setAlertForPlan(null);
       const functionsUrl = import.meta.env.VITE_FUNCTIONS_URL;
-
+      if (!functionsUrl) {
+        throw new Error("Functions URL is not defined.");
+      }
       const idToken = await user.getIdToken();
       const response = await fetch(functionsUrl, {
         method: "POST",
@@ -240,7 +242,11 @@ export default function PricingPage() {
                       : "bg-gray-700 cursor-not-allowed opacity-60"
                   }`}
                   style={{ color: "white" }}
-                  disabled={!plan.popular || userPlan === "LIFETIME"}
+                  disabled={
+                    !plan.popular ||
+                    userPlan === "LIFETIME" ||
+                    userPlan === plan.stripePriceId
+                  }
                   onPress={() => handlePayment(plan.stripePriceId)}
                 >
                   {userPlan === "LIFETIME" ? "Already Purchased" : plan.cta}

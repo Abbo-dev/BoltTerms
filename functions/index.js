@@ -75,8 +75,8 @@ checkoutApp.post("/", async (req, res) => {
       ],
       mode: "payment",
       success_url:
-        "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:5173/cancel",
+        "https://www.boltterms.com/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "https://www.boltterms.com/cancel",
       metadata: {
         userId: userId,
       },
