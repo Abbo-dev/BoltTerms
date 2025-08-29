@@ -16,7 +16,8 @@ function SupaDemoEmbed() {
         className="text-center mb-12 max-w-3xl"
       >
         <h2 className="text-2xl font-bold text-[#e4e6e8] mb-4">
-          See It In Action
+          Don't Just Take <span className="text-[#2962ea]">Our Word</span> For
+          It
         </h2>
         <div className="inline-flex items-center bg-[#2962ea]/10 border border-[#2962ea]/20 text-[#2962ea] px-4 py-2 rounded-full mb-6">
           <FaPlay className="mr-2 text-sm" />
@@ -77,8 +78,6 @@ function SupaDemoEmbed() {
             title="How to create e-commerce terms and conditions"
             loading="lazy"
             allow="clipboard-write"
-            frameBorder="0"
-            allowFullScreen
             className="absolute top-0 left-0 w-full h-full rounded-xl"
           />
         </div>

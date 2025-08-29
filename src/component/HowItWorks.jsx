@@ -45,7 +45,7 @@ function HowItWorks() {
         transition={{ duration: 0.6 }}
         className="text-2xl font-bold text-[#e4e6e8] mb-4 text-center"
       >
-        How It Works
+        From Start to <span className="text-[#2962ea]">Secure </span> in Minutes
       </motion.h2>
 
       {/* Steps as Cards */}
