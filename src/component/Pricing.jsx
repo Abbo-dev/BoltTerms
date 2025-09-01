@@ -9,10 +9,13 @@ import { useContext, useState } from "react";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 import AlertSignIn from "./AlertSignIn.jsx";
 import PricingTable from "./PricingTable.jsx";
+import useStatus from "./userStatus.jsx";
 export default function PricingPage() {
   const [alertForPlan, setAlertForPlan] = useState(false);
   const user = getAuth().currentUser;
   const { userPlan } = useContext(GeneratedTemplatesContext);
+  const { userStatus } = useStatus();
+  const isPaidUser = userStatus?.isPaidUser;
 
   const handlePayment = async (stripePriceId) => {
     try {
@@ -237,7 +240,7 @@ export default function PricingPage() {
                 </ul>
                 <Button
                   className={`w-full py-3 px-4 rounded-md font-medium ${
-                    plan.popular
+                    plan.popular && !isPaidUser
                       ? "bg-blue-600 hover:bg-blue-700"
                       : "bg-gray-700 cursor-not-allowed opacity-60"
                   }`}
@@ -245,11 +248,12 @@ export default function PricingPage() {
                   disabled={
                     !plan.popular ||
                     userPlan === "LIFETIME" ||
-                    userPlan === plan.stripePriceId
+                    userPlan === plan.stripePriceId ||
+                    isPaidUser
                   }
                   onPress={() => handlePayment(plan.stripePriceId)}
                 >
-                  {userPlan === "LIFETIME" ? "Already Purchased" : plan.cta}
+                 {isPaidUser ? "Enjoy Your Premium Access" : "Unlock the Full Story"}
                 </Button>
                 {alertForPlan === plan.stripePriceId && <AlertSignIn />}
               </div>

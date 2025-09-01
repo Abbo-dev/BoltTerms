@@ -113,8 +113,8 @@ export default function SupportPage() {
           <LifebuoyIcon className="w-5 h-5 mr-2" />
           We're here to help
         </div>
-        <h1 className="text-4xl font-bold text-center text-[#e4e6e8] pb-4">
-          T&C Generator Support
+        <h1 className="text-4xl font-extrabold text-center text-[#e4e6e8] pb-4">
+          T&C Generator <span className="text-[#2962ea]">Support</span>
         </h1>
         <p className="text-base text-gray-300 mb-8 max-w-2xl mx-auto">
           Get help with generating, editing, and managing your legal documents
