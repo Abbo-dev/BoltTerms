@@ -103,7 +103,11 @@ exports.createCheckoutSession = onRequest(
     secrets: ["STRIPE_SECRET_KEY"],
     region: "us-central1",
     cors: {
-      origin: ["http://localhost:5173"], // Your frontend origin
+      origin: [
+        "http://localhost:5173",
+        "https://www.boltterms.com",
+        "https://boltterms.com",
+      ], // Your frontend origin
       methods: ["POST", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
