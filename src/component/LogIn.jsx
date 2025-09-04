@@ -110,8 +110,8 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#181e2b] flex items-center justify-center p-4 ">
-      <Card className="bg-[#242d39] p-8 rounded-2xl shadow-xl max-w-md w-full space-y-6">
+    <div className="min-h-screen bg-[#181e2b]  items-center justify-center p-4  flex flex-col">
+      <Card className="bg-[#242d39] p-8 rounded-2xl  max-w-md w-full space-y-6 shadow-xl shadow-black/25  ">
         <Link to="/" className=" flex items-center justify-center ">
           <div className="w-12 h-12 bg-[#2962ea] rounded-lg flex items-center justify-center  mr-2">
             <Image src={Bolt} alt="Shield Icon" className="w-8 h-8 " />
@@ -140,7 +140,7 @@ export default function AuthPage() {
         </div>
 
         {/* Heading */}
-        <h2 className="text-2xl font-bold text-[#e4e6e8] text-center">
+        <h2 className="text-3xl font-extrabold text-[#e4e6e8] text-center">
           {isLogin ? "Welcome Back" : "Create an Account"}
         </h2>
 
@@ -158,6 +158,7 @@ export default function AuthPage() {
               label="Username"
               type="text"
               name="username"
+              size="sm"
               placeholder="Your username"
               isRequired
               className=" text-[#e4e6e8]"
@@ -170,6 +171,7 @@ export default function AuthPage() {
             type="email"
             name="email"
             placeholder="you@example.com"
+            size="sm"
             isRequired
             className=" text-[#e4e6e8]"
             onChange={(e) => setEmail(e.target.value)}
@@ -182,6 +184,7 @@ export default function AuthPage() {
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="••••••••"
+              size="sm"
               isRequired
               className="text-[#e4e6e8]"
               onChange={(e) => setPassword(e.target.value)}
@@ -205,16 +208,26 @@ export default function AuthPage() {
             {isLogin ? "Log In" : "Register"}
           </Button>
         </motion.form>
-
-        <p className="text-center text-sm text-[#828a96] mt-4">
-          {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button
-            onClick={() => setTab(isLogin ? "register" : "login")}
-            className="text-[#2962ea] hover:underline"
-          >
-            {isLogin ? "Register" : "Log In"}
-          </button>
-        </p>
+        <div>
+          <p className="text-center text-xs text-[#828a96] mb-3">
+            Forgot Password?{" "}
+            <button
+              onClick={() => navigate("/forgot-password")}
+              className="text-[#2962ea] hover:underline"
+            >
+              Reset Password
+            </button>
+          </p>
+          <p className="text-center text-sm text-[#828a96]  ">
+            {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+            <button
+              onClick={() => setTab(isLogin ? "register" : "login")}
+              className="text-[#2962ea] hover:underline"
+            >
+              {isLogin ? "Register" : "Log In"}
+            </button>
+          </p>
+        </div>
       </Card>
       <BackHome />
     </div>

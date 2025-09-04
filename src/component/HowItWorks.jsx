@@ -52,7 +52,7 @@ function HowItWorks() {
 
       {/* Steps as Cards */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-6 md:p-10 relative z-10 max-w-6xl"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-6 md:p-10 relative z-10 max-w-6xl  "
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
