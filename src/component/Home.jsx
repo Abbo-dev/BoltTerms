@@ -11,6 +11,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import SupaDemoEmbed from "./SupaDemoEmbed.jsx";
 import HowItWorks from "./HowItWorks.jsx";
 import { motion } from "framer-motion";
+import ComingSoon from "./ComingSoon.jsx";
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -24,6 +25,7 @@ const Home = () => {
 
   return (
     <div className="w-full h-full relative overflow-hidden">
+      <ComingSoon />
       <Navbar />
       {/* Subtle background elements */}
       <div className="fixed -top-20 -left-20 w-64 h-64 rounded-full bg-[#2962ea]/20 blur-3xl -z-0"></div>
