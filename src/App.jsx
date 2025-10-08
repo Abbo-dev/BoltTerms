@@ -14,6 +14,7 @@ import CookiesPolicy from "./component/CookiesPage.jsx";
 import AboutPage from "./component/About.jsx";
 import Success from "./component/Success.jsx";
 import CancelPage from "./component/CancelPage.jsx";
+import RefundPolicy from "./component/Refund.jsx";
 const App = () => {
   return (
     <>
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<CancelPage />} />
+        <Route path="/refund" element={<RefundPolicy />} />
       </Routes>
     </>
   );
