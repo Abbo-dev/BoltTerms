@@ -13,56 +13,54 @@ const RefundPolicy = () => {
         </div>
 
         <div className="space-y-6 text-sm md:text-base">
-          <Section title="1. No Refunds for Digital Services">
+          <Section title="1. Overview">
             <p>
-              All purchases made through TC Gen are final and non-refundable.
-              Our product delivers instant access to digital content (custom
-              legal documents), which cannot be returned or revoked once
-              generated. For this reason, we do not offer refunds,
-              cancellations, or exchanges after a purchase is completed.
+              At <strong>Bolt Terms</strong>, we want every customer to be
+              satisfied with their purchase. Because our products are digital
+              legal-document generators, delivery occurs instantly after
+              payment. However, in accordance with Paddle’s Buyer Terms, we
+              offer a <strong>14-day refund policy</strong> from the date of
+              purchase.
             </p>
           </Section>
 
-          <Section title="2. Instant Delivery">
+          <Section title="2. Eligibility for Refunds">
             <p>
-              Upon successful payment, your Terms & Conditions and related legal
-              documents are immediately created and made available for download
-              or copy. Because the full value of our service is delivered
-              instantly, refund requests cannot be honored after delivery.
+              You may request a refund within 14 days of your transaction if you
+              are not satisfied or experience issues accessing your generated
+              documents. To request a refund, contact our support team with your
+              order details and the email used for purchase.
             </p>
           </Section>
 
-          <Section title="3. Errors or Technical Issues">
+          <Section title="3. Technical Issues">
             <p>
-              If you experience a technical issue preventing you from receiving
-              your document, please contact our support team within{" "}
-              <span className="text-[#2962ea] font-semibold">48 hours</span> of
-              purchase. We will verify your case and, if applicable, provide a
-              corrected document or new access at no additional charge.
+              If a technical problem prevents you from receiving your document,
+              please reach out within 48 hours. We’ll verify the issue and
+              either resolve it or issue a refund if appropriate.
             </p>
           </Section>
 
           <Section title="4. Chargebacks & Disputes">
             <p>
-              Initiating a chargeback after accessing or downloading our digital
-              product is considered a violation of these terms. We reserve the
-              right to dispute such claims and provide full evidence of delivery
-              to the payment provider.
+              Filing a chargeback without contacting us first may result in your
+              account being suspended. We always aim to resolve refund requests
+              directly and fairly.
             </p>
           </Section>
 
           <Section title="5. Policy Updates">
             <p>
-              We may update this Refund Policy from time to time to reflect
-              changes in our service or applicable laws. Continued use of TC Gen
-              after such changes constitutes acceptance of the revised policy.
+              Bolt Terms may update this Refund Policy periodically. Continued
+              use of our services after an update means you accept the revised
+              version.
             </p>
           </Section>
 
           <div className="pt-4 border-t border-[#4c5562]">
             <p className="text-[#828a96] text-sm">
-              Questions or issues with your order? Reach out to us at{" "}
-              <span className="text-[#2962ea]">support@tcgen.app</span>.
+              For refund requests or questions, please contact us at{" "}
+              <span className="text-[#2962ea]">support@boltterms.com</span>.
             </p>
           </div>
         </div>

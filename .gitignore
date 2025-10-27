@@ -27,3 +27,4 @@ src/FirebaseConfig.js
 .env
 template.json
 .env.*
+hosting.*.cache

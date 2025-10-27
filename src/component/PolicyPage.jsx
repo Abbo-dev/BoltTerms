@@ -1,4 +1,5 @@
 import BackToHome from "./BackHome";
+
 export const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-[#181e2b] text-[#e4e6e8] py-8 px-4">
@@ -16,9 +17,9 @@ export const PrivacyPolicy = () => {
         <div className="space-y-6 text-sm md:text-base">
           <Section title="1. Introduction">
             <p>
-              TC Gen ("we," "our," or "us") respects your privacy. This policy
-              explains how we handle information in our term generator
-              application.
+              Bolt Terms ("we," "our," or "us") respects your privacy. This
+              policy explains how we handle information in our legal document
+              generator application.
             </p>
           </Section>
 
@@ -55,21 +56,21 @@ export const PrivacyPolicy = () => {
           <Section title="6. Your Rights">
             <p>
               You may request deletion of your account and associated data at
-              any time by contacting us at privacy@tcgen.app.
+              any time by contacting us at privacy@boltterms.com.
             </p>
           </Section>
 
           <Section title="7. Changes to This Policy">
             <p>
-              We may update this policy periodically. Continued use of TC Gen
-              after changes constitutes acceptance of the revised policy.
+              We may update this policy periodically. Continued use of Bolt
+              Terms after changes constitutes acceptance of the revised policy.
             </p>
           </Section>
 
           <div className="pt-4 border-t border-[#4c5562]">
             <p className="text-[#828a96] text-sm">
               For questions about this policy, contact us at: <br />
-              <span className="text-[#2962ea]">support@tcgen.app</span>
+              <span className="text-[#2962ea]">support@boltterms.com</span>
             </p>
           </div>
         </div>
