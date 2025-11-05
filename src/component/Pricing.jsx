@@ -1,9 +1,8 @@
- 
 import Navbar from "./Navbar";
 import FooterPart from "./FooterPart";
 import { Button } from "@heroui/react";
 import { Accordion, AccordionItem } from "@heroui/react";
-import { stripePromise } from "../stripe";
+//import { stripePromise } from "../stripe";
 import { getAuth } from "firebase/auth";
 import { useContext, useState } from "react";
 import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
@@ -253,7 +252,9 @@ export default function PricingPage() {
                   }
                   onPress={() => handlePayment(plan.stripePriceId)}
                 >
-                 {isPaidUser ? "Enjoy Your Premium Access" : "Unlock the Full Story"}
+                  {isPaidUser
+                    ? "Enjoy Your Premium Access"
+                    : "Unlock the Full Story"}
                 </Button>
                 {alertForPlan === plan.stripePriceId && <AlertSignIn />}
               </div>
