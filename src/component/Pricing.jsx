@@ -9,6 +9,7 @@ import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 import AlertSignIn from "./AlertSignIn.jsx";
 import PricingTable from "./PricingTable.jsx";
 import useStatus from "./userStatus.jsx";
+
 export default function PricingPage() {
   const [alertForPlan, setAlertForPlan] = useState(false);
   const user = getAuth().currentUser;
@@ -16,8 +17,37 @@ export default function PricingPage() {
   const { userStatus } = useStatus();
   const isPaidUser = userStatus?.isPaidUser;
 
-const handlePayment = async () => {
-    
+  const handlePayment = async () => {
+    const userId = user?.uid;
+    const userEmail = user?.email;
+    if (!user) {
+      setAlertForPlan(true);
+      return;
+    }
+    // Check if Paddle is loaded
+    if (!window.Paddle) {
+      console.error("Paddle.js is not loaded.");
+      return;
+    }
+    try {
+      window.Paddle.Checkout.open({
+        items: [{ priceId: "pri_01k9d09zr0grd38nvxent39sc4", quantity: 1 }],
+        custom_data: {
+          firebaseUserId: userId,
+          email: userEmail,
+        },
+
+        successUrl: "https://boltterms.com/success",
+        cancelUrl: "https://boltterms.com/cancel",
+
+        customer: {
+          email: userEmail,
+          name: user?.displayName,
+        },
+      });
+    } catch (error) {
+      console.error("Error during Paddle checkout:", error);
+    }
   };
 
   const plans = [
