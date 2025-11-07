@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./AuthContext.jsx";
 import { FormProvider } from "./FormDataContext.jsx";
 import { GeneratedTemplatesProvider } from "./component/GeneratedTemplatesContext.jsx";
+import {PaddleProvider} from './PaddleProvider.jsx';
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -17,11 +18,13 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <FormProvider>
             <GeneratedTemplatesProvider>
+            <PaddleProvider>
               <App />
+            </PaddleProvider>
             </GeneratedTemplatesProvider>
           </FormProvider>
         </AuthProvider>
       </HeroUIProvider>
-    </BrowserRouter>
+      </BrowserRouter>
   </StrictMode>
 );

@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
-import { CheckIcon, DocumentTextIcon } from "./Icons";
-import Navbar from "./Navbar";
-import FooterPart from "./FooterPart";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import TemplatePreviewModal from "./TemplatePreview";
+import { useAuth } from "../AuthContext.jsx";
+import { useForm } from "../FormDataContext.jsx";
 import { downloadTemplatePdf } from "../utils/dowloadTemplatePdf";
 import { downloadTemplateDocx } from "../utils/downloadTemplateDocx";
-import { useState, useEffect } from "react";
 import Templates from "./../../template.json";
-import useStatus from "./userStatus";
-import { useForm } from "../FormDataContext.jsx";
+import FooterPart from "./FooterPart";
 import { useGeneratedTemplates } from "./GeneratedTemplatesContext.jsx";
-import { useAuth } from "../AuthContext.jsx";
-import { motion } from "framer-motion";
+import { CheckIcon, DocumentTextIcon } from "./Icons";
+import Navbar from "./Navbar";
+import TemplatePreviewModal from "./TemplatePreview";
+import useStatus from "./userStatus";
 
 export default function TCTemplatePage() {
   const [previewTemplate, setPreviewTemplate] = useState(null);

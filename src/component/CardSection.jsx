@@ -1,27 +1,22 @@
 import { Card, CardBody } from "@heroui/card";
 import {
-  Input,
   Button,
+  Image,
+  Input,
   Select,
   SelectItem,
-  Image,
   addToast,
 } from "@heroui/react";
-import Copy from "./../assets/copy.svg";
-import { useState, useContext, useEffect } from "react";
-import Templates from "./../../template.json";
-import { useForm } from "../FormDataContext.jsx";
-import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
-import { useAuth } from "../AuthContext.jsx";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../AuthContext.jsx";
+import { useForm } from "../FormDataContext.jsx";
+import Templates from "./../../template.json";
+import Copy from "./../assets/copy.svg";
+import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 // Added framer-motion and heroicons for enhanced styling and animations
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  BuildingOffice2Icon,
-  GlobeAltIcon,
-  XMarkIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/24/outline";
+import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
 
 function CardSection() {
   const options = [{ value: "E-commerce", label: "E-commerce" }];

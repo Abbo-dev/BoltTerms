@@ -16,53 +16,8 @@ export default function PricingPage() {
   const { userStatus } = useStatus();
   const isPaidUser = userStatus?.isPaidUser;
 
-  const handlePayment = async (stripePriceId) => {
-    try {
-      if (!user) {
-        setAlertForPlan(stripePriceId);
-        return;
-      }
-
-      setAlertForPlan(null);
-      const functionsUrl = import.meta.env.VITE_FUNCTIONS_URL;
-      if (!functionsUrl) {
-        throw new Error("Functions URL is not defined.");
-      }
-      const idToken = await user.getIdToken();
-      const response = await fetch(functionsUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${idToken}`,
-        },
-        body: JSON.stringify({ stripePriceId }),
-      });
-
-      const result = await response.json();
-      const sessionId = result.sessionId;
-
-      if (!sessionId) {
-        throw new Error("No sessionId returned from function.");
-      }
-
-      // Add success_url and cancel_url to the session creation
-      if (!result.success_url || !result.cancel_url) {
-        console.log("Payment session URLs:", result);
-      }
-
-      const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({
-        sessionId,
-      });
-
-      if (error) {
-        console.error("Stripe redirect error:", error.message);
-        alert("Error redirecting to Stripe: " + error.message);
-      }
-    } catch (error) {
-      console.error("Error during handlePayment:", error.message, error.stack);
-      alert("Payment failed: " + error.message);
-    }
+const handlePayment = async () => {
+    
   };
 
   const plans = [
