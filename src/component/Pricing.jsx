@@ -9,6 +9,9 @@ import { GeneratedTemplatesContext } from "./GeneratedTemplatesContext.jsx";
 import AlertSignIn from "./AlertSignIn.jsx";
 import PricingTable from "./PricingTable.jsx";
 import useStatus from "./userStatus.jsx";
+import { plans } from "../config/Plans.jsx";
+import { faqs } from "../config/Faqs.jsx";
+import HeroPricing from "./HeroPricing.jsx";
 
 export default function PricingPage() {
   const [alertForPlan, setAlertForPlan] = useState(false);
@@ -17,21 +20,19 @@ export default function PricingPage() {
   const { userStatus } = useStatus();
   const isPaidUser = userStatus?.isPaidUser;
 
-  const handlePayment = async () => {
+  const handlePayment = async (paddlePriceId) => {
+    const Paddle = window.Paddle;
     const userId = user?.uid;
     const userEmail = user?.email;
-    if (!user) {
-      setAlertForPlan(true);
-      return;
-    }
+
     // Check if Paddle is loaded
     if (!window.Paddle) {
       console.error("Paddle.js is not loaded.");
       return;
     }
     try {
-      window.Paddle.Checkout.open({
-        items: [{ priceId: "pri_01k9d09zr0grd38nvxent39sc4", quantity: 1 }],
+      await Paddle.Checkout.open({
+        items: [{ priceId: paddlePriceId, quantity: 1 }],
         custom_data: {
           firebaseUserId: userId,
           email: userEmail,
@@ -50,50 +51,6 @@ export default function PricingPage() {
     }
   };
 
-  const plans = [
-    {
-      name: "Lifetime Access",
-      price: "$19",
-      description: "One-time payment. No subscriptions. Instant access.",
-      features: [
-        "Unlimited TC generations",
-        "PDF & DOCX export",
-        "Access to all templates",
-        "Custom fields & branding",
-        "Email support (48h response)",
-      ],
-      cta: "Buy Once, Use Forever",
-      stripePriceId: "price_1Rdt73COmRZKMVKqPPM96VIo",
-      popular: true,
-    },
-    {
-      name: "Pro Monthly (Coming Soon)",
-      price: "$9",
-      period: "/month",
-      description: "Subscription for power users — launching soon",
-      features: [
-        "Everything in Lifetime plan",
-        "Priority support (24h)",
-        "Bulk generation",
-        "Team seats",
-      ],
-      cta: "Coming Soon",
-      popular: false,
-    },
-    {
-      name: "Pro Annual (Coming Soon)",
-      price: "$90",
-      period: "/year",
-      description: "Annual savings with additional features — launching soon",
-      features: [
-        "Everything in Pro Monthly",
-        "Dedicated account manager",
-        "API access (beta)",
-      ],
-      cta: "Coming Soon",
-      popular: false,
-    },
-  ];
   const itemClasses = {
     base: "w-full",
     title: "text-[#e4e6e8] text-base font-medium",
@@ -102,29 +59,6 @@ export default function PricingPage() {
     indicator: "text-[#828a96]",
     content: "text-[#828a96] text-sm px-5 pb-4 pt-3",
   };
-
-  const faqs = [
-    {
-      question: "Is this really a one-time payment?",
-      answer:
-        "Yes, it is. We offer a lifetime license that you acquire with a single payment. This means you pay once and have access to all the features included in your plan forever, without any recurring subscriptions or hidden fees.",
-    },
-    {
-      question: "Can I upgrade to future subscriptions later?",
-      answer:
-        "Absolutely. We value our early supporters. When we introduce new subscription models in the future, all lifetime license holders will be offered a substantial discount to upgrade, should they choose to do so.",
-    },
-    {
-      question: "Do you offer refunds?",
-      answer:
-        "We offer a 7-day, no-questions-asked refund policy. If you find that our service doesn't meet your needs within the first week of your purchase, you are entitled to a full refund.",
-    },
-    {
-      question: "Will my access change when subscriptions launch?",
-      answer:
-        "Your lifetime access will not be affected at all. As a lifetime user, you will permanently retain all the features and benefits that were available at the time of your purchase, regardless of any future changes to our pricing or subscription models.",
-    },
-  ];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#181e2b" }}>
@@ -137,25 +71,8 @@ export default function PricingPage() {
         💡 Subscriptions launching soon — grab lifetime access for $19 before
         it's gone!
       </div>
+      <HeroPricing />
 
-      {/* Hero Section */}
-      <div className="relative" style={{ backgroundColor: "#232b38" }}>
-        <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8 text-center">
-          <h1
-            className="text-4xl font-bold text-center text-[#e4e6e8] pb-4 "
-            style={{ color: "#e4e6e8" }}
-          >
-            Simple, transparent pricing
-          </h1>
-
-          <p
-            className="text-center text-[#9CA3AF] text-md"
-            style={{ color: "#828a96" }}
-          >
-            One-time lifetime access — with optional subscriptions coming soon.
-          </p>
-        </div>
-      </div>
       {/* Separator SVG */}
       <div className="relative z-10">
         <svg viewBox="0 0 1440 100" className="text-[#232b38] fill-current">
@@ -232,16 +149,16 @@ export default function PricingPage() {
                   disabled={
                     !plan.popular ||
                     userPlan === "LIFETIME" ||
-                    userPlan === plan.stripePriceId ||
+                    userPlan === plan.paddlePriceId ||
                     isPaidUser
                   }
-                  onPress={() => handlePayment(plan.stripePriceId)}
+                  onPress={() => handlePayment(plan.paddlePriceId)}
                 >
                   {isPaidUser
                     ? "Enjoy Your Premium Access"
                     : "Unlock the Full Story"}
                 </Button>
-                {alertForPlan === plan.stripePriceId && <AlertSignIn />}
+                {alertForPlan === plan.paddlePriceId && <AlertSignIn />}
               </div>
             </div>
           ))}
