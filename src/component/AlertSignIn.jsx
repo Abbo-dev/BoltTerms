@@ -6,7 +6,7 @@ export default function AlertSignIn() {
     <div className="flex items-center justify-center w-full mt-4">
       <Alert
         color="danger"
-        description="You need to sign in to generate templates. Please sign up or log in to continue."
+        description="Please sign in  or log in to unlock this premium feature."
         endContent={
           <Link to="/login">
             <Button color="warning" size="sm" variant="flat">
@@ -16,6 +16,7 @@ export default function AlertSignIn() {
         }
         title="Sign In Required to Continue"
         variant="faded"
+        withIcon
       />
     </div>
   );
