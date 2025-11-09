@@ -7,8 +7,9 @@ export const PaddleProvider = ({ children }) => {
     script.onload = () => {
       const Paddle = window.Paddle;
       Paddle.Environment.set("sandbox"); // Remove or change for production
-      Paddle.Initialize({ token: "test_94bafca7620d0e7190f338ba2fe" }); // Replace with your Paddle Vendor ID
-      // Remove or change for production
+      Paddle.Initialize({
+        token: "test_94bafca7620d0e7190f338ba2fe",
+      });
     };
     document.body.appendChild(script);
   }, []);

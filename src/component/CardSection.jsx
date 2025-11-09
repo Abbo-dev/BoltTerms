@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Card, CardBody } from "@heroui/card";
 import {
   Button,

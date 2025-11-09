@@ -28,7 +28,7 @@ export function GeneratedTemplatesProvider({ children }) {
         setGeneratedTemplates([]);
         return;
       }
-      console.log("Fetching templates for user:", user.uid);
+      //console.log("Fetching templates for user:", user.uid);
       // Fetch templates for the logged-in user
       const q = query(
         collection(db, "templates"),
@@ -37,7 +37,7 @@ export function GeneratedTemplatesProvider({ children }) {
       );
       const snapshot = await getDocs(q);
       const loaded = snapshot.docs.map((doc) => doc.data());
-      console.log("Loaded templates:", loaded);
+      //console.log("Loaded templates:", loaded);
       setGeneratedTemplates(loaded);
     };
     fetchTemplates();
