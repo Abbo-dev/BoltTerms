@@ -44,18 +44,7 @@ export default function PricingPage() {
 
         successUrl: "https://boltterms.com/success",
         cancelUrl: "https://boltterms.com/cancel",
-        checkout: {
-          settings: {
-            displayMode: "inline",
-            variant: "one-page",
-            theme: "dark",
-            locale: "en",
-            frameTarget: "checkout-container",
-            frameInitialHeight: "450",
-            frameStyle:
-              "width: 100%; min-width: 312px; background-color: transparent; border: none;",
-          },
-        },
+
         customer: {
           email: userEmail,
           name: user?.displayName,
