@@ -34,12 +34,29 @@ export default function PricingPage() {
       console.error("Paddle.js is not loaded.");
       return;
     }
+    const target = document.getElementById("checkout-container");
+    if (!target) {
+      console.error("checkout-container not found!");
+      return;
+    }
+
     try {
       await Paddle.Checkout.open({
         items: [{ priceId: paddlePriceId, quantity: 1 }],
         custom_data: {
           firebaseUserId: userId,
           email: userEmail,
+        },
+        checkout: {
+          settings: {
+            displayMode: "inline",
+            variant: "single-page", // single-page for clean look
+            theme: "light",
+            frameTarget: "checkout-container",
+            frameInitialHeight: 600,
+            frameStyle:
+              "width:100%; border:none; border-radius:16px; overflow:hidden;",
+          },
         },
 
         successUrl: "https://boltterms.com/success",
@@ -75,6 +92,7 @@ export default function PricingPage() {
         💡 Subscriptions launching soon — grab lifetime access for $19 before
         it's gone!
       </div>
+
       <HeroPricing />
 
       {/* Separator SVG */}
@@ -107,6 +125,7 @@ export default function PricingPage() {
                 >
                   {plan.name}
                 </h2>
+                <div id="checkout-container"></div>
                 <div className="flex items-baseline mb-4">
                   <span
                     className="text-4xl font-extrabold"
