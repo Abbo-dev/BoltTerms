@@ -24,48 +24,42 @@ export default function PricingPage() {
     const Paddle = window.Paddle;
     const userId = user?.uid;
     const userEmail = user?.email;
+
     if (!user) {
       setAlertForPlan(paddlePriceId);
       return;
     }
 
-    // Check if Paddle is loaded
-    if (!window.Paddle) {
+    if (!Paddle) {
       console.error("Paddle.js is not loaded.");
       return;
     }
-    const target = document.getElementById("checkout-container");
-    if (!target) {
-      console.error("checkout-container not found!");
+
+    const targetOverlay = document.getElementById("checkout-container");
+    const targetFrame = document.getElementById("checkout-frame");
+
+    if (!targetOverlay || !targetFrame) {
+      console.error("checkout-container or frame not found!");
       return;
     }
 
     try {
+      targetOverlay.style.display = "flex";
+
       await Paddle.Checkout.open({
         items: [{ priceId: paddlePriceId, quantity: 1 }],
-        custom_data: {
-          firebaseUserId: userId,
-          email: userEmail,
-        },
         checkout: {
           settings: {
             displayMode: "inline",
-            variant: "single-page", // single-page for clean look
+            variant: "single-page",
             theme: "light",
-            frameTarget: "checkout-container",
+            frameTarget: "checkout-frame",
             frameInitialHeight: 600,
-            frameStyle:
-              "width:100%; border:none; border-radius:16px; overflow:hidden;",
+            frameStyle: "width:100%; border:none;",
           },
         },
-
         successUrl: "https://boltterms.com/success",
         cancelUrl: "https://boltterms.com/cancel",
-
-        customer: {
-          email: userEmail,
-          name: user?.displayName,
-        },
       });
     } catch (error) {
       console.error("Error during Paddle checkout:", error);
@@ -101,6 +95,32 @@ export default function PricingPage() {
           <path d="M0,0 C480,100 960,0 1440,100 L1440,00 L0,0 Z"></path>
         </svg>
       </div>
+      <div
+        id="checkout-container"
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.4)",
+          backdropFilter: "blur(3px)",
+          display: "none", // hidden until opened
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
+          zIndex: 9999,
+        }}
+      >
+        <div
+          id="checkout-frame"
+          style={{
+            width: "100%",
+            maxWidth: "600px",
+            minHeight: "600px",
+            background: "#1f2937",
+            borderRadius: "16px",
+            overflow: "hidden",
+          }}
+        ></div>
+      </div>
 
       {/* Pricing Tiers */}
       <div className="max-w-xl md:max-w-3xl  lg:max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12">
@@ -125,7 +145,7 @@ export default function PricingPage() {
                 >
                   {plan.name}
                 </h2>
-                <div id="checkout-container"></div>
+
                 <div className="flex items-baseline mb-4">
                   <span
                     className="text-4xl font-extrabold"
