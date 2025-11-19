@@ -1,4 +1,3 @@
-// PaddleProvider.jsx
 import { useEffect } from "react";
 
 export const PaddleProvider = ({ children }) => {
@@ -8,9 +7,20 @@ export const PaddleProvider = ({ children }) => {
     script.onload = () => {
       const Paddle = window.Paddle;
       if (!Paddle) return;
+
       Paddle.Environment.set("sandbox");
       Paddle.Initialize({
         token: "test_94bafca7620d0e7190f338ba2fe",
+        checkout: {
+          settings: {
+            displayMode: "inline",
+            theme: "dark",
+            frameTarget: "checkout-container",
+            frameInitialHeight: 450,
+            frameStyle:
+              "width: 100%; min-width: 312px; background-color: transparent; border: none;",
+          },
+        },
       });
     };
     document.body.appendChild(script);

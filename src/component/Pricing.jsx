@@ -44,22 +44,15 @@ export default function PricingPage() {
     }
 
     try {
-      targetOverlay.style.display = "flex";
+      const frame = document.getElementById("checkout-frame");
+      frame.style.opacity = "1"; // show frame
+      frame.style.pointerEvents = "auto"; // enable click
 
       await Paddle.Checkout.open({
         items: [{ priceId: paddlePriceId, quantity: 1 }],
-        checkout: {
-          settings: {
-            displayMode: "inline",
-            variant: "single-page",
-            theme: "light",
-            frameTarget: "checkout-frame",
-            frameInitialHeight: 600,
-            frameStyle: "width:100%; border:none;",
-          },
-        },
         successUrl: "https://boltterms.com/success",
         cancelUrl: "https://boltterms.com/cancel",
+        theme: "dark",
       });
     } catch (error) {
       console.error("Error during Paddle checkout:", error);
@@ -95,31 +88,10 @@ export default function PricingPage() {
           <path d="M0,0 C480,100 960,0 1440,100 L1440,00 L0,0 Z"></path>
         </svg>
       </div>
-      <div
-        id="checkout-container"
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: "rgba(0,0,0,0.4)",
-          backdropFilter: "blur(3px)",
-          display: "none", // hidden until opened
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "20px",
-          zIndex: 9999,
-        }}
-      >
-        <div
-          id="checkout-frame"
-          style={{
-            width: "100%",
-            maxWidth: "600px",
-            minHeight: "600px",
-            background: "#1f2937",
-            borderRadius: "16px",
-            overflow: "hidden",
-          }}
-        ></div>
+      {/* Checkout Overlay */}
+      <div id="checkout-container" className="checkout-container">
+        {" "}
+        <div id="checkout-frame"></div>{" "}
       </div>
 
       {/* Pricing Tiers */}
