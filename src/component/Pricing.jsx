@@ -15,12 +15,13 @@ import HeroPricing from "./HeroPricing.jsx";
 
 export default function PricingPage() {
   const [alertForPlan, setAlertForPlan] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
   const user = getAuth().currentUser;
   const { userPlan } = useContext(GeneratedTemplatesContext);
   const { userStatus } = useStatus();
   const isPaidUser = userStatus?.isPaidUser;
 
-  const handlePayment = async (paddlePriceId) => {
+  const handlePayment = (paddlePriceId) => {
     const Paddle = window.Paddle;
     const userId = user?.uid;
     const userEmail = user?.email;
@@ -35,28 +36,25 @@ export default function PricingPage() {
       return;
     }
 
-    const targetOverlay = document.getElementById("checkout-container");
-    const targetFrame = document.getElementById("checkout-frame");
+    setShowCheckout(true);
+    setTimeout(() => {
+      const targetOverlay = document.getElementById("checkout-container");
 
-    if (!targetOverlay || !targetFrame) {
-      console.error("checkout-container or frame not found!");
-      return;
-    }
+      if (!targetOverlay) {
+        console.error("checkout-container or frame not found!");
+        return;
+      }
 
-    try {
-      const frame = document.getElementById("checkout-frame");
-      frame.style.opacity = "1"; // show frame
-      frame.style.pointerEvents = "auto"; // enable click
-
-      await Paddle.Checkout.open({
-        items: [{ priceId: paddlePriceId, quantity: 1 }],
-        successUrl: "https://boltterms.com/success",
-        cancelUrl: "https://boltterms.com/cancel",
-        theme: "dark",
-      });
-    } catch (error) {
-      console.error("Error during Paddle checkout:", error);
-    }
+      try {
+        Paddle.Checkout.open({
+          items: [{ priceId: paddlePriceId, quantity: 1 }],
+          successUrl: "https://boltterms.com/success",
+          cancelUrl: "https://boltterms.com/cancel",
+        });
+      } catch (error) {
+        console.error("Error during Paddle checkout:", error);
+      }
+    }, 0);
   };
 
   const itemClasses = {
@@ -83,16 +81,32 @@ export default function PricingPage() {
       <HeroPricing />
 
       {/* Separator SVG */}
+
       <div className="relative z-10">
         <svg viewBox="0 0 1440 100" className="text-[#232b38] fill-current">
           <path d="M0,0 C480,100 960,0 1440,100 L1440,00 L0,0 Z"></path>
         </svg>
       </div>
+
       {/* Checkout Overlay */}
-      <div id="checkout-container" className="checkout-container">
-        {" "}
-        <div id="checkout-frame"></div>{" "}
-      </div>
+
+      {showCheckout && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center w-full"
+          style={{
+            background: "rgba(0, 0, 0, 0.7)",
+            backdropFilter: "blur(4px)",
+          }}
+          onClick={() => setShowCheckout(false)}
+        >
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <div
+              id="checkout-container"
+              className="checkout-container  rounded-xl shadow-2xl  w-[100%] h-[100%] flex items-center justify-center bg-white "
+            ></div>
+          </div>
+        </div>
+      )}
 
       {/* Pricing Tiers */}
       <div className="max-w-xl md:max-w-3xl  lg:max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12">

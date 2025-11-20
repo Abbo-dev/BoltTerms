@@ -1,3 +1,4 @@
+import { th } from "framer-motion/client";
 import { useEffect } from "react";
 
 export const PaddleProvider = ({ children }) => {
@@ -14,11 +15,9 @@ export const PaddleProvider = ({ children }) => {
         checkout: {
           settings: {
             displayMode: "inline",
-            theme: "dark",
+            variant: "one-page",
             frameTarget: "checkout-container",
-            frameInitialHeight: 450,
-            frameStyle:
-              "width: 100%; min-width: 312px; background-color: transparent; border: none;",
+            theme: "light",
           },
         },
       });
