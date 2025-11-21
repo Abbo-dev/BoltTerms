@@ -17,7 +17,9 @@ export const PaddleProvider = ({ children }) => {
             displayMode: "inline",
             variant: "one-page",
             frameTarget: "checkout-container",
-            theme: "light",
+            frameInitialHeight: "450",
+            frameStyle:
+              "width: 100%; min-width: 312px; background-color: transparent; border: none;",
           },
         },
       });

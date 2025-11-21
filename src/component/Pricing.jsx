@@ -92,18 +92,20 @@ export default function PricingPage() {
 
       {showCheckout && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center w-full"
+          className="fixed inset-0 z-[9999] flex items-center justify-center"
           style={{
-            background: "rgba(0, 0, 0, 0.7)",
+            background: "rgba(0, 0, 0, 0.65)",
             backdropFilter: "blur(4px)",
           }}
           onClick={() => setShowCheckout(false)}
         >
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <div
-              id="checkout-container"
-              className="checkout-container  rounded-xl shadow-2xl  w-[100%] h-[100%] flex items-center justify-center bg-white "
-            ></div>
+          {/* Modal Box */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#1f1f24] rounded-xl shadow-2xl p-6 w-[500px] max-w-[95%] max-h-[90vh] overflow-auto"
+          >
+            {/* Paddle inline checkout mounts HERE */}
+            <div id="checkout-container"></div>
           </div>
         </div>
       )}
