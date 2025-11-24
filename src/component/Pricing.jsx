@@ -48,8 +48,19 @@ export default function PricingPage() {
       try {
         Paddle.Checkout.open({
           items: [{ priceId: paddlePriceId, quantity: 1 }],
+          settings: {
+            displayMode: "inline",
+            theme: "dark",
+            frameTarget: "checkout-container",
+            frameStyle:
+              "width: 100%;  background-color: transparent; border: none;",
+          },
           successUrl: "https://boltterms.com/success",
           cancelUrl: "https://boltterms.com/cancel",
+          // specific custom data if needed
+          customData: {
+            userId: userId,
+          },
         });
       } catch (error) {
         console.error("Error during Paddle checkout:", error);
@@ -89,23 +100,29 @@ export default function PricingPage() {
       </div>
 
       {/* Checkout Overlay */}
-
       {showCheckout && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center"
-          style={{
-            background: "rgba(0, 0, 0, 0.65)",
-            backdropFilter: "blur(4px)",
-          }}
+          className="fixed inset-0 z-[9999] flex items-center justify-center backdrop-blur-md bg-[#181e2b]/60"
           onClick={() => setShowCheckout(false)}
         >
           {/* Modal Box */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#1f1f24] rounded-xl shadow-2xl p-6 w-[500px] max-w-[95%] max-h-[90vh] overflow-auto"
+            className="relative rounded-xl shadow-2xl p-4 w-[500px] max-w-[95%] max-h-[90vh] overflow-auto border border-[#3a4556]"
+            style={{
+              backgroundColor: "#232b38", // Matches your FAQ/Separators
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)", // Deep shadow
+            }}
           >
-            {/* Paddle inline checkout mounts HERE */}
-            <div id="checkout-container"></div>
+            {/* Close Button (Optional but recommended for UX) */}
+            <button
+              onClick={() => setShowCheckout(false)}
+              className="absolute top-4 right-4 text-[#828a96] hover:text-[#e4e6e8] transition-colors"
+            >
+              ✕
+            </button>
+
+            <div id="checkout-container" className="checkout-container"></div>
           </div>
         </div>
       )}
@@ -116,10 +133,9 @@ export default function PricingPage() {
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`rounded-lg overflow-hidden relative ${
+              className={`rounded-lg overflow-hidden relative bg-[#374151] ${
                 plan.popular ? "ring-2 ring-blue-500" : ""
               }`}
-              style={{ backgroundColor: "#374151" }}
             >
               {plan.popular && (
                 <div className="absolute top-1 right-1 bg-blue-600 text-white text-xs font-bold px-3 py-1 transform translate-x-2 -translate-y-2 rounded-bl-lg">
