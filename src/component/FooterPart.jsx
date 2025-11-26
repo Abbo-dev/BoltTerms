@@ -96,7 +96,7 @@ function FooterPart() {
         <Divider className="h-[2px] bg-[#3c4654] w-[400px] md:w-[800px] flex items-center transtion-all" />
         <div className="flex items-center justify-center mt-10">
           <footer className="text-[#9CA3AF] text-sm ">
-            &copy; 2025 T&C Generator. All rights reserved.
+            &copy; 2025 Bolt Terms. All rights reserved.
           </footer>
         </div>
       </div>

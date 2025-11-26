@@ -63,3 +63,17 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+/* Add this to ensure base readability */
+body {
+  color: #e4e6e8; /* Default text is readable, not too dark */
+  background-color: #181e2b;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff; /* Headings always pop */
+}
