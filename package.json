@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "@heroicons/react": "^2.2.0",
     "@heroui/react": "^2.7.6",
     "docx": "^9.5.1",

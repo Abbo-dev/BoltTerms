@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/20/solid";
+import { EnvelopeIcon } from "@heroicons/react/20/solid";
 import FooterPart from "./FooterPart";
 import Navbar from "./Navbar";
 import {
@@ -13,17 +13,17 @@ import {
 } from "@heroui/react";
 import {
   CheckCircleIcon,
-  ExclamationTriangleIcon,
+  XCircleIcon, // Fixed missing import
   LifebuoyIcon,
-  ChatBubbleLeftRightIcon,
   DocumentTextIcon,
   ArrowPathIcon,
   ArrowDownTrayIcon,
   PencilSquareIcon,
   ClockIcon,
-  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
+import { ContactForm } from "./ContactForm";
+// Import a social icon for X/Twitter
+import { FaTwitter } from "react-icons/fa";
 
 export default function SupportPage() {
   const faqs = [
@@ -31,28 +31,28 @@ export default function SupportPage() {
       id: 1,
       question: "How do I generate a TC?",
       answer:
-        "To generate a Terms & Conditions document, simply click the 'Generate' button on the homepage or templates section. You'll be guided through a short form where you'll enter basic information about your business, website, and policies. Once you fill out all required fields, your tailored document will be ready for download instantly.",
+        "To generate a Terms & Conditions document, simply click the 'Generate' button on the homepage or templates section. You'll be guided through a short form where you'll enter basic information about your business, website, and policies.",
       icon: <DocumentTextIcon className="w-5 h-5 text-[#2962ea]" />,
     },
     {
       id: 2,
       question: "What formats are supported?",
       answer:
-        "We currently support downloads in both PDF and DOCX formats. PDF is ideal if you want a ready-to-use version for viewing or sharing, while DOCX is perfect if you'd like to make further edits using Microsoft Word or Google Docs before publishing it on your website.",
+        "We currently support downloads in both PDF and DOCX formats. PDF is ideal if you want a ready-to-use version for viewing or sharing, while DOCX is perfect if you'd like to make further edits using Microsoft Word.",
       icon: <ArrowDownTrayIcon className="w-5 h-5 text-[#2962ea]" />,
     },
     {
       id: 3,
       question: "Is there a limit to how many TCs I can generate?",
       answer:
-        "Nope! With an active subscription, you can create as many Terms & Conditions documents as you need — for multiple businesses, websites, or variations. Whether you're updating an existing policy or creating a new one from scratch, there's no cap.",
+        "Nope! With an active subscription, you can create as many Terms & Conditions documents as you need — for multiple businesses, websites, or variations.",
       icon: <ArrowPathIcon className="w-5 h-5 text-[#2962ea]" />,
     },
     {
       id: 4,
       question: "How do I edit a generated TC?",
       answer:
-        "If you need to make changes, just return to the generator and re-enter your details. You can either load your previous inputs (if saved) or start fresh. After updating any fields, simply regenerate the document and download the latest version. For quick tweaks, we recommend using the DOCX format for easier editing in your preferred text editor.",
+        "If you need to make changes, just return to the generator and re-enter your details. You can either load your previous inputs (if saved) or start fresh.",
       icon: <PencilSquareIcon className="w-5 h-5 text-[#2962ea]" />,
     },
   ];
@@ -60,32 +60,33 @@ export default function SupportPage() {
   const systemStatus = {
     operational: true,
     message: `All systems operational - No issues reported as of
-     ${new Date()
-       .toLocaleString("en-GB", {
-         day: "2-digit",
-         month: "2-digit",
-         year: "numeric",
-         hour: "2-digit",
-         minute: "2-digit",
-         second: "2-digit",
-       })
-       .toLocaleUpperCase()}`,
+      ${new Date()
+        .toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+        .toLocaleUpperCase()}`,
   };
 
   const supportChannels = [
     {
       title: "Email Support",
-      description: "Typically responds within 4 hours",
+      description: "We usually reply within 24 hours.",
       icon: <EnvelopeIcon className="w-6 h-6 text-[#2962ea]" />,
-      action: "mailto:support@tcgenerator.com",
-      actionText: "support@tcgenerator.com",
+      // Just anchor to the form below
+      action: "#contact",
+      actionText: "Send a message below",
     },
     {
-      title: "Phone Support",
-      description: " Typically responds within 1 hour",
-      icon: <PhoneIcon className="w-6 h-6 text-[#2962ea]" />,
-      action: "tel:+11234567890",
-      actionText: "+1 (123) 456-7890",
+      title: "Twitter / X",
+      description: "Quick questions & updates.",
+      // Replaced Phone with Twitter - much more realistic for Indie Hackers
+      icon: <FaTwitter className="w-6 h-6 text-[#2962ea]" />,
+      action: "https://x.com/YOUR_TWITTER_HANDLE", // Put your handle here
+      actionText: "@YourHandle",
     },
   ];
 
@@ -93,7 +94,7 @@ export default function SupportPage() {
     base: "w-full",
     title: "text-[#e4e6e8] text-base font-medium",
     trigger:
-      "flex items-center gap-3 py-4 px-5 text-left text-[#e4e6e8] rounded-lg transition-colors  hover:bg-[#3a4556]",
+      "flex items-center gap-3 py-4 px-5 text-left text-[#e4e6e8] rounded-lg transition-colors hover:bg-[#3a4556]",
     indicator: "text-[#828a96]",
     content: "text-[#828a96] text-sm px-5 pb-4 pt-3",
   };
@@ -128,7 +129,6 @@ export default function SupportPage() {
         } border-y border-[#3a4556]`}
       >
         <div className="max-w-7xl mx-auto flex items-center gap-3">
-          {/* Icon - fixed position */}
           <div className="flex-shrink-0">
             {systemStatus.operational ? (
               <div className="h-5 w-5 text-green-300 animate-pulse">
@@ -141,7 +141,6 @@ export default function SupportPage() {
             )}
           </div>
 
-          {/* Scrolling text container */}
           <div className="flex-1 overflow-hidden">
             <div className="whitespace-nowrap">
               <span
@@ -149,8 +148,6 @@ export default function SupportPage() {
                   systemStatus.operational ? "text-green-300" : "text-red-300"
                 }`}
               >
-                {systemStatus.message}
-                <span className="mx-12">•</span>
                 {systemStatus.message}
                 <span className="mx-12">•</span>
                 {systemStatus.message}
@@ -170,42 +167,7 @@ export default function SupportPage() {
 
           <Accordion
             itemClasses={itemClasses}
-            motionProps={{
-              variants: {
-                enter: {
-                  y: 0,
-                  opacity: 1,
-                  height: "auto",
-                  transition: {
-                    height: {
-                      type: "spring",
-                      stiffness: 500,
-                      damping: 30,
-                    },
-                    opacity: {
-                      easings: "ease",
-                      duration: 0.3,
-                    },
-                  },
-                },
-                exit: {
-                  y: -10,
-                  opacity: 0,
-                  height: 0,
-                  transition: {
-                    height: {
-                      easings: "ease",
-                      duration: 0.5,
-                    },
-                    opacity: {
-                      easings: "ease",
-                      duration: 0.2,
-                    },
-                  },
-                },
-              },
-            }}
-            className="rounded-xl overflow-hidden bg-[#232b38] border border-[#3a4556] "
+            className="rounded-xl overflow-hidden bg-[#232b38] border border-[#3a4556]"
           >
             {faqs.map((faq) => (
               <AccordionItem
@@ -224,14 +186,15 @@ export default function SupportPage() {
         </div>
 
         {/* Support Channels */}
-        <div className="grid gap-6 md:grid-cols-2  max-w-4xl mx-auto">
+        <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
           {supportChannels.map((channel, index) => (
-            <div
+            <a
               key={index}
-              className="bg-[#232b38] border border-[#3a4556] rounded-xl p-6 hover:border-[#2962ea]/50 transition-all hover:shadow-lg hover:shadow-[#2962ea]/50 hover:cursor-pointer"
+              href={channel.action}
+              className="bg-[#232b38] border border-[#3a4556] rounded-xl p-6 hover:border-[#2962ea]/50 transition-all hover:shadow-lg hover:shadow-[#2962ea]/50 cursor-pointer group"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-[#2962ea]/10 rounded-lg">
+                <div className="p-2 bg-[#2962ea]/10 rounded-lg group-hover:bg-[#2962ea]/20 transition-colors">
                   {channel.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-[#e4e6e8]">
@@ -245,64 +208,14 @@ export default function SupportPage() {
                 <p className="text-gray-400 text-sm">{channel.description}</p>
               </div>
 
-              <a
-                href={channel.action}
-                className="text-[#2962ea] hover:underline flex items-center gap-1"
-              >
+              <span className="text-[#2962ea] group-hover:underline flex items-center gap-1">
                 {channel.actionText}
-              </a>
-            </div>
+              </span>
+            </a>
           ))}
         </div>
-
         {/* Contact Form */}
-        <div id="contact" className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-[#e4e6e8] mb-2">
-              Send Us a Message
-            </h2>
-            <p className="text-gray-400">
-              Can't find what you're looking for? Our team will get back to you
-              within 24 hours.
-            </p>
-          </div>
-
-          <Form className="bg-[#232b38] border border-[#3a4556] p-6 sm:p-8 rounded-xl space-y-6 hover:shadow-lg hover:shadow-[#2962ea]/50 hover:cursor-pointer max-w-5xl mx-auto ">
-            <div className="flex flex-col sm:flex-row justify-between items-center w-full    gap-3">
-              <Input
-                label="Name"
-                type="text "
-                isRequired
-                labelPlacement="inside"
-                size="sm"
-                placeholder="Your name"
-              />
-              <Input
-                label="Email"
-                type="email"
-                isRequired
-                labelPlacement="inside"
-                size="sm"
-                placeholder="your@email.com"
-              />
-            </div>
-            <Textarea
-              label="How can we help?"
-              placeholder="Describe your issue or question..."
-              labelPlacement="inside"
-              minRows={5}
-            />
-
-            <div className="flex justify-end w-full">
-              <Button
-                type="submit"
-                className="bg-[#2962ea] hover:bg-[#1e4bac] text-white px-8 py-3 rounded-md font-medium transition-all"
-              >
-                Send Message
-              </Button>
-            </div>
-          </Form>
-        </div>
+        <ContactForm />
       </main>
 
       <FooterPart />
