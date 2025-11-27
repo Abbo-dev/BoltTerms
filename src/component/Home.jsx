@@ -37,20 +37,21 @@ const Home = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="inline-flex items-center bg-[#2962ea]/10 border border-[#2962ea]/20 text-[#2962ea] text-sm px-4 py-2 rounded-full mb-6">
-            ⚡ Instant Legal Docs
-          </div>
-
-          <h1 className="text-[34px] md:text-[37px] font-extrabold text-center text-[#e4e6e8] leading-tight">
-            Your Legal Docs,{" "}
-            <span className="text-[#2962ea]">Done in 3 Minutes</span>
+          <h1 className="text-5xl font-extrabold tracking-tight mt-10">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-500 ">
+              Instant Legal Docs
+            </span>
+            <br />
+            <span className="text-[#2962ea]">for SaaS Founders</span>
           </h1>
-
           <p className="text-center text-[#9CA3AF] text-sm md:text-base max-w-md leading-relaxed mt-3">
             Generate professional, compliant Terms & Conditions instantly. No
             legal knowledge required.
           </p>
         </motion.div>
+        <div className="inline-flex items-center bg-[#2962ea]/10 border border-[#2962ea]/20 text-[#2962ea] text-sm px-4 py-2 rounded-full ">
+          ⚡ Instant Legal Docs
+        </div>
 
         {/* CTA Buttons */}
         <div className="flex gap-6 items-center justify-center mt-6">

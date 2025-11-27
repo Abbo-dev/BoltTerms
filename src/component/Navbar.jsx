@@ -51,7 +51,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="w-full h-15 bg-[#232b38] flex flex-wrap justify-between items-center px-4 py-3 md:px-8 transition-allbackdrop-blur-md bg-slate-900/80 border-b border-blue-500/20 ">
+      <nav className="fixed top-0 left-0 w-full z-50 h-16 flex items-center justify-between px-4 md:px-8 border-b border-[#3a4556]/40 bg-[#181e2b]/90 backdrop-blur-xl transition-all duration-300">
         {/* Logo Section */}
         <div onClick={() => handleClick()}>
           <Link to="/" className="flex items-center">
@@ -186,7 +186,7 @@ const Navbar = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </nav>
       <div
         className={`md:hidden fixed inset-0 z-[70] bg-[#1e2530] transition-transform duration-300 ease-in-out ${
           open ? "translate-x-0 opacity-100" : "translate-x-full"

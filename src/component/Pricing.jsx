@@ -108,7 +108,7 @@ export default function PricingPage() {
           {/* Modal Box */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative rounded-xl shadow-2xl p-4 max-w-[500px] max-h-[90vh] overflow-auto border border-[#3a4556]"
+            className="relative rounded-xl shadow-2xl p-4  max-h-[90vh] overflow-auto border border-[#3a4556]"
             style={{
               backgroundColor: "#232b38", // Matches your FAQ/Separators
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)", // Deep shadow
