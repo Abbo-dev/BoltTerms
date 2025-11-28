@@ -193,7 +193,7 @@ function CardSection() {
               <h1 className="text-white text-2xl font-bold mb-6 text-left">
                 Document Details
               </h1>
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-8 transition-all">
                 <motion.div variants={itemVariants}>
                   <Input
                     type="text"
@@ -232,7 +232,7 @@ function CardSection() {
                 </motion.div>
                 <motion.div variants={itemVariants}>
                   <Select
-                    label="Select Template Type"
+                    label="Select Template "
                     className="pt-2"
                     labelPlacement="inside"
                     size="sm"

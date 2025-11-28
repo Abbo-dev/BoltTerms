@@ -17,7 +17,7 @@ function GeneratePage() {
       <Navbar />
 
       {/* Main container with background styling and layout */}
-      <div className="bg-[#181e2b] min-h-screen px-4 sm:px-6 md:px-12 py-16 relative overflow-hidden">
+      <div className="bg-[#181e2b]   px-4 sm:px-6 md:px-12 py-16 relative overflow-hidden mt-5">
         {/* Decorative background gradient elements */}
         <div className="fixed -top-20 -left-20 w-64 h-64 rounded-full bg-[#2962ea]/10 blur-3xl -z-0"></div>
         <div className="fixed -bottom-20 -right-20 w-64 h-64 rounded-full bg-[#2962ea]/10 blur-3xl -z-0"></div>

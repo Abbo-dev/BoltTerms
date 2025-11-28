@@ -21,7 +21,7 @@ import {
   PencilSquareIcon,
   ClockIcon,
 } from "@heroicons/react/24/outline";
-import { ContactForm } from "./ContactForm";
+import ContactForm from "./ContactForm";
 // Import a social icon for X/Twitter
 import { FaTwitter } from "react-icons/fa";
 
@@ -208,7 +208,7 @@ export default function SupportPage() {
                 <p className="text-gray-400 text-sm">{channel.description}</p>
               </div>
 
-              <span className="text-[#2962ea] group-hover:underline flex items-center gap-1">
+              <span className="text-[#2962ea] group-hover:underline flex items-center gap-1 ">
                 {channel.actionText}
               </span>
             </a>
