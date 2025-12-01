@@ -92,7 +92,6 @@ export default function PricingPage() {
       <HeroPricing />
 
       {/* Separator SVG */}
-
       <div className="relative z-10">
         <svg viewBox="0 0 1440 100" className="text-[#232b38] fill-current">
           <path d="M0,0 C480,100 960,0 1440,100 L1440,00 L0,0 Z"></path>
@@ -108,7 +107,7 @@ export default function PricingPage() {
           {/* Modal Box */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative rounded-xl shadow-2xl p-4  max-h-[90vh] overflow-auto border border-[#3a4556]"
+            className="relative rounded-xl shadow-2xl p-4 w-[60vw]  max-h-[90vh] overflow-auto border border-[#3a4556]"
             style={{
               backgroundColor: "#232b38", // Matches your FAQ/Separators
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)", // Deep shadow

@@ -72,7 +72,7 @@ export default function TCTemplatePage() {
       <div className="fixed -bottom-20 -right-20 w-64 h-64 rounded-full bg-[#2962ea]/10 blur-3xl -z-0"></div>
       <div className="bg-[#181e2b] min-h-screen px-4 py-8 sm:px-6 md:px-8 lg:px-12">
         {/* Header */}
-        <header className="bg-[#232b38] rounded-lg p-6 mb-10 max-w-7xl mx-auto">
+        <header className="bg-[#232b38] rounded-lg p-6 mb-10 max-w-7xl mx-auto mt-10">
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#e4e6e8]">
             Terms & Conditions Templates
           </h1>

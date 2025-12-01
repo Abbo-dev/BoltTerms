@@ -18,6 +18,8 @@ import {
   DocumentTextIcon,
   CreditCardIcon,
   LifebuoyIcon,
+  XMarkIcon,
+  Bars3Icon, // Imported Bars3 for the Hamburger
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { auth } from "./../FirebaseConfig.js";
@@ -51,7 +53,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 h-16 flex items-center justify-between px-4 md:px-8 border-b border-[#3a4556]/40 bg-[#181e2b]/90 backdrop-blur-xl transition-all duration-300">
+      {/* Navbar stays at default/low z-index so it gets covered */}
+      <nav className="fixed top-0 left-0 w-full z-[40] md:z-50 flex items-center justify-between px-4 md:px-8 border-b border-[#3a4556]/40 bg-[#181e2b]/90 backdrop-blur-xl transition-all duration-300 p-3">
         {/* Logo Section */}
         <div onClick={() => handleClick()}>
           <Link to="/" className="flex items-center">
@@ -104,7 +107,7 @@ const Navbar = () => {
                   }}
                 >
                   <DropdownTrigger>
-                    <Button className="bg-transparent hover:bg-transparent active:bg-transparent focus:outline-none focus:ring-0 shadow-none  min-w-0 p-0 ">
+                    <Button className="bg-transparent hover:bg-transparent active:bg-transparent focus:outline-none focus:ring-0 shadow-none  min-w-0 p-0 overflow-hidden ">
                       <Avatar
                         classNames={{
                           base: "bg-gradient-to-br from-[#2962ea] to-[#1e40af] w-8 h-8",
@@ -114,7 +117,7 @@ const Navbar = () => {
                       />
                     </Button>
                   </DropdownTrigger>
-                  <DropdownMenu aria-label="Static Actions" className="pt-0">
+                  <DropdownMenu aria-label="Static Actions" className="pt-0 ">
                     <DropdownItem key="welcome" disabled>
                       Welcome ,{" "}
                       {user.displayName[0].toUpperCase() +
@@ -154,48 +157,29 @@ const Navbar = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button - Hidden on desktop */}
+          {/* Mobile Menu Button (Hamburger) - VISIBLE ONLY WHEN CLOSED */}
           <div className="md:hidden flex items-center ml-2 ">
             <Button
-              onPress={() => setOpen(!open)}
-              className="bg-transparent text-[#e4e6e8]  min-w-0 z-[90] "
+              onPress={() => setOpen(true)}
+              className="bg-transparent text-[#e4e6e8] min-w-0"
             >
-              {open ? (
-                <Image
-                  className="w-7 h-7 "
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  src={Closex}
-                ></Image>
-              ) : (
-                <svg
-                  className="w-7 h-7"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
+              {/* Only showing the hamburger here. The X is inside the popup now. */}
+              <Bars3Icon className="w-7 h-7" />
             </Button>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu Overlay */}
       <div
         className={`md:hidden fixed inset-0 z-[70] bg-[#1e2530] transition-transform duration-300 ease-in-out ${
           open ? "translate-x-0 opacity-100" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full justify-between">
+        <div className="flex flex-col h-full justify-between ">
           {/* Top Menu Content */}
           <div className="p-6 pt-10">
-            {/* Menu Header */}
+            {/* Menu Header with Logo AND Close Button */}
             <div className="flex items-center justify-between mb-8">
               <Link to="/" className="flex items-center">
                 <div className="flex items-center">
@@ -205,6 +189,14 @@ const Navbar = () => {
                   <p className="text-white text-lg font-bold">Bolt Terms</p>
                 </div>
               </Link>
+
+              {/* FIX: The Close Button is now HERE, inside the z-[70] overlay */}
+              <Button
+                onPress={() => setOpen(false)}
+                className="bg-transparent text-[#e4e6e8] min-w-0 p-0"
+              >
+                <XMarkIcon className="w-7 h-7" />
+              </Button>
             </div>
 
             {/* Menu Items */}

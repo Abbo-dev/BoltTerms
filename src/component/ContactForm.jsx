@@ -2,7 +2,7 @@ import { useForm, ValidationError } from "@formspree/react";
 import { Button, Form, Input, Textarea } from "@heroui/react";
 
 export default function ContactForm() {
-  // REPLACE "YOUR_FORM_ID" WITH THE CODE FROM FORMSPREE (e.g. xblvygpg)
+  
   const [state, handleSubmit] = useForm("xbpvzlng");
 
   if (state.succeeded) {

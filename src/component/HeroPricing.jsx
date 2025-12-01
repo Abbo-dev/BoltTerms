@@ -22,7 +22,7 @@ function HeroPricing() {
           <div className="bg-[#232b38] border border-[#3a4556] p-3 rounded-lg shadow-2xl flex items-center gap-3">
             <div className="h-8 w-8 bg-green-500/20 rounded-full flex items-center justify-center">
               <svg
-                className="w-4 h-4 text-green-500"
+                className="w-4 h-4 text-green-500 animate-pulse duration-150"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
