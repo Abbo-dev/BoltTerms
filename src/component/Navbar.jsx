@@ -19,7 +19,10 @@ import {
   CreditCardIcon,
   LifebuoyIcon,
   XMarkIcon,
-  Bars3Icon, // Imported Bars3 for the Hamburger
+  Bars3Icon,
+  BookOpenIcon,
+  ChatBubbleLeftRightIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { auth } from "./../FirebaseConfig.js";
@@ -94,7 +97,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button and Auth Buttons  */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ">
           {/* Auth Buttons - Visible on mobile and desktop */}
           <div className="hidden md:flex items-center gap-4">
             {user ? (
@@ -178,7 +181,7 @@ const Navbar = () => {
       >
         <div className="flex flex-col h-full justify-between ">
           {/* Top Menu Content */}
-          <div className="p-6 pt-10">
+          <div className="ml-3 pt-3">
             {/* Menu Header with Logo AND Close Button */}
             <div className="flex items-center justify-between mb-8">
               <Link to="/" className="flex items-center">
@@ -190,12 +193,12 @@ const Navbar = () => {
                 </div>
               </Link>
 
-              {/* FIX: The Close Button is now HERE, inside the z-[70] overlay */}
+              {/* Close Button */}
               <Button
                 onPress={() => setOpen(false)}
                 className="bg-transparent text-[#e4e6e8] min-w-0 p-0"
               >
-                <XMarkIcon className="w-7 h-7" />
+                <XMarkIcon className="w-7 h-7 mr-10" />
               </Button>
             </div>
 
@@ -221,6 +224,21 @@ const Navbar = () => {
                   name: "Support",
                   path: "/support",
                   icon: <LifebuoyIcon className="w-5 h-5" />,
+                },
+                {
+                  name: "Blog",
+                  path: "/blog",
+                  icon: <BookOpenIcon className="w-5 h-5" />,
+                },
+                {
+                  name: "Contact",
+                  path: "/contact",
+                  icon: <ChatBubbleLeftRightIcon className="w-5 h-5" />,
+                },
+                {
+                  name: "Profile",
+                  path: "/profile",
+                  icon: <UserIcon className="w-5 h-5" />,
                 },
               ].map((item) => (
                 <li key={item.name}>

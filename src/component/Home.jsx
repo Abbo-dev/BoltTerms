@@ -25,6 +25,7 @@ const Home = () => {
 
   return (
     <div className="w-full h-full relative overflow-hidden">
+      
       <Navbar />
       {/* Subtle background elements */}
       <div className="fixed -top-20 -left-20 w-64 h-64 rounded-full bg-[#2962ea]/20 blur-3xl -z-0"></div>

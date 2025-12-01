@@ -78,22 +78,27 @@ export default function FeaturesPage() {
               Trusted by thousands of businesses to stay legally compliant
               without the hefty lawyer fees.
             </p>
-            <div className="flex justify-center gap-4 flex-col sm:flex-row">
-              <Button
-                as={Link}
-                to="/"
-                className="bg-[#2962ea] hover:bg-[#1e4bac] px-6 py-3 text-md font-medium shadow-lg transition-all rounded-md"
-              >
-                Start Generating Free
-              </Button>
-              <Button
-                as={HashLink}
-                smooth
-                to={"/#supa-demo-embed"}
-                className="border border-[#2962ea] text-[#2962ea] hover:bg-[#2962ea]/10 px-6 py-3 rounded-md text-md"
-              >
-                See Live Demo
-              </Button>
+            <div className="flex justify-center gap-4 flex-col sm:flex-row mx-auto">
+              <div className="flex justify-center gap-4 flex-col sm:flex-row mx-auto">
+                {/* Primary Button - Matches Navbar "Get Started" exactly */}
+                <Button
+                  as={Link}
+                  to="/"
+                  className="bg-[#2962ea] hover:bg-[#2962ea]/80 text-[#e4e6e8] text-md font-semibold h-10 px-6 rounded-md transition-colors duration-300 shadow-lg"
+                >
+                  Start Generating Free
+                </Button>
+
+                {/* Secondary Button - Outline style but matches Navbar text/font settings */}
+                <Button
+                  as={HashLink}
+                  smooth
+                  to={"/#supa-demo-embed"}
+                  className="bg-transparent border border-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/10 text-md font-semibold h-10 px-6 rounded-md transition-colors duration-300"
+                >
+                  See Live Demo
+                </Button>
+              </div>
             </div>
           </section>
 
