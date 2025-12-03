@@ -110,7 +110,7 @@ export default function SupportPage() {
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto py-20 px-4 sm:px-6 lg:px-8 text-center relative">
         <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full bg-[#2962ea]/10 blur-3xl"></div>
-        <div className="inline-flex items-center bg-[#2962ea]/10 text-[#2962ea] px-4 py-2 rounded-full mb-4">
+        <div className="inline-flex items-center bg-[#2962ea]/10 text-[#2962ea] px-4 py-2 rounded-full mb-4 text-sm font-medium">
           <LifebuoyIcon className="w-5 h-5 mr-2" />
           We're here to help
         </div>

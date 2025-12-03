@@ -84,10 +84,6 @@ export default function PricingPage() {
       <div className="fixed -top-20 -left-20 w-64 h-64 rounded-full bg-[#2962ea]/20 blur-3xl -z-0"></div>
       <div className="fixed -bottom-20 -right-20 w-64 h-64 rounded-full bg-[#2962ea]/10 blur-3xl -z-0"></div>
       {/* Launch Alert */}
-      <div className="bg-[#2962ea] text-white text-center py-3 text-sm font-medium">
-        💡 Subscriptions launching soon — grab lifetime access for $19 before
-        it's gone!
-      </div>
 
       <HeroPricing />
 
