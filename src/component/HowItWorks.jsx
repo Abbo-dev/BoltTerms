@@ -56,7 +56,7 @@ function HowItWorks() {
 
       {/* Steps as Cards */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-6 md:p-10 relative z-10 max-w-6xl"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 p-6 md:p-10 relative z-10 max-w-6xl "
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -71,7 +71,7 @@ function HowItWorks() {
             transition={{ delay: i * 0.15, duration: 0.6 }}
             className="h-full" // Ensure motion div takes full height
           >
-            <Card className="h-full rounded-xl bg-[#242d39] border border-transparent hover:border-[#2962ea]/30 hover:shadow-lg hover:shadow-[#2962ea]/20 transition-all duration-300 group">
+            <Card className="h-full rounded-xl bg-[#242d39] border border-transparent hover:border-[#2962ea]/30 hover:shadow-lg hover:shadow-[#2962ea]/20 transition-all duration-300 group hover:animate-pulse">
               <CardBody className="flex flex-col items-center text-center p-6 h-full justify-between">
                 {/* Top Content Wrapper (Icon + Text) */}
                 <div className="flex flex-col items-center w-full">
