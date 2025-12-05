@@ -33,11 +33,24 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #718096;
 }
+html,
+body,
+#root {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 
 /* Firefox */
 * {
   scrollbar-width: thin;
   scrollbar-color: #4a5568 #2d3748;
+}
+/* index.css */
+html,
+body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
 }
 
 body {

@@ -103,6 +103,8 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center">
                 <Dropdown
+                  portalProps={{ disablePortal: true }}
+                  shouldBlockScroll={false}
                   showArrow
                   className="bg-[#374151] text-md"
                   classNames={{
@@ -184,13 +186,14 @@ const Navbar = () => {
           <div className="ml-3 pt-3">
             {/* Menu Header with Logo AND Close Button */}
             <div className="flex items-center justify-between mb-8">
-              <Link to="/" className="flex items-center">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-[#2962ea] rounded-lg flex items-center justify-center mr-2">
-                    <Image src={Bolt} alt="Shield Icon" className="w-6 h-6" />
-                  </div>
-                  <p className="text-white text-lg font-bold">Bolt Terms</p>
+              <Link to="/" className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-[#2962ea] flex items-center justify-center">
+                  <Image src={Bolt} alt="Bolt Icon" className="w-5 h-5" />
                 </div>
+
+                <span className="text-white text-base font-semibold">
+                  Bolt Terms
+                </span>
               </Link>
 
               {/* Close Button */}

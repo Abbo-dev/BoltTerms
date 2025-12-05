@@ -12,6 +12,12 @@ import SupaDemoEmbed from "./SupaDemoEmbed.jsx";
 import HowItWorks from "./HowItWorks.jsx";
 import { motion } from "framer-motion";
 import ComingSoon from "./ComingSoon.jsx";
+import {
+  CheckCircleIcon,
+  ClockIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+} from "@heroicons/react/24/solid";
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -25,7 +31,6 @@ const Home = () => {
 
   return (
     <div className="w-full h-full relative overflow-hidden">
-      
       <Navbar />
       {/* Subtle background elements */}
       <div className="fixed -top-20 -left-20 w-64 h-64 rounded-full bg-[#2962ea]/20 blur-3xl -z-0"></div>
@@ -76,15 +81,49 @@ const Home = () => {
           </Link>
         </div>
 
-        <p className="text-xs text-[#9CA3AF] mt-3">
-          ⚡ No signup required • Free to try
-        </p>
+        {/* Badge */}
+        <div className="flex justify-center mt-8">
+          <span
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold 
+    bg-blue-600/10 text-blue-300 border border-blue-600/20 shadow-sm"
+          >
+            <SparklesIcon className="w-4 h-4 opacity-80" />
+            No signup required — Free to try
+          </span>
+        </div>
 
-        {/* Social Proof */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-[#9CA3AF] text-sm mt-8">
-          <span>✅ 1000+ Businesses Protected</span>
-          <span>⏱ Avg 3-Minute Setup</span>
-          <span>🔒 Always Compliant</span>
+        {/* Trust Block */}
+        <div className="mt-12 w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+          {/* Item */}
+          <div className="flex flex-col items-center text-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/10">
+              <CheckCircleIcon className="w-5 h-5 text-emerald-400" />
+            </div>
+            <p className="mt-3 text-gray-300 font-medium">
+              1,000+ Businesses Protected
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              Across multiple industries
+            </p>
+          </div>
+
+          {/* Item */}
+          <div className="flex flex-col items-center text-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500/10">
+              <ClockIcon className="w-5 h-5 text-blue-400" />
+            </div>
+            <p className="mt-3 text-gray-300 font-medium">3-Minute Setup</p>
+            <p className="text-xs text-gray-500 mt-1">Optimized for speed</p>
+          </div>
+
+          {/* Item */}
+          <div className="flex flex-col items-center text-center">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-purple-500/10">
+              <ShieldCheckIcon className="w-5 h-5 text-purple-400" />
+            </div>
+            <p className="mt-3 text-gray-300 font-medium">Compliance Assured</p>
+            <p className="text-xs text-gray-500 mt-1">Always up-to-date</p>
+          </div>
         </div>
       </div>{" "}
       {/* Separator SVG */}
