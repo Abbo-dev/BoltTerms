@@ -50,10 +50,8 @@ const GeneratorWidget = () => {
             <Button
               type="submit"
               disabled={!businessName.trim()}
-              className={`px-6 py-3 font-semibold rounded-lg transition-all duration-300 ${
-                businessName.trim()
-                  ? "bg-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/90"
-                  : "bg-[#394251] text-[#9CA3AF] cursor-not-allowed"
+              className={`px-6 py-3 transition-all duration-300 ${
+                businessName.trim() ? "btn-primary" : "btn-muted"
               }`}
             >
               Generate

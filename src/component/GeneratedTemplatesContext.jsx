@@ -4,6 +4,7 @@ import { db } from "../FirebaseConfig"; // make sure Firestore is initialized he
 import {
   collection,
   addDoc,
+  doc,
   getDocs,
   query,
   where,
@@ -24,11 +25,9 @@ export function GeneratedTemplatesProvider({ children }) {
   useEffect(() => {
     const fetchTemplates = async () => {
       if (!user) {
-        console.log("No user logged in, skipping template fetch.");
         setGeneratedTemplates([]);
         return;
       }
-      //console.log("Fetching templates for user:", user.uid);
       // Fetch templates for the logged-in user
       const q = query(
         collection(db, "templates"),
@@ -36,8 +35,10 @@ export function GeneratedTemplatesProvider({ children }) {
         orderBy("generatedAt", "desc")
       );
       const snapshot = await getDocs(q);
-      const loaded = snapshot.docs.map((doc) => doc.data());
-      //console.log("Loaded templates:", loaded);
+      const loaded = snapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }));
       setGeneratedTemplates(loaded);
     };
     fetchTemplates();
@@ -65,36 +66,41 @@ export function GeneratedTemplatesProvider({ children }) {
     };
 
     // Save to Firestore
+    let docRef;
     if (user) {
-      await addDoc(collection(db, "templates"), newTemplate);
+      docRef = await addDoc(collection(db, "templates"), newTemplate);
     }
 
     // Update local state
-    setGeneratedTemplates((prev) => [newTemplate, ...prev]);
+    const newTemplateWithId = docRef
+      ? { id: docRef.id, ...newTemplate }
+      : newTemplate;
+    setGeneratedTemplates((prev) => [newTemplateWithId, ...prev]);
   };
 
-  const clearGeneratedTemplates = () => {
-    //setGeneratedTemplates([]);
-    // Optionally delete from Firestore if needed
+  const clearGeneratedTemplates = async () => {
+    setGeneratedTemplates([]);
 
-    if (user) {
-      const q = query(
-        collection(db, "templates"),
-        where("uid", "==", user.uid)
-      );
-      getDocs(q).then((snapshot) => {
-        snapshot.forEach((doc) => {
-          // Delete each document
-          deleteDoc(doc.ref)
-            .then(() => {
-              console.log("Deleted template:", doc.id);
-            })
-            .catch((error) => {
-              console.error("Error deleting template:", error);
-            });
-        });
-      });
+    if (!user) {
+      return;
     }
+
+    const q = query(collection(db, "templates"), where("uid", "==", user.uid));
+    const snapshot = await getDocs(q);
+    await Promise.all(
+      snapshot.docs.map((docSnap) => deleteDoc(docSnap.ref))
+    );
+  };
+
+  const deleteGeneratedTemplate = async (templateId) => {
+    if (!user || !templateId) {
+      return;
+    }
+
+    await deleteDoc(doc(db, "templates", templateId));
+    setGeneratedTemplates((prev) =>
+      prev.filter((template) => template.id !== templateId)
+    );
   };
 
   const setUserPlanAfterPurchase = (planType) => {
@@ -108,6 +114,7 @@ export function GeneratedTemplatesProvider({ children }) {
         generatedTemplates,
         addGeneratedTemplate,
         clearGeneratedTemplates,
+        deleteGeneratedTemplate,
         userPlan,
         setUserPlanAfterPurchase,
         canGenerateMore,
