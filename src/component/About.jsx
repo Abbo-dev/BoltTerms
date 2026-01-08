@@ -5,44 +5,43 @@ const AboutPage = () => {
       <div className="max-w-3xl mx-auto bg-[#374151] rounded-xl p-6 md:p-8">
         {/* Header */}
         <div className="border-b border-[#4c5562] pb-4 mb-6 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold">About TC Gen</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">About Bolt Terms</h1>
           <p className="text-[#828a96] mt-2">
-            Simple, powerful term generation
+            Simple, compliant Terms & Conditions generation
           </p>
         </div>
 
         {/* Content */}
         <div className="space-y-6 text-sm md:text-base">
-          <Section title="What is TC Gen?">
+          <Section title="What is Bolt Terms?">
             <p>
-              TC Gen is a specialized tool that helps you generate technical
-              terms and definitions instantly. Perfect for writers, developers,
-              and content creators who need precise terminology.
+              Bolt Terms is a streamlined tool that helps you generate clear,
+              professional Terms & Conditions for your business in minutes. It
+              is built for founders who want speed, clarity, and compliance
+              without the legal hassle.
             </p>
           </Section>
 
           <Section title="Our Mission">
             <p>
-              To eliminate terminology roadblocks by providing quick, accurate
-              term generation without compromising on quality or technical
-              accuracy.
+              To make legal compliance simple and accessible for every
+              business—so you can launch faster and stay protected.
             </p>
           </Section>
 
           <Section title="Key Features">
             <ul className="list-disc pl-5 space-y-2">
-              <li>Instant technical term generation</li>
-              <li>Customizable output complexity</li>
-              <li>Save and organize your terms</li>
-              <li>100% client-side processing</li>
+              <li>Instant Terms & Conditions generation</li>
+              <li>Industry-specific templates</li>
+              <li>PDF and DOCX export</li>
+              <li>Secure account-based storage</li>
             </ul>
           </Section>
 
           <Section title="The Team">
             <p>
-              TC Gen is developed by a small team of language technologists and
-              developers passionate about making technical writing more
-              accessible.
+              Bolt Terms is built by a small team of builders and legal-tech
+              enthusiasts focused on helping founders ship confidently.
             </p>
           </Section>
 
@@ -51,10 +50,10 @@ const AboutPage = () => {
               Have questions or suggestions? We'd love to hear from you.
               <br />
               <a
-                href="mailto:contact@tcgen.app"
+                href="mailto:support@boltterms.com"
                 className="text-[#2962ea] hover:underline"
               >
-                contact@tcgen.app
+                support@boltterms.com
               </a>
             </p>
           </Section>
