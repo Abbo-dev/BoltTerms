@@ -343,30 +343,34 @@ function CardSection() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-5 left-1/2 -translate-x-1/2 w-full max-w-lg z-50"
+            className="fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-lg z-50"
           >
-            <div className="bg-[#242d39] border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center justify-between gap-4">
-              <CheckCircleIcon className="w-6 h-6 text-green-400 shrink-0" />
-              <div className="flex-grow">
-                <p className="font-semibold text-white">Document Generated!</p>
-                <p className="text-sm text-gray-400">
-                  You can also browse your generated templates.
-                </p>
+            <div className="bg-[#242d39] border border-white/10 rounded-2xl p-4 shadow-2xl flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="flex items-start gap-3 flex-1">
+                <CheckCircleIcon className="w-6 h-6 text-green-400 shrink-0" />
+                <div>
+                  <p className="font-semibold text-white">Document Generated!</p>
+                  <p className="text-sm text-gray-400">
+                    You can also browse your generated templates.
+                  </p>
+                </div>
               </div>
-              <Link
-                to="/templates"
-                onClick={() => setShowTemplateToast(false)}
-                className="btn-primary px-4 py-2 text-sm whitespace-nowrap"
-              >
-                Browse
-              </Link>
-              <Button
-                isIconOnly
-                className="btn-ghost shrink-0"
-                onPress={() => setShowTemplateToast(false)}
-              >
-                <XMarkIcon className="w-5 h-5 text-gray-400" />
-              </Button>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Link
+                  to="/templates"
+                  onClick={() => setShowTemplateToast(false)}
+                  className="btn-primary px-4 py-2 text-sm w-full sm:w-auto text-center"
+                >
+                  Browse
+                </Link>
+                <Button
+                  isIconOnly
+                  className="btn-ghost shrink-0 min-w-0 h-9 w-9"
+                  onPress={() => setShowTemplateToast(false)}
+                >
+                  <XMarkIcon className="w-5 h-5 text-gray-400" />
+                </Button>
+              </div>
             </div>
           </motion.div>
         )}
