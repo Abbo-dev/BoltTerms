@@ -12,7 +12,7 @@ export default function UpgradePrompt({ onUpgrade }) {
         features!
       </p>
       <Button
-        className="w-full bg-[#2962ea] text-[#e4e6e8] py-2 rounded-md hover:bg-[#2454c9]"
+        className="btn-primary w-full py-2"
         onPress={onUpgrade}
       >
         Upgrade Now
