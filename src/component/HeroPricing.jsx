@@ -5,11 +5,11 @@ function HeroPricing() {
     <>
       {/* Hero Section */}
       <div className="relative pt-16 mx-auto">
-        <div className="bg-[#2962ea] text-white text-center py-3 text-sm font-medium animate-fade-in-down mx-auto">
+        <div className="bg-[#2962ea] text-white text-center py-4 text-sm font-medium animate-fade-in-down mx-auto ">
           💡 Subscriptions launching soon — grab lifetime access for $19 before
           it's gone!
         </div>
-        <div className="relative max-w-7xl pt-12 pb-24 px-4 sm:pt-20 sm:pb-32 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-7xl mx-auto pt-12 pb-24 px-4 sm:pt-20 sm:pb-32 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center bg-[#2962ea]/10 text-[#2962ea] px-4 py-2 rounded-full mb-2 text-sm font-medium">
             <CurrencyDollarIcon className="w-5 h-5 mr-2" />
             We're here to help
