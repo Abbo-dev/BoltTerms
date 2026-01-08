@@ -87,7 +87,7 @@ export default function TCTemplatePage() {
                 whileHover="hover"
                 whileTap="tap"
                 onClick={clearGeneratedTemplates}
-                className="mt-4 bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm"
+                className="btn-muted mt-4 py-2 px-4 text-sm"
               >
                 Clear Generated Templates
               </motion.button>
@@ -112,7 +112,7 @@ export default function TCTemplatePage() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm"
+                className="btn-primary py-2 px-6 text-sm"
               >
                 Sign In
               </motion.button>
@@ -131,7 +131,7 @@ export default function TCTemplatePage() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm"
+                className="btn-primary py-2 px-6 text-sm"
               >
                 Create Your First Template
               </motion.button>
@@ -196,7 +196,7 @@ export default function TCTemplatePage() {
                       whileHover="hover"
                       whileTap="tap"
                       onClick={() => handlePreview(template)}
-                      className="bg-[#4c5562] text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                      className="btn-muted py-2 px-4 text-sm flex-1"
                     >
                       Preview
                     </motion.button>
@@ -209,7 +209,7 @@ export default function TCTemplatePage() {
                           onClick={() =>
                             downloadTemplatePdf(template, formData)
                           }
-                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                          className="btn-primary py-2 px-4 text-sm flex-1"
                         >
                           Download PDF
                         </motion.button>
@@ -220,7 +220,7 @@ export default function TCTemplatePage() {
                           onClick={() =>
                             downloadTemplateDocx(template, formData)
                           }
-                          className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                          className="btn-primary py-2 px-4 text-sm flex-1"
                         >
                           Download DOCX
                         </motion.button>
@@ -232,7 +232,7 @@ export default function TCTemplatePage() {
                           whileHover="hover"
                           whileTap="tap"
                           onClick={() => handleDownload(template, "pdf")}
-                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                          className="btn-primary py-2 px-4 text-sm flex-1"
                         >
                           Try PDF (Free)
                         </motion.button>
@@ -241,7 +241,7 @@ export default function TCTemplatePage() {
                           whileHover="hover"
                           whileTap="tap"
                           onClick={() => handleDownload(template, "docx")}
-                          className="bg-[#2962ea]/90 text-[#e4e6e8] py-2 px-4 rounded-md text-sm flex-1"
+                          className="btn-primary py-2 px-4 text-sm flex-1"
                         >
                           Try DOCX (Free)
                         </motion.button>
@@ -252,7 +252,7 @@ export default function TCTemplatePage() {
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"
-                          className="bg-[#2962ea] text-[#e4e6e8] py-2 px-4 rounded-md text-sm w-full"
+                          className="btn-primary py-2 px-4 text-sm w-full"
                         >
                           Upgrade for Unlimited Downloads
                         </motion.button>
@@ -280,7 +280,7 @@ export default function TCTemplatePage() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="bg-[#2962ea] text-white px-6 py-3 rounded-md"
+                className="btn-primary px-6 py-3"
               >
                 See Features
               </motion.button>
@@ -290,7 +290,7 @@ export default function TCTemplatePage() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="border border-[#4c5562] text-[#e4e6e8] px-6 py-3 rounded-md"
+                className="btn-outline-muted px-6 py-3"
               >
                 View Pricing
               </motion.button>
@@ -315,7 +315,7 @@ export default function TCTemplatePage() {
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
-                className="bg-[#2962ea] text-[#e4e6e8] py-2 px-6 rounded-md text-sm"
+                className="btn-primary py-2 px-6 text-sm"
               >
                 Upgrade to Pro
               </motion.button>

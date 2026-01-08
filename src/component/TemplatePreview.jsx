@@ -7,9 +7,6 @@ export default function TemplatePreviewModal({ template, onClose }) {
   if (!template) return null;
 
   const { formData } = useForm();
-  //console.log(formData.businessName);
-  console.log(formData);
-  console.log(formData.websiteURL);
   const businessName = formData.businessName;
   const websiteURL = formData.websiteURL;
 
@@ -22,9 +19,9 @@ export default function TemplatePreviewModal({ template, onClose }) {
       )
       ?.replace(/{{websiteUrl}}/g, websiteURL);
   };
-  const cleanedClauses = template.clauses.map((clause) => ({
+  const cleanedClauses = template.clauses.map((clause, index) => ({
     ...clause,
-    title: clause.title || `Clause ${i++}`, // Add a default title if not provided in the input
+    title: clause.title || `Clause ${index + 1}`,
     text: replacePlaceholders(clause.text),
   }));
 
@@ -34,7 +31,7 @@ export default function TemplatePreviewModal({ template, onClose }) {
         <CardBody className="bg-[#1f2937] rounded-l-xl rounded-r-xl p-6 max-w-2xl w-full shadow-xl relative overflow-y-auto max-h-[90vh] m-4 ">
           <Button
             onPress={onClose}
-            className="  bg-transparent border-none p-0 absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
+            className="btn-ghost absolute top-3 right-3 p-0 h-8 w-8 text-gray-400 hover:text-white text-xl"
           >
             ×
           </Button>
@@ -50,7 +47,7 @@ export default function TemplatePreviewModal({ template, onClose }) {
               cleanedClauses.map((clause, i) => (
                 <div key={i}>
                   <h3 className="text-[#e4e6e8] font-semibold mb-1 text-base">
-                    {clause.title || `Clause ${i++}`}
+                    {clause.title || `Clause ${i + 1}`}
                   </h3>
                   <p className="text-sm text-[#cbd5e1] whitespace-pre-line">
                     {replacePlaceholders(clause.text)}
