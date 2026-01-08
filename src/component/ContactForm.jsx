@@ -16,7 +16,7 @@ export default function ContactForm() {
           <span className="text-[#2962ea]">support@boltterms.com</span> shortly.
         </p>
         <Button
-          className="bg-[#2962ea] text-white"
+          className="btn-primary px-6 py-2"
           onPress={() => window.location.reload()}
         >
           Send Another
@@ -121,7 +121,7 @@ export default function ContactForm() {
           <Button
             type="submit"
             disabled={state.submitting}
-            className="bg-[#2962ea] hover:bg-[#1e4bac] text-white px-8 py-3 rounded-md font-medium transition-all disabled:opacity-50"
+            className="btn-primary px-8 py-3"
           >
             {state.submitting ? "Sending..." : "Send Message"}
           </Button>

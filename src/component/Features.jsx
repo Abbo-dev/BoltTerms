@@ -84,7 +84,7 @@ export default function FeaturesPage() {
                 <Button
                   as={Link}
                   to="/"
-                  className="bg-[#2962ea] hover:bg-[#2962ea]/80 text-[#e4e6e8] text-md font-semibold h-10 px-6 rounded-md transition-colors duration-300 shadow-lg"
+                  className="btn-primary h-10 px-6 text-md shadow-lg"
                 >
                   Start Generating Free
                 </Button>
@@ -94,7 +94,7 @@ export default function FeaturesPage() {
                   as={HashLink}
                   smooth
                   to={"/#supa-demo-embed"}
-                  className="bg-transparent border border-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/10 text-md font-semibold h-10 px-6 rounded-md transition-colors duration-300"
+                  className="btn-outline h-10 px-6 text-md"
                 >
                   See Live Demo
                 </Button>
@@ -175,12 +175,12 @@ export default function FeaturesPage() {
             </p>
             <div className="flex justify-center gap-4 flex-col sm:flex-row">
               <Link to="/login">
-                <Button className="bg-[#2962ea] hover:bg-[#1e4bac] text-white px-10 py-4 rounded-md text-md font-medium shadow-lg shadow-[#2962ea]/30 hover:shadow-[#1e4bac]/40 transition-all transform hover:scale-105">
+                <Button className="btn-primary px-10 py-4 text-md shadow-lg shadow-[#2962ea]/30 hover:shadow-[#1e4bac]/40 transition-all transform hover:scale-105">
                   Get Started Free
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button className="bg-transparent border border-white text-white hover:bg-white/10 px-10 py-4 rounded-md text-md transition-all transform hover:scale-105">
+                <Button className="btn-outline px-10 py-4 text-md transition-all transform hover:scale-105">
                   Compare Plans
                 </Button>
               </Link>
