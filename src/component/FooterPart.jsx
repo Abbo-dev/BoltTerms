@@ -55,12 +55,15 @@ function FooterPart() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="hover:text-white transition">
+                  <Link to="/blog" className="hover:text-white transition">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link to="/support" className="hover:text-white transition">
+                  <Link
+                    to="/support#contact"
+                    className="hover:text-white transition"
+                  >
                     Contact
                   </Link>
                 </li>

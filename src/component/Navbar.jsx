@@ -1,6 +1,7 @@
 import { Image, Button } from "@heroui/react";
 import Shield from "./../assets/shield.svg";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import { useState, useEffect } from "react";
 import Closex from "./../assets/closex.svg";
 import { useAuth } from "./../AuthContext.jsx";
@@ -230,7 +231,7 @@ const Navbar = () => {
                 },
                 {
                   name: "Contact",
-                  path: "/contact",
+                  path: "/support#contact",
                   icon: <ChatBubbleLeftRightIcon className="w-5 h-5" />,
                 },
                 {
@@ -238,18 +239,26 @@ const Navbar = () => {
                   path: "/profile",
                   icon: <UserIcon className="w-5 h-5" />,
                 },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.path}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#232b38] text-[#e4e6e8] hover:text-[#2962ea] transition-colors"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="text-[#2962ea]">{item.icon}</span>
-                    <span className="font-medium">{item.name}</span>
-                  </Link>
-                </li>
-              ))}
+              ].map((item) => {
+                const LinkComponent = item.path.includes("#")
+                  ? HashLink
+                  : Link;
+                const linkProps = item.path.includes("#")
+                  ? { to: item.path, smooth: true }
+                  : { to: item.path };
+                return (
+                  <li key={item.name}>
+                    <LinkComponent
+                      {...linkProps}
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#232b38] text-[#e4e6e8] hover:text-[#2962ea] transition-colors"
+                      onClick={() => setOpen(false)}
+                    >
+                      <span className="text-[#2962ea]">{item.icon}</span>
+                      <span className="font-medium">{item.name}</span>
+                    </LinkComponent>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

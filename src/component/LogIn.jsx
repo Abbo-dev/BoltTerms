@@ -8,11 +8,14 @@ import { auth, db } from "../FirebaseConfig.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import Bolt from "../assets/bolt.png";
+import GoogleIcon from "../assets/google.svg";
 import { Link } from "react-router-dom";
 export default function AuthPage() {
   const [tab, setTab] = useState("login");
@@ -24,6 +27,44 @@ export default function AuthPage() {
 
   const isLogin = tab === "login";
   let navigate = useNavigate();
+  const handleGoogleAuth = async () => {
+    setError("");
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          username:
+            user.displayName ||
+            user.email?.split("@")[0] ||
+            "User",
+          email: user.email || "",
+          isPaidUser: false,
+          aiQueriesToday: 0,
+          createdAt: new Date(),
+        });
+      }
+
+      navigate("/");
+    } catch (error) {
+      switch (error.code) {
+        case "auth/popup-closed-by-user":
+          setError("Google sign-in was closed. Please try again.");
+          break;
+        case "auth/popup-blocked":
+          setError("Popup blocked. Please allow popups and try again.");
+          break;
+        default:
+          setError("Google sign-in failed. Please try again.");
+      }
+      void error;
+    }
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
@@ -206,6 +247,22 @@ export default function AuthPage() {
             {isLogin ? "Log In" : "Register"}
           </Button>
         </motion.form>
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 text-xs text-[#828a96]">
+            <span className="h-px flex-1 bg-[#3a4556]" />
+            <span>or</span>
+            <span className="h-px flex-1 bg-[#3a4556]" />
+          </div>
+          <Button
+            type="button"
+            onPress={handleGoogleAuth}
+            className="btn-outline w-full py-3 flex items-center justify-center gap-2"
+          >
+            <Image src={GoogleIcon} alt="Google" className="w-5 h-5" />
+            Continue with Google
+          </Button>
+        </div>
         <div>
           <p className="text-center text-xs text-[#828a96] mb-3">
             Forgot Password?{" "}
