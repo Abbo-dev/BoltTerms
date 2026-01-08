@@ -12,7 +12,7 @@ export default function BackToHome() {
       className="absolute top-6 left-6"
     >
       <Link to="/">
-        <Button className="group flex items-center gap-2 text-[#e4e6e8] hover:text-white bg-[#232b38] hover:bg-[#1F2937] px-4 py-2 rounded-full shadow transition-all duration-300 checked:bg-[#2962ea]">
+        <Button className="btn bg-[#232b38] text-[#e4e6e8] hover:text-white hover:bg-[#1F2937] px-4 py-2 rounded-full shadow transition-all duration-300 group">
           <ArrowLeftIcon className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1.5" />
           <span className="text-sm font-medium">Back to Home</span>
         </Button>
