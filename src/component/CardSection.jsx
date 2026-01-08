@@ -178,6 +178,23 @@ function CardSection() {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
   };
+  const inputClassNames = {
+    inputWrapper:
+      "bg-[#1f2937]/60 border border-[#3a4556] data-[hover=true]:bg-[#1f2937]/80 data-[focus=true]:border-[#2962ea]",
+    input: "text-[#e4e6e8] placeholder:text-[#9CA3AF]",
+    label: "text-[#9CA3AF]",
+  };
+  const selectClassNames = {
+    trigger:
+      "bg-[#1f2937]/60 border border-[#3a4556] text-[#e4e6e8] data-[hover=true]:bg-[#1f2937]/80",
+    value: "text-[#e4e6e8]",
+    selectorIcon: "text-[#9CA3AF]",
+    popoverContent:
+      "bg-[#1f2937] border border-[#3a4556] text-[#e4e6e8] backdrop-blur-none",
+    listboxWrapper: "bg-[#1f2937] backdrop-blur-none",
+    listbox: "text-[#e4e6e8]",
+    label: "text-[#9CA3AF]",
+  };
 
   return (
     <>
@@ -202,6 +219,7 @@ function CardSection() {
                     size="sm"
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
+                    classNames={inputClassNames}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
@@ -212,6 +230,7 @@ function CardSection() {
                     size="sm"
                     value={websiteURL}
                     onChange={(e) => setWebsiteURL(e.target.value)}
+                    classNames={inputClassNames}
                   />
                 </motion.div>
                 <motion.div variants={itemVariants}>
@@ -222,9 +241,14 @@ function CardSection() {
                     size="sm"
                     onChange={(e) => setBusinessType(e.target.value)}
                     isRequired
+                    classNames={selectClassNames}
                   >
                     {options.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
+                      <SelectItem
+                        key={option.value}
+                        value={option.value}
+                        className="text-[#e4e6e8] hover:bg-[#2a3442]"
+                      >
                         {option.label}
                       </SelectItem>
                     ))}
@@ -240,9 +264,14 @@ function CardSection() {
                       handleTemplateSelect(Number(e.target.value))
                     }
                     isRequired
+                    classNames={selectClassNames}
                   >
                     {Templates.templates.map((template, index) => (
-                      <SelectItem key={index} value={index}>
+                      <SelectItem
+                        key={index}
+                        value={index}
+                        className="text-[#e4e6e8] hover:bg-[#2a3442]"
+                      >
                         {template.templateName}
                       </SelectItem>
                     ))}
