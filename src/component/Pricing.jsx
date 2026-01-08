@@ -24,7 +24,6 @@ export default function PricingPage() {
   const handlePayment = (paddlePriceId) => {
     const Paddle = window.Paddle;
     const userId = user?.uid;
-    const userEmail = user?.email;
 
     if (!user) {
       setAlertForPlan(paddlePriceId);
