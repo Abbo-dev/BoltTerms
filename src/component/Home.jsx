@@ -62,7 +62,7 @@ const Home = () => {
         {/* CTA Buttons */}
         <div className="flex gap-6 items-center justify-center mt-6">
           <Link to="/generate">
-            <Button className="flex items-center justify-center gap-2 bg-[#2962ea] w-52 h-12 rounded-lg text-[#e4e6e8] font-semibold hover:bg-[#2962ea]/90 hover:scale-105 transition-all duration-300 group">
+            <Button className="btn-primary w-52 h-12 hover:scale-105 transition-all duration-300 group">
               Start Generating
               <Image
                 src={Arrow}
@@ -75,7 +75,7 @@ const Home = () => {
           </Link>
 
           <Link to="/templates">
-            <Button className="bg-[#394251]/60 border border-white/10 px-8 h-12 rounded-lg text-[#e4e6e8] hover:bg-[#394251]/80 hover:scale-105 transition-all duration-300">
+            <Button className="btn-secondary px-8 h-12 hover:scale-105 transition-all duration-300">
               View Templates
             </Button>
           </Link>
@@ -157,7 +157,7 @@ const Home = () => {
           Start for free. No credit card required.
         </p>
         <Link to="/generate">
-          <Button className="bg-[#2962ea] w-56 h-12 text-[#e4e6e8] font-semibold hover:bg-[#2962ea]/90 hover:scale-105 transition-all duration-300 ">
+          <Button className="btn-primary w-56 h-12 hover:scale-105 transition-all duration-300">
             Start Generating Now
           </Button>
         </Link>
