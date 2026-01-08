@@ -20,7 +20,7 @@ function Profile() {
       await signOut(auth);
       navigate("/login");
     } catch (error) {
-      console.error("Error signing out:", error);
+      void error;
     }
   };
 
@@ -63,9 +63,8 @@ function Profile() {
             </div>
 
             <Button
-              color="danger"
               onPress={handleSignout}
-              className="w-full   py-2 rounded-lg transition-colors mt-4 text-white "
+              className="btn-danger w-full py-2 mt-4"
             >
               Sign Out
             </Button>
