@@ -49,7 +49,7 @@ export default function PricingSection() {
               ))}
             </ul>
             <Button
-              className="w-full bg-[#4c5562] text-[#e4e6e8] py-2 rounded-md"
+              className="btn-muted w-full py-2"
               disabled={true}
             >
               Current Plan
@@ -89,7 +89,7 @@ export default function PricingSection() {
               ))}
             </ul>
             <Button
-              className="w-full bg-[#2962ea] text-[#e4e6e8] py-2 rounded-md hover:bg-[#2454c9]"
+              className="btn-primary w-full py-2"
               onPress={upgradeToPro}
               disabled={userPlan === "PRO"}
             >
