@@ -11,7 +11,9 @@ export const plans = [
       "Email support (48h response)",
     ],
     cta: "Buy Once, Use Forever",
-    paddlePriceId: "pri_01k9d09zr0grd38nvxent39sc4",
+    paddlePriceId:
+      import.meta.env.VITE_PADDLE_PRICE_LIFETIME ||
+      "pri_01k9d09zr0grd38nvxent39sc4",
     popular: true,
   },
   {
