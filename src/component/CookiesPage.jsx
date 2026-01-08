@@ -33,13 +33,13 @@ const CookiesPolicy = () => {
           <Section title="3. Managing Cookies">
             <p>
               You can disable cookies via your browser settings. However, this
-              may impact certain features of TC Gen.
+              may impact certain features of Bolt Terms.
             </p>
           </Section>
 
           <Section title="4. Third-Party Cookies">
             <p>
-              We may use third-party tools that set cookies (e.g., Stripe,
+              We may use third-party tools that set cookies (e.g., Paddle,
               Firebase). These are governed by their respective policies.
             </p>
           </Section>
@@ -47,7 +47,7 @@ const CookiesPolicy = () => {
           <div className="pt-4 border-t border-[#4c5562]">
             <p className="text-[#828a96] text-sm">
               For questions about our cookie use, contact:{" "}
-              <span className="text-[#2962ea]">privacy@tcgen.app</span>
+              <span className="text-[#2962ea]">privacy@boltterms.com</span>
             </p>
           </div>
         </div>
