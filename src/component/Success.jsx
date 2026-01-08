@@ -21,11 +21,11 @@ export default function SuccessPage() {
           <div className="space-y-4">
             <Button
               onPress={() => navigate("/profile")}
-              className="w-full bg-[#2962ea] hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200"
+              className="btn-primary w-full py-3 px-4"
             >
               Go to Dashboard
             </Button>
-            <Button className="w-full bg-[#4c5562] hover:bg-[#5a6474] text-white font-medium py-3 px-4 rounded-lg transition duration-200">
+            <Button className="btn-muted w-full py-3 px-4">
               View Order Details
             </Button>
           </div>
