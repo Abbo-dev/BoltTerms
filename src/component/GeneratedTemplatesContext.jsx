@@ -85,11 +85,18 @@ export function GeneratedTemplatesProvider({ children }) {
       return;
     }
 
-    const q = query(collection(db, "templates"), where("uid", "==", user.uid));
-    const snapshot = await getDocs(q);
-    await Promise.all(
-      snapshot.docs.map((docSnap) => deleteDoc(docSnap.ref))
-    );
+    try {
+      const q = query(
+        collection(db, "templates"),
+        where("uid", "==", user.uid)
+      );
+      const snapshot = await getDocs(q);
+      await Promise.all(
+        snapshot.docs.map((docSnap) => deleteDoc(docSnap.ref))
+      );
+    } catch (error) {
+      void error;
+    }
   };
 
   const deleteGeneratedTemplate = async (templateId) => {
@@ -97,10 +104,14 @@ export function GeneratedTemplatesProvider({ children }) {
       return;
     }
 
-    await deleteDoc(doc(db, "templates", templateId));
-    setGeneratedTemplates((prev) =>
-      prev.filter((template) => template.id !== templateId)
-    );
+    try {
+      await deleteDoc(doc(db, "templates", templateId));
+      setGeneratedTemplates((prev) =>
+        prev.filter((template) => template.id !== templateId)
+      );
+    } catch (error) {
+      void error;
+    }
   };
 
   const setUserPlanAfterPurchase = (planType) => {
