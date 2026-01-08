@@ -2,6 +2,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2962ea]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#181e2b] disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/90;
+  }
+  .btn-secondary {
+    @apply btn bg-[#394251]/60 text-[#e4e6e8] border border-white/10 hover:bg-[#394251]/80;
+  }
+  .btn-muted {
+    @apply btn bg-[#4c5562] text-white hover:bg-[#5a6474];
+  }
+  .btn-outline {
+    @apply btn bg-transparent border border-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/10;
+  }
+  .btn-outline-muted {
+    @apply btn bg-transparent border border-[#4c5562] text-[#e4e6e8] hover:bg-[#232b38];
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-[#e4e6e8] hover:bg-white/10;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+}
 @supports not selector(::-webkit-scrollbar) {
   .scroll-container {
     border-radius: 0.75rem !important;
