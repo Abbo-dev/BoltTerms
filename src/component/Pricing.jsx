@@ -24,6 +24,7 @@ export default function PricingPage() {
   const handlePayment = (paddlePriceId) => {
     const Paddle = window.Paddle;
     const userId = user?.uid;
+    const baseUrl = import.meta.env.VITE_APP_URL || window.location.origin;
 
     if (!user) {
       setAlertForPlan(paddlePriceId);
@@ -54,8 +55,8 @@ export default function PricingPage() {
             frameStyle:
               "width: 100%;  background-color: transparent; border: none;",
           },
-          successUrl: "https://boltterms.com/success",
-          cancelUrl: "https://boltterms.com/cancel",
+          successUrl: `${baseUrl}/success`,
+          cancelUrl: `${baseUrl}/cancel`,
           // specific custom data if needed
           customData: {
             userId: userId,
