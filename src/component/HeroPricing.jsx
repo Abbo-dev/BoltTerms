@@ -4,8 +4,8 @@ function HeroPricing() {
   return (
     <>
       {/* Hero Section */}
-      <div className="relative pt-16" style={{ backgroundColor: "" }}>
-        <div className="bg-[#2962ea] text-white text-center py-3 text-sm font-medium animate-fade-in-down">
+      <div className="relative pt-16 mx-auto">
+        <div className="bg-[#2962ea] text-white text-center py-3 text-sm font-medium animate-fade-in-down mx-auto">
           💡 Subscriptions launching soon — grab lifetime access for $19 before
           it's gone!
         </div>
