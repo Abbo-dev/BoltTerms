@@ -19,9 +19,7 @@ export default function AlertSignIn() {
           <Link to="/login">
             <Button
               size="sm"
-              color="danger"
-              variant="light"
-              className="transition-all flex items-center justify-center pt-2 pb-2 px-4 text-xs font-semibold hover:scale-105 duration-500"
+              className="btn-primary flex items-center justify-center px-4 py-2 text-xs font-semibold hover:scale-105 duration-500"
             >
               Sign In
             </Button>
