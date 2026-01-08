@@ -8,25 +8,63 @@
     @apply inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2962ea]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#181e2b] disabled:opacity-60 disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply btn bg-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/90;
+    @apply btn;
+    background-color: #2962ea !important;
+    color: #e4e6e8 !important;
+  }
+  .btn-primary:hover {
+    background-color: rgba(41, 98, 234, 0.9) !important;
   }
   .btn-secondary {
-    @apply btn bg-[#394251]/60 text-[#e4e6e8] border border-white/10 hover:bg-[#394251]/80;
+    @apply btn;
+    background-color: rgba(57, 66, 81, 0.6) !important;
+    color: #e4e6e8 !important;
+    border: 1px solid #3a4556 !important;
+  }
+  .btn-secondary:hover {
+    background-color: rgba(57, 66, 81, 0.8) !important;
   }
   .btn-muted {
-    @apply btn bg-[#4c5562] text-white hover:bg-[#5a6474];
+    @apply btn;
+    background-color: #4c5562 !important;
+    color: #e4e6e8 !important;
+  }
+  .btn-muted:hover {
+    background-color: #5a6474 !important;
   }
   .btn-outline {
-    @apply btn bg-transparent border border-[#2962ea] text-[#e4e6e8] hover:bg-[#2962ea]/10;
+    @apply btn;
+    background-color: transparent !important;
+    border: 1px solid #2962ea !important;
+    color: #e4e6e8 !important;
+  }
+  .btn-outline:hover {
+    background-color: rgba(41, 98, 234, 0.12) !important;
   }
   .btn-outline-muted {
-    @apply btn bg-transparent border border-[#4c5562] text-[#e4e6e8] hover:bg-[#232b38];
+    @apply btn;
+    background-color: transparent !important;
+    border: 1px solid #4c5562 !important;
+    color: #e4e6e8 !important;
+  }
+  .btn-outline-muted:hover {
+    background-color: #232b38 !important;
   }
   .btn-ghost {
-    @apply btn bg-transparent text-[#e4e6e8] hover:bg-white/10;
+    @apply btn;
+    background-color: transparent !important;
+    color: #e4e6e8 !important;
+  }
+  .btn-ghost:hover {
+    background-color: rgba(41, 98, 234, 0.12) !important;
   }
   .btn-danger {
-    @apply btn bg-red-600 text-white hover:bg-red-700;
+    @apply btn;
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+  }
+  .btn-danger:hover {
+    background-color: #b91c1c !important;
   }
 }
 @supports not selector(::-webkit-scrollbar) {
@@ -117,3 +155,5 @@ h5,
 h6 {
   color: #ffffff; /* Headings always pop */
 }
+
+/* Prevent checkout overlays from blurring the page */
