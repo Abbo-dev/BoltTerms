@@ -38,7 +38,7 @@ const Navbar = () => {
       await signOut(auth);
       navigate("/login");
     } catch (error) {
-      console.error("Error signing out:", error);
+      void error;
     }
   };
 
@@ -57,7 +57,7 @@ const Navbar = () => {
   return (
     <>
       {/* Navbar stays at default/low z-index so it gets covered */}
-      <nav className="fixed top-0 left-0 w-full z-[40] md:z-50 flex items-center justify-between px-4 md:px-8 border-b border-[#3a4556]/40 bg-[#181e2b]/90 backdrop-blur-xl transition-all duration-300 p-3">
+      <nav className="fixed top-0 left-0 w-full z-[40] md:z-50 flex items-center justify-between px-4 md:px-8 border-b border-[#3a4556]/40 bg-[#181e2b]/90 backdrop-blur-xl transition-all duration-300 p-4">
         {/* Logo Section */}
         <div onClick={() => handleClick()}>
           <Link to="/" className="flex items-center">
@@ -154,12 +154,7 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Button
-              className="flex items-center justify-center gap-2 bg-[#2962ea] w-50 h-10 rounded-md 
-                text-[#e4e6e8] font-semibold hover:bg-[#2962ea]/80 transition-colors duration-300"
-            >
-              Get Started
-            </Button>
+            <Button className="btn-primary w-50 h-10">Get Started</Button>
           </div>
 
           {/* Mobile Menu Button (Hamburger) - VISIBLE ONLY WHEN CLOSED */}
@@ -301,7 +296,7 @@ const Navbar = () => {
             )}
 
             <Button
-              className="w-full bg-[#2962ea] hover:bg-[#1e4bac] text-white font-semibold py-3 rounded-md transition-colors"
+              className="btn-primary w-full py-3"
               onPress={() => {
                 setOpen(false);
               }}
