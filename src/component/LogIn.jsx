@@ -41,11 +41,10 @@ export default function AuthPage() {
         aiQueriesToday: 0,
         createdAt: new Date(),
       }).catch((error) => {
-        console.error("Error creating user document:", error);
+        void error;
       });
       await updateProfile(user, { displayName: username });
 
-      console.log("User registered:", user);
       navigate("/");
     } catch (error) {
       switch (error.code) {
@@ -70,7 +69,7 @@ export default function AuthPage() {
         default:
           setError("An error occurred. Please try again.");
       }
-      console.error("Error creating user:", error);
+      void error;
     }
   };
 
@@ -79,7 +78,6 @@ export default function AuthPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      console.log("User logged in sucessfully:", auth.currentUser);
       navigate("/");
     } catch (error) {
       switch (error.code) {
@@ -105,7 +103,7 @@ export default function AuthPage() {
           setError("An error occurred. Please try again.");
       }
 
-      console.error("Error logging in:", error);
+      void error;
     }
   };
 
@@ -128,7 +126,7 @@ export default function AuthPage() {
                 setTab(type);
                 setError("");
               }}
-              className={`px-4 py-2 text-sm font-medium rounded-full mx-1 transition-all ${
+              className={`btn px-4 py-2 text-sm font-medium rounded-full mx-1 transition-all ${
                 tab === type
                   ? "bg-[#2962ea] text-white shadow-md"
                   : "text-[#828a96] hover:bg-[#1F2937]"
@@ -203,7 +201,7 @@ export default function AuthPage() {
           {error && <p className="text-red-500 text-xs text-center">{error}</p>}
           <Button
             type="submit"
-            className="w-full bg-[#2962ea] text-white py-3 rounded-md font-medium hover:opacity-90 transition"
+            className="btn-primary w-full py-3"
           >
             {isLogin ? "Log In" : "Register"}
           </Button>
