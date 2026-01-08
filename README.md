@@ -11,7 +11,7 @@ Built with a clean React frontend and a fully serverless backend using Firebase,
 - **Frontend**: React (Vite), Tailwind CSS  
 - **Backend**: Firebase Functions (Node.js)  
 - **Authentication**: Firebase Auth  
-- **Payments**: Stripe Checkout  
+- **Payments**: Paddle Checkout  
 - **Database**: Firestore  
 - **Hosting**: Firebase Hosting  
 
