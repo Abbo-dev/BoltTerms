@@ -125,7 +125,7 @@ function HowItWorks() {
         </p>
         <Link to="/generate">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="bg-[#2962ea] px-10 h-12 rounded-lg text-[#e4e6e8] font-semibold text-lg hover:bg-[#2962ea]/90 transition-all duration-300 flex items-center gap-2">
+            <Button className="btn-primary px-10 h-12 text-lg transition-all duration-300">
               <FaShieldAlt /> Try It Now
             </Button>
           </motion.div>
