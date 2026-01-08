@@ -15,6 +15,7 @@ import AboutPage from "./component/About.jsx";
 import Success from "./component/Success.jsx";
 import CancelPage from "./component/CancelPage.jsx";
 import RefundPolicy from "./component/Refund.jsx";
+import BlogPage from "./component/Blog.jsx";
 const App = () => {
   return (
     <>
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/terms" element={<TermsOfService />} />
         <Route path="/cookies" element={<CookiesPolicy />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/blog" element={<BlogPage />} />
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<CancelPage />} />
         <Route path="/refund" element={<RefundPolicy />} />
