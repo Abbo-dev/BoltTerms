@@ -118,7 +118,7 @@ function CardSection() {
       // Show the custom toast on successful generation
       setShowTemplateToast(true);
     } catch (error) {
-      console.error("Error generating content:", error);
+      void error;
     } finally {
       setLoading(false);
     }
@@ -193,7 +193,7 @@ function CardSection() {
               <h1 className="text-white text-2xl font-bold mb-6 text-left">
                 Document Details
               </h1>
-              <div className="flex flex-col gap-8 transition-all">
+              <div className="flex flex-col space-y-10 transition-all">
                 <motion.div variants={itemVariants}>
                   <Input
                     type="text"
@@ -253,7 +253,7 @@ function CardSection() {
                     isLoading={loading}
                     disabled={!businessName || !websiteURL || loading}
                     onPress={handleGenerate}
-                    className="w-full bg-[#2962ea] text-[#e4e6e8] font-semibold rounded-lg h-12 text-base disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-[#2962ea]/90 hover:shadow-lg hover:shadow-[#2962ea]/20"
+                    className="btn-primary w-full h-12 text-base hover:shadow-lg hover:shadow-[#2962ea]/20"
                   >
                     {loading ? "Generating..." : "Generate T&C"}
                   </Button>
@@ -278,7 +278,7 @@ function CardSection() {
                 </h1>
                 <Button
                   onPress={handleCopy}
-                  className="bg-[#4c5562] text-white font-semibold h-10 flex items-center justify-center gap-2 rounded-md transition-all hover:bg-[#4c5562]/80"
+                  className="btn-muted h-10 flex items-center justify-center gap-2"
                 >
                   <Image src={Copy} className="w-5 h-5" />
                   <span className="text-sm">Copy</span>
@@ -327,13 +327,13 @@ function CardSection() {
               <Link
                 to="/templates"
                 onClick={() => setShowTemplateToast(false)}
-                className="bg-[#2962ea] text-white px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap hover:bg-[#2962ea]/90"
+                className="btn-primary px-4 py-2 text-sm whitespace-nowrap"
               >
                 Browse
               </Link>
               <Button
                 isIconOnly
-                className="bg-transparent hover:bg-white/10 shrink-0"
+                className="btn-ghost shrink-0"
                 onPress={() => setShowTemplateToast(false)}
               >
                 <XMarkIcon className="w-5 h-5 text-gray-400" />
