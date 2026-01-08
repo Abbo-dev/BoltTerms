@@ -22,7 +22,7 @@ export default function TCTemplatePage() {
     return used ? JSON.parse(used) : false;
   });
 
-  const { generatedTemplates, clearGeneratedTemplates } =
+  const { generatedTemplates, clearGeneratedTemplates, deleteGeneratedTemplate } =
     useGeneratedTemplates();
 
   const { formData } = useForm();
@@ -63,6 +63,7 @@ export default function TCTemplatePage() {
     hover: { scale: 1.05, opacity: 0.9 },
     tap: { scale: 0.95 },
   };
+  const actionButtonClass = "h-10 text-sm flex-1";
 
   return (
     <>
@@ -144,9 +145,9 @@ export default function TCTemplatePage() {
                 key={index}
                 className="bg-[#374151] border border-[#4c5562] rounded-lg p-6 hover:shadow-lg transition-all"
               >
-                <div className="flex items-start mb-4 relative">
-                  <DocumentTextIcon className="h-6 w-6 text-[#2962ea] mr-3 mt-1" />
-                  <div>
+                <div className="flex items-start gap-3 mb-4">
+                  <DocumentTextIcon className="h-6 w-6 text-[#2962ea] mt-1" />
+                  <div className="flex-1">
                     <h3 className="text-lg font-semibold text-[#e4e6e8]">
                       {template.templateName}
                     </h3>
@@ -166,6 +167,18 @@ export default function TCTemplatePage() {
                       {template.clauses?.length ?? 0} clauses included
                     </p>
                   </div>
+                  {template.id && (
+                    <motion.button
+                      type="button"
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                      onClick={() => deleteGeneratedTemplate(template.id)}
+                      className="btn-danger h-8 px-3 text-xs"
+                    >
+                      Delete
+                    </motion.button>
+                  )}
                 </div>
 
                 <div className="bg-[#1F2937] rounded p-4 mb-4">
@@ -196,7 +209,7 @@ export default function TCTemplatePage() {
                       whileHover="hover"
                       whileTap="tap"
                       onClick={() => handlePreview(template)}
-                      className="btn-muted py-2 px-4 text-sm flex-1"
+                      className={`btn-muted ${actionButtonClass}`}
                     >
                       Preview
                     </motion.button>
@@ -209,7 +222,7 @@ export default function TCTemplatePage() {
                           onClick={() =>
                             downloadTemplatePdf(template, formData)
                           }
-                          className="btn-primary py-2 px-4 text-sm flex-1"
+                          className={`btn-primary ${actionButtonClass}`}
                         >
                           Download PDF
                         </motion.button>
@@ -220,7 +233,7 @@ export default function TCTemplatePage() {
                           onClick={() =>
                             downloadTemplateDocx(template, formData)
                           }
-                          className="btn-primary py-2 px-4 text-sm flex-1"
+                          className={`btn-primary ${actionButtonClass}`}
                         >
                           Download DOCX
                         </motion.button>
@@ -232,7 +245,7 @@ export default function TCTemplatePage() {
                           whileHover="hover"
                           whileTap="tap"
                           onClick={() => handleDownload(template, "pdf")}
-                          className="btn-primary py-2 px-4 text-sm flex-1"
+                          className={`btn-primary ${actionButtonClass}`}
                         >
                           Try PDF (Free)
                         </motion.button>
@@ -241,7 +254,7 @@ export default function TCTemplatePage() {
                           whileHover="hover"
                           whileTap="tap"
                           onClick={() => handleDownload(template, "docx")}
-                          className="btn-primary py-2 px-4 text-sm flex-1"
+                          className={`btn-primary ${actionButtonClass}`}
                         >
                           Try DOCX (Free)
                         </motion.button>
@@ -252,7 +265,7 @@ export default function TCTemplatePage() {
                           variants={buttonVariants}
                           whileHover="hover"
                           whileTap="tap"
-                          className="btn-primary py-2 px-4 text-sm w-full"
+                          className={`btn-primary ${actionButtonClass} w-full`}
                         >
                           Upgrade for Unlimited Downloads
                         </motion.button>
