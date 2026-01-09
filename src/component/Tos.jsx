@@ -63,10 +63,16 @@ const TermsOfService = () => {
 
             <Section title="7. Refund Policy">
               <p>
-                In accordance with Paddle’s Buyer Terms, Bolt Terms offers a{" "}
-                <strong>14-day refund policy</strong> from the date of purchase.
-                If you are not satisfied or encounter technical issues, you may
-                request a refund within 14 days by contacting our support team.
+                Refunds are provided at the sole discretion of Paddle and on a
+                case-by-case basis and may be refused, including where there is
+                evidence of fraud, refund abuse, or other manipulative
+                behavior. This does not affect your rights as a Consumer in
+                relation to Products that are not as described, faulty, or not
+                fit for purpose. If you are a Consumer, you generally have the
+                right to cancel within 14 days from the day after completion of
+                the transaction, unless the exception applies for digital
+                content you have started to download, stream, or otherwise
+                acquire or Products you have had the benefit of.
               </p>
             </Section>
 

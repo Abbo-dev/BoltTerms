@@ -31,6 +31,11 @@ export default function PricingPage() {
       return;
     }
 
+    if (!paddlePriceId) {
+      console.error("Missing Paddle price ID.");
+      return;
+    }
+
     if (!Paddle) {
       console.error("Paddle.js is not loaded.");
       return;
@@ -184,13 +189,14 @@ export default function PricingPage() {
 
                 <Button
                   className={`w-full py-3 px-4 rounded-md font-medium ${
-                    plan.popular && !isPaidUser
+                    plan.popular && !isPaidUser && plan.paddlePriceId
                       ? "bg-blue-600 hover:bg-blue-700"
                       : "bg-gray-700 cursor-not-allowed opacity-60"
                   }`}
                   style={{ color: "white" }}
                   disabled={
                     !plan.popular ||
+                    !plan.paddlePriceId ||
                     userPlan === "LIFETIME" ||
                     userPlan === plan.paddlePriceId ||
                     isPaidUser
