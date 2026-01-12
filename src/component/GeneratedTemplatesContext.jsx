@@ -34,12 +34,17 @@ export function GeneratedTemplatesProvider({ children }) {
         where("uid", "==", user.uid),
         orderBy("generatedAt", "desc")
       );
-      const snapshot = await getDocs(q);
-      const loaded = snapshot.docs.map((docSnap) => ({
-        id: docSnap.id,
-        ...docSnap.data(),
-      }));
-      setGeneratedTemplates(loaded);
+      try {
+        const snapshot = await getDocs(q);
+        const loaded = snapshot.docs.map((docSnap) => ({
+          id: docSnap.id,
+          ...docSnap.data(),
+        }));
+        setGeneratedTemplates(loaded);
+      } catch (error) {
+        setGeneratedTemplates([]);
+        void error;
+      }
     };
     fetchTemplates();
   }, [user]);
