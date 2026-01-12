@@ -27,13 +27,10 @@ export default function AuthPage() {
 
   const isLogin = tab === "login";
   let navigate = useNavigate();
-  const handleGoogleAuth = async () => {
-    setError("");
-    try {
-      const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-      const user = userCredential.user;
 
+  const ensureUserDoc = async (user) => {
+    if (!user) return;
+    try {
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
       if (!userSnap.exists()) {
@@ -43,11 +40,29 @@ export default function AuthPage() {
             user.email?.split("@")[0] ||
             "User",
           email: user.email || "",
+          uid: user.uid,
           isPaidUser: false,
           aiQueriesToday: 0,
           createdAt: new Date(),
         });
+        return;
       }
+      if (!userSnap.data()?.uid) {
+        await setDoc(userRef, { uid: user.uid }, { merge: true });
+      }
+    } catch (error) {
+      void error;
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setError("");
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+      const user = userCredential.user;
+
+      await ensureUserDoc(user);
 
       navigate("/");
     } catch (error) {
@@ -78,6 +93,7 @@ export default function AuthPage() {
       await setDoc(doc(db, "users", user.uid), {
         username,
         email,
+        uid: user.uid,
         isPaidUser: false,
         aiQueriesToday: 0,
         createdAt: new Date(),
@@ -117,7 +133,12 @@ export default function AuthPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await ensureUserDoc(userCredential.user);
 
       navigate("/");
     } catch (error) {
