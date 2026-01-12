@@ -34,6 +34,14 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+  const displayName =
+    user?.displayName || user?.email?.split("@")[0] || "User";
+  const displayInitial = displayName
+    ? displayName.charAt(0).toUpperCase()
+    : "U";
+  const displayLabel = displayName
+    ? displayName.charAt(0).toUpperCase() + displayName.slice(1)
+    : "User";
   const handleSignout = async () => {
     try {
       await signOut(auth);
@@ -125,9 +133,7 @@ const Navbar = () => {
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Static Actions" className="pt-0 ">
                     <DropdownItem key="welcome" disabled>
-                      Welcome ,{" "}
-                      {user.displayName[0].toUpperCase() +
-                        user.displayName.slice(1)}
+                      Welcome , {displayLabel}
                     </DropdownItem>
                     <DropdownItem key="prfile" href="/profile">
                       {" "}
@@ -275,14 +281,13 @@ const Navbar = () => {
                     />
                   ) : (
                     <span className="text-xl font-bold text-[#e4e6e8]">
-                      {user.displayName?.charAt(0).toUpperCase() || "U"}
+                      {displayInitial}
                     </span>
                   )}
                 </div>
                 <Link to="/profile">
                   <p className="text-[#e4e6e8] font-medium hover:underline">
-                    {user.displayName?.charAt(0).toUpperCase() +
-                      user.displayName?.slice(1) || "User"}
+                    {displayLabel}
                   </p>
                 </Link>
                 <p className="text-sm text-[#9CA3AF]">{user.email}</p>
