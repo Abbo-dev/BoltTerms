@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "./../AuthContext.jsx";
 import { signOut } from "firebase/auth";
 import { auth } from "./../FirebaseConfig.js";
@@ -9,12 +9,36 @@ import BackHome from "./BackHome.jsx";
 import useStatus from "./userStatus.jsx";
 function Profile() {
   const { user } = useAuth();
-  const { metadata } = user;
-  const { creationTime } = metadata;
-  const dateOnly = creationTime.split(" ").slice(1, 4).join(" ");
   const navigate = useNavigate();
 
   const { userStatus } = useStatus();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { replace: true });
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return (
+      <>
+        <BackHome />
+        <div className="min-h-screen bg-[#181e2b] text-[#e4e6e8] p-4 flex items-center justify-center">
+          <p className="text-sm text-[#9CA3AF]">Redirecting to login...</p>
+        </div>
+      </>
+    );
+  }
+
+  const displayName =
+    user.displayName || user.email?.split("@")[0] || "User";
+  const displayLabel =
+    displayName.charAt(0).toUpperCase() + displayName.slice(1);
+  const creationTime = user.metadata?.creationTime;
+  const dateOnly = creationTime
+    ? creationTime.split(" ").slice(1, 4).join(" ")
+    : "Unknown";
+
   const handleSignout = async () => {
     try {
       await signOut(auth);
@@ -41,8 +65,7 @@ function Profile() {
               />
             </div>
             <h1 className="text-xl font-bold">
-              {user.displayName.charAt(0).toUpperCase() +
-                user.displayName.slice(1)}
+              {displayLabel}
             </h1>
             <p className="text-[#828a96]">{user.email}</p>
           </div>
